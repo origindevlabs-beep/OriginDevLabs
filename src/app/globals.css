@@ -1,0 +1,119 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+/* --- ODL Custom Theme --- */
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: #FFFFFF;
+  --color-foreground: #111111;
+  --color-odl-dark: #0A0A0A;
+  --color-odl-offwhite: #FAFAF8;
+  --color-odl-gray-700: #374151;
+  --color-odl-gray-500: #6B7280;
+  --color-odl-gray-300: #D1D5DB;
+  --color-odl-gray-100: #F3F4F6;
+  --font-heading: var(--font-space-grotesk);
+  --font-body: var(--font-plus-jakarta);
+  --font-mono: var(--font-jetbrains);
+}
+
+/* --- Base Reset --- */
+:root {
+  --ease-premium: cubic-bezier(0.32, 0.72, 0, 1);
+  --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-sharp: cubic-bezier(0.5, 0, 0.75, 0);
+}
+
+@layer base {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  html {
+    scroll-behavior: auto; /* Lenis handles smooth scroll */
+  }
+
+  body {
+    font-family: var(--font-body), system-ui, sans-serif;
+    background: #FFFFFF;
+    color: #111111;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading), system-ui, sans-serif;
+  }
+
+  code, pre, .font-mono {
+    font-family: var(--font-mono), monospace;
+  }
+}
+
+/* --- Marquee Animation (NewsStrip) --- */
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  animation: marquee 30s linear infinite;
+}
+
+/* --- Load Screen Pulse --- */
+@keyframes logo-pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.05); opacity: 0.8; }
+}
+
+.animate-logo-pulse {
+  animation: logo-pulse 2s ease-in-out infinite;
+}
+
+/* --- CTA Button Pulse --- */
+@keyframes cta-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+}
+
+.animate-cta-pulse {
+  animation: cta-pulse 3s ease-in-out infinite;
+}
+
+/* --- Reduced Motion --- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* --- Scrollbar Styling --- */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.25);
+}
+
+/* --- Selection --- */
+::selection {
+  background: rgba(0, 0, 0, 0.08);
+  color: #111;
+}

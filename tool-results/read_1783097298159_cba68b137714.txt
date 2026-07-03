@@ -1,0 +1,1186 @@
+     1→     1→# ORIGIN DEV LABS — COMPREHENSIVE WEBSITE DESIGN FILE & PRD
+     2→     2→
+     3→     3→> **Version:** 2.0  
+     4→     4→> **Date:** July 2026  
+     5→     5→> **Status:** Active Build  
+     6→     6→> **Stack:** Next.js 16 · Tailwind CSS v4 · motion · Lenis · Supabase
+     7→     7→
+     8→     8→---
+     9→     9→
+    10→    10→## TABLE OF CONTENTS
+    11→    11→
+    12→    12→1. [Company Overview & Positioning](#1-company-overview--positioning)
+    13→    13→2. [Brand Identity System](#2-brand-identity-system)
+    14→    14→3. [Site Architecture & Navigation](#3-site-architecture--navigation)
+    15→    15→4. [Load Screen Animation](#4-load-screen-animation)
+    16→    16→5. [Homepage — Section-by-Section Design](#5-homepage--section-by-section-design)
+    17→    17→6. [About Page](#6-about-page)
+    18→    18→7. [Services Page](#7-services-page)
+    19→    19→8. [Testimonials Page](#8-testimonials-page)
+    20→    20→9. [Get Started / Contact Page](#9-get-started--contact-page)
+    21→    21→10. [Supabase Database Schema](#10-supabase-database-schema)
+    22→    22→11. [Form Submission Flow & Welcome Animation](#11-form-submission-flow--welcome-animation)
+    23→    23→12. [Animation System](#12-animation-system)
+    24→    24→13. [Image & Video Assets](#13-image--video-assets)
+    25→    25→14. [SEO & LLMO Optimization](#14-seo--llmo-optimization)
+    26→    26→15. [Responsive Design Specifications](#15-responsive-design-specifications)
+    27→    27→16. [Copy Guidelines & Voice](#16-copy-guidelines--voice)
+    28→    28→17. [Tech Stack & Dependencies](#17-tech-stack--dependencies)
+    29→    29→
+    30→    30→---
+    31→    31→
+    32→    32→# 1. COMPANY OVERVIEW & POSITIONING
+    33→    33→
+    34→    34→## 1.1 Company Profile
+    35→    35→
+    36→    36→| Field | Value |
+    37→    37→|-------|-------|
+    38→    38→| **Name** | Origin Dev Labs (ODL) |
+    39→    39→| **Type** | Automation & Digital Transformation Company |
+    40→    40→| **Primary Tagline** | We Build Systems That Work While You Sleep |
+    41→    41→| **Primary Service** | Intelligent automation, systems, and business solutions |
+    42→    42→| **Secondary Service** | Web design, development, and optimization |
+    43→    43→| **Headquarters** | 100 South Orange Avenue, Suite 1200, Orlando, FL 32801 |
+    44→    44→| **Target Region** | US → Global |
+    45→    45→| **Budget Range** | $500 – $15,000 |
+    46→    46→
+    47→    47→### Tagline Variations (for Hero Scroll Animation)
+    48→    48→
+    49→    49→During the hero section's scroll animation, the tagline cycles through four tones:
+    50→    50→
+    51→    51→| Tone | Tagline | Character |
+    52→    52→|------|---------|-----------|
+    53→    53→| **Bold + Confident** | We Build Systems That Work While You Sleep | The default — direct, authoritative |
+    54→    54→| **Clean + Direct** | Automation That Runs Your Business for You | No fluff, states the outcome plainly |
+    55→    55→| **Aspirational + Visionary** | The Future of Work Is Automated. We're Building It. | Forward-looking, positions ODL as a leader |
+    56→    56→| **Smart + Witty** | Sleep More. Scale Faster. Let the Systems Handle It. | Conversational, memorable, human |
+    57→    57→
+    58→    58→## 1.2 Mission
+    59→    59→
+    60→    60→We build automation systems that remove busywork from businesses — so people spend their time on work that actually matters. Every system we ship is designed to save hours, cut costs, and scale without adding headcount.
+    61→    61→
+    62→    62→## 1.3 Vision
+    63→    63→
+    64→    64→By year three, we'll operate multiple proprietary software products, serve international clients from our Orlando headquarters, and have built acquisition-ready software assets. Our north star hasn't changed: make automation practical, measurable, and profitable for every business we touch.
+    65→    65→
+    66→    66→## 1.4 Core Philosophy
+    67→    67→
+    68→    68→- Your best people shouldn't spend their days on data entry, scheduling, or copy-pasting between tools.
+    69→    69→- Automation should pay for itself — in hours saved, errors avoided, or revenue gained.
+    70→    70→- If a system needs a manual to operate, it's not finished yet.
+    71→    71→- ODL exists because most businesses know automation is possible but can't figure out how to actually get it working.
+    72→    72→
+    73→    73→## 1.5 Value Proposition
+    74→    74→
+    75→    75→ODL replaces manual, repetitive processes with systems that run on their own. You get back the hours your team loses to busywork, the money you burn on fixable inefficiencies, and the growth you're leaving on the table because your operations can't keep up.
+    76→    76→
+    77→    77→**What changes when you work with us:**
+    78→    78→- Your team stops doing the same 30 tasks every Monday morning
+    79→    79→- Leads get responded to in minutes, not hours
+    80→    80→- Reports generate themselves instead of someone spending Friday afternoon on spreadsheets
+    81→    81→- Customer follow-ups happen automatically — no one falls through the cracks
+    82→    82→- You know exactly what's happening across your business, in real time
+    83→    83→
+    84→    84→## 1.6 Competitive Positioning
+    85→    85→
+    86→    86→ODL is **not** a web design agency. We're an automation company. Web development exists as a supporting capability — we build the front-end systems that make automation visible and usable.
+    87→    87→
+    88→    88→**Where we compete:**
+    89→    89→- Automation Consulting
+    90→    90→- Business Process Automation
+    91→    91→- Intelligent Agent Development
+    92→    92→- Operations Management
+    93→    93→- Digital Transformation
+    94→    94→- Productivity Systems
+    95→    95→
+    96→    96→## 1.7 Target Market
+    97→    97→
+    98→    98→### Primary Clients
+    99→    99→
+   100→   100→| Segment | Pain Points | What They Get |
+   101→   101→|---------|-------------|---------------|
+   102→   102→| **Small & Medium Businesses** | Spending 20+ hours/week on manual processes | 10-30 hours back every week, fewer errors |
+   103→   103→| **Startups** | Small teams wearing 5 roles each | Systems that scale with them |
+   104→   104→| **Entrepreneurs** | Drowning in admin while trying to run the business | Automated workflows, less overhead |
+   105→   105→| **Professionals** | No time for deep work because admin fills every gap | Intelligent assistants that handle scheduling |
+   106→   106→
+   107→   107→## 1.8 Revenue Model
+   108→   108→
+   109→   109→1. **Project-Based Services** — One-time automation builds, agent deployment, custom system development
+   110→   110→2. **Retainer Services** — Ongoing system maintenance, monitoring, optimization
+   111→   111→3. **Subscription Products** — Proprietary automation tools and dashboards (launching Year 2)
+   112→   112→4. **Consulting** — Automation audits, process optimization, transformation planning
+   113→   113→
+   114→   114→---
+   115→   115→
+   116→   116→# 2. BRAND IDENTITY SYSTEM
+   117→   117→
+   118→   118→## 2.1 Color System
+   119→   119→
+   120→   120→### Design Philosophy
+   121→   121→
+   122→   122→**No gradients. No bright colors. No conventional AI slop.**
+   123→   123→
+   124→   124→The color system uses a restrained, professional palette built on neutrals with intentional accent moments. Colors serve function, not decoration.
+   125→   125→
+   126→   126→### Primary Background (Services, Problem/Solution, Sub Pages)
+   127→   127→
+   128→   128→| Element | Color | Description |
+   129→   129→|---------|-------|-------------|
+   130→   130→| **Base** | `#FFFFFF` | Pure white |
+   131→   131→| **Circuitry Pattern** | `rgba(0,0,0,0.03)` to `rgba(0,0,0,0.08)` | Animated circuit board nodes and connections |
+   132→   132→| **Node Glow** | `rgba(0,0,0,0.15)` | Radial glow on nodes near cursor |
+   133→   133→
+   134→   134→The primary background features an interactive circuitry animation — a canvas-based network of nodes and connections that pulse and glow as the mouse moves across the surface. The effect is subtle: visible but never distracting.
+   135→   135→
+   136→   136→### Secondary Background (Header, Footer, How It Works)
+   137→   137→
+   138→   138→| Element | Color | Description |
+   139→   139→|---------|-------|-------------|
+   140→   140→| **Base** | `#0A0A0A` | Near-black |
+   141→   141→| **Pattern** | `rgba(255,255,255,0.03)` | Subtle dot grid |
+   142→   142→| **Text** | `#FFFFFF` and `rgba(255,255,255,0.4)` | White primary, muted secondary |
+   143→   143→
+   144→   144→### Testimonials Background
+   145→   145→
+   146→   146→| Element | Color | Description |
+   147→   147→|---------|-------|-------------|
+   148→   148→| **Base** | `#FAFAF8` | Warm off-white |
+   149→   149→| **Pattern** | `rgba(0,0,0,0.02)` | Subtle dot grid |
+   150→   150→
+   151→   151→### Neutral Scale
+   152→   152→
+   153→   153→| Name | Hex | Usage |
+   154→   154→|------|-----|-------|
+   155→   155→| Black | `#000000` | Text on light backgrounds |
+   156→   156→| Gray 900 | `#111111` | Primary text, dark elements |
+   157→   157→| Gray 700 | `#374151` | Secondary text |
+   158→   158→| Gray 500 | `#6B7280` | Muted text, placeholders |
+   159→   159→| Gray 300 | `#D1D5DB` | Borders, dividers |
+   160→   160→| Gray 100 | `#F3F4F6` | Subtle backgrounds |
+   161→   161→| White | `#FFFFFF` | Text on dark, cards |
+   162→   162→
+   163→   163→### Accent Usage
+   164→   164→
+   165→   165→| Element | Style |
+   166→   166→|---------|-------|
+   167→   167→| **Primary Buttons** | `bg-gray-900 text-white` — solid, no gradient |
+   168→   168→| **Secondary Buttons** | `bg-transparent border border-gray-300 text-gray-900` |
+   169→   169→| **Links** | `text-gray-900` with hover underline |
+   170→   170→| **Icons** | Monochrome, consistent with text color |
+   171→   171→
+   172→   172→## 2.2 Typography
+   173→   173→
+   174→   174→### Font Stack
+   175→   175→
+   176→   176→| Role | Font | Weight | Usage |
+   177→   177→|------|------|--------|-------|
+   178→   178→| **Headings** | Space Grotesk | 600, 700 | H1-H6, hero text, section titles |
+   179→   179→| **Body** | Plus Jakarta Sans | 400, 500, 600 | Paragraphs, descriptions, form labels |
+   180→   180→| **Monospace** | JetBrains Mono | 400 | Code, technical terms, metrics |
+   181→   181→
+   182→   182→### Type Scale
+   183→   183→
+   184→   184→| Element | Size (Desktop) | Size (Mobile) | Line Height | Letter Spacing |
+   185→   185→|---------|---------------|---------------|-------------|----------------|
+   186→   186→| H1 | 60px (3.75rem) | 32px (2rem) | 1.1 | -0.02em |
+   187→   187→| H2 | 48px (3rem) | 28px (1.75rem) | 1.2 | -0.01em |
+   188→   188→| H3 | 32px (2rem) | 22px (1.375rem) | 1.3 | 0 |
+   189→   189→| H4 | 24px (1.5rem) | 18px (1.125rem) | 1.4 | 0 |
+   190→   190→| Body Large | 18px (1.125rem) | 16px (1rem) | 1.6 | 0 |
+   191→   191→| Body | 16px (1rem) | 16px (1rem) | 1.6 | 0 |
+   192→   192→| Body Small | 14px (0.875rem) | 13px (0.8125rem) | 1.5 | 0.01em |
+   193→   193→| Caption | 12px (0.75rem) | 12px (0.75rem) | 1.4 | 0.02em |
+   194→   194→
+   195→   195→## 2.3 Logo Usage
+   196→   196→
+   197→   197→### Files
+   198→   198→
+   199→   199→| File | Format | Usage |
+   200→   200→|------|--------|-------|
+   201→   201→| `logo.png` | PNG | Primary logo — dark background |
+   202→   202→| `logo-white.png` | PNG | Light/dark background variant |
+   203→   203→| `logo-icon.png` | PNG | Favicon, small spaces |
+   204→   204→
+   205→   205→### Placement Rules
+   206→   206→
+   207→   207→- **Header:** Left-aligned in floating pill, max height 32px, links to homepage
+   208→   208→- **Footer:** Left-aligned, max height 28px
+   209→   209→- **Load Screen:** Center of viewport, max 60px wide (small pulsating)
+   210→   210→- **Minimum size:** 20px height (icon only), 60px height (full logo)
+   211→   211→
+   212→   212→## 2.4 Visual Language
+   213→   213→
+   214→   214→### Design Principles
+   215→   215→
+   216→   216→1. **White-first:** White backgrounds with interactive circuitry — clean, modern, premium
+   217→   217→2. **No gradients:** Solid colors only — gradient-free by design
+   218→   218→3. **Depth through motion:** Animations guide attention, reinforce hierarchy
+   219→   219→4. **Generous whitespace:** Let content breathe — no cluttered layouts
+   220→   220→5. **Monochrome with intent:** Color appears only when it means something
+   221→   221→
+   222→   222→### UI Component Patterns
+   223→   223→
+   224→   224→| Component | Style |
+   225→   225→|-----------|-------|
+   226→   226→| **Buttons (Primary)** | `bg-gray-900 text-white rounded-full px-8 py-3.5 hover:bg-gray-800 transition-all` |
+   227→   227→| **Buttons (Secondary)** | `bg-transparent border border-gray-300 text-gray-900 rounded-full px-8 py-3.5` |
+   228→   228→| **Cards (Light)** | `bg-white border border-gray-100 rounded-2xl shadow-sm hover:shadow-xl` |
+   229→   229→| **Cards (Dark)** | `bg-[#0a0a0a] border border-white/10 rounded-2xl` |
+   230→   230→| **Inputs** | `bg-white border border-gray-200 rounded-lg px-4 py-2.5 focus:outline-none focus:border-gray-400` |
+   231→   231→| **Sections** | `min-height: 100vh`, `padding: 120px 0` (desktop), `80px 0` (mobile) |
+   232→   232→
+   233→   233→---
+   234→   234→
+   235→   235→# 3. SITE ARCHITECTURE & NAVIGATION
+   236→   236→
+   237→   237→## 3.1 Page Map
+   238→   238→
+   239→   239→| Route | Page | Priority |
+   240→   240→|-------|------|----------|
+   241→   241→| `/` | Homepage | Primary |
+   242→   242→| `/about` | About ODL | Primary |
+   243→   243→| `/services` | All Services | Primary |
+   244→   244→| `/testimonials` | Client Stories | Primary |
+   245→   245→| `/get-started` | Contact Form | Primary |
+   246→   246→| `/*` (modal) | Contact Form (overlay) | Secondary |
+   247→   247→
+   248→   248→## 3.2 Navigation Structure
+   249→   249→
+   250→   250→### Desktop Header (Floating Glass Pill)
+   251→   251→
+   252→   252→- **Position:** Fixed, top 1.5rem, centered horizontally
+   253→   253→- **Layout:** Floating pill — `top: 1.5rem; left: 50%; transform: translateX(-50%); width: max-content`
+   254→   254→- **Background:** `rgba(255,255,255,0.08)` with `backdrop-filter: blur(20px)`
+   255→   255→- **Border:** `1px solid rgba(255,255,255,0.1)`, `border-radius: 9999px`
+   256→   256→- **Logo:** Left, 28px height, links to homepage
+   257→   257→- **Nav Links:** Plus Jakarta Sans 500 14px, hover: gray-900
+   258→   258→- **CTA Button:** `bg-gray-900 text-white rounded-full`, "Get Started"
+   259→   259→- **z-index:** 50
+   260→   260→
+   261→   261→### Mobile Header
+   262→   262→
+   263→   263→- Same floating pill, smaller padding
+   264→   264→- **Menu button:** Black pill with Plus icon + "Menu" text
+   265→   265→
+   266→   266→### Mobile Menu Overlay
+   267→   267→
+   268→   268→- Fullscreen, `bg: rgba(10,10,10,0.98)`, `backdrop-filter: blur(30px)`
+   269→   269→- Links: Space Grotesk 28px, stacked vertically, centered
+   270→   270→- Staggered mask reveal animation
+   271→   271→- Close: X morph from hamburger
+   272→   272→
+   273→   273→### Footer
+   274→   274→
+   275→   275→- **Background:** `#0A0A0A` (secondary background — same as header)
+   276→   276→- **Logo:** Left-aligned, `logo-white.png`
+   277→   277→- **Columns:** 4-column grid (stacks on mobile)
+   278→   278→  - Brand & Newsletter | Company Links | Services Links | Contact & Social
+   279→   279→- **Social Icons:** TikTok, Instagram, WhatsApp, Twitter
+   280→   280→- **Address:** Only appears here (100 South Orange Avenue, Suite 1200, Orlando, FL 32801)
+   281→   281→- **Back-to-top:** Floating button, bottom-right
+   282→   282→- **Border-top:** `1px solid rgba(255,255,255,0.1)`
+   283→   283→
+   284→   284→---
+   285→   285→
+   286→   286→# 4. LOAD SCREEN ANIMATION
+   287→   287→
+   288→   288→## 4.1 Purpose
+   289→   289→
+   290→   290→The load screen serves two functions:
+   291→   291→1. **Brand moment** — Logo animation establishes premium feel
+   292→   292→2. **Frame preload** — Hero canvas requires pre-rendered frames
+   293→   293→
+   294→   294→## 4.2 Sequence Overview
+   295→   295→
+   296→   296→```
+   297→   297→Phase 1: Logo Pulse     →  Logo scales 1.0 ↔ 1.05, subtle glow pulse, small size (60px)
+   298→   298→Phase 2: Bounce Reveal  →  Whole webpage bounces up from bottom, centered in view
+   299→   299→Phase 3: Experience     →  Hero section begins immediately
+   300→   300→```
+   301→   301→
+   302→   302→## 4.3 Visual Design
+   303→   303→
+   304→   304→```
+   305→   305→┌──────────────────────────────────────────────────────────────┐
+   306→   306→│                                                              │
+   307→   307→│                                                              │
+   308→   308→│                                                              │
+   309→   309→│                    [ODL Logo]                                 │
+   310→   310→│                    (centered, 60px wide)                      │
+   311→   311→│                    (subtle pulse animation)                   │
+   312→   312→│                                                              │
+   313→   313→│                                                              │
+   314→   314→│                                                              │
+   315→   315→│                                                              │
+   316→   316→└──────────────────────────────────────────────────────────────┘
+   317→   317→```
+   318→   318→
+   319→   319→- **Background:** `#FFFFFF` (white)
+   320→   320→- **Logo:** Centered, 60px wide, subtle pulse animation
+   321→   321→- **No progress bar**
+   322→   322→- **No percentage text**
+   323→   323→
+   324→   324→## 4.4 Transition
+   325→   325→
+   326→   326→- **Load → Content:** Logo fades out (0.3s), then entire webpage bounces up from bottom (`translateY(100vh)` to `translateY(0)`) with spring animation (`stiffness: 200, damping: 20`)
+   327→   327→- The bounce effect brings the full page into view while continuing the experience
+   328→   328→- Hero section activates immediately after reveal
+   329→   329→
+   330→   330→## 4.5 Technical Implementation
+   331→   331→
+   332→   332→```typescript
+   333→   333→// Bounce-in animation for page reveal
+   334→   334→const pageVariants = {
+   335→   335→  hidden: { y: "100vh", opacity: 0 },
+   336→   336→  visible: {
+   337→   337→    y: 0,
+   338→   338→    opacity: 1,
+   339→   339→    transition: {
+   340→   340→      type: "spring",
+   341→   341→      stiffness: 200,
+   342→   342→      damping: 20,
+   343→   343→      mass: 1,
+   344→   344→    },
+   345→   345→  },
+   346→   346→};
+   347→   347→```
+   348→   348→
+   349→   349→## 4.6 Fallback
+   350→   350→
+   351→   351→- If user has `prefers-reduced-motion: reduce`, skip bounce, instant reveal
+   352→   352→- Maximum load screen duration: 5 seconds (force dismiss)
+   353→   353→- Loading state stored in sessionStorage to avoid replay on SPA navigation
+   354→   354→
+   355→   355→---
+   356→   356→
+   357→   357→# 5. HOMEPAGE — SECTION-BY-SECTION DESIGN
+   358→   358→
+   359→   359→## 5.1 Overview
+   360→   360→
+   361→   361→| # | Section | Animation Type | Background | Min Height |
+   362→   362→|---|---------|---------------|------------|------------|
+   363→   363→| 1 | Hero | Scroll-driven card morph + circuitry | Primary (white + circuitry) | 100vh (scroll container) |
+   364→   364→| 2 | News Strip | Marquee scroll | Secondary (#0a0a0a) | auto |
+   365→   365→| 3 | Trust Bar | Counter + liquid glass overlay | Primary (white + circuitry) | auto |
+   366→   366→| 4 | Services | 3D card tilt + frosted hover | Primary (white + circuitry) | auto |
+   367→   367→| 5 | How It Works | Vertical zigzag timeline | Secondary (creative) | auto |
+   368→   368→| 6 | Problem/Solution | Overlay revelation | Primary (white + circuitry) | 100vh |
+   369→   369→| 7 | Testimonials | Stacking cards | Testimonials (#FAFAF8) | 300vh (scroll container) |
+   370→   370→| 8 | CTA | Unique reveal | Primary (white + circuitry) | 60vh |
+   371→   371→| 9 | Footer | Standard | Secondary (#0A0A0A) | auto |
+   372→   372→
+   373→   373→---
+   374→   374→
+   375→   375→## 5.2 Section 1: Hero
+   376→   376→
+   377→   377→### Layout
+   378→   378→
+   379→   379→```
+   380→   380→┌──────────────────────────────────────────────────────────────┐
+   381→   381→│  [Floating glass pill navbar]                                │
+   382→   382→│                                                              │
+   383→   383→│                                                              │
+   384→   384→│              [Intro: "Systems That Work While You Sleep"]    │
+   385→   385→│              [Fades as cards form arc]                        │
+   386→   386→│                                                              │
+   387→   387→│              [20 flip cards morph from scatter → circle →     │
+   388→   388→│               bottom arc, scrubbing on scroll]                │
+   389→   389→│                                                              │
+   390→   390→│              [Arc Content: "We Build Automation"]             │
+   391→   391→│              [Subheadline + Get Started CTA]                  │
+   392→   392→│                                                              │
+   393→   393→└──────────────────────────────────────────────────────────────┘
+   394→   394→```
+   395→   395→
+   396→   396→### Copy
+   397→   397→
+   398→   398→- **Intro (fades out):** "Systems That Work While You Sleep"
+   399→   399→- **Scroll prompt:** "SCROLL TO EXPLORE"
+   400→   400→- **Main (fades in):** "We Build Automation"
+   401→   401→- **Description:** "From workflow automation to intelligent agents, we architect systems that handle the work your team shouldn't have to."
+   402→   402→- **CTA:** "Get Started" (appears after 90% morph progress)
+   403→   403→
+   404→   404→### Animation System
+   405→   405→
+   406→   406→This section uses a **scroll-driven card morph** — NOT a frame-sequence canvas.
+   407→   407→
+   408→   408→**How it works:**
+   409→   409→1. 20 flip cards start scattered across the viewport
+   410→   410→2. On load, they animate into a circle formation
+   411→   411→3. On scroll, the circle morphs into a bottom arc
+   412→   412→4. Cards shuffle along the arc as user continues scrolling
+   413→   413→5. Mouse parallax affects card positions
+   414→   414→6. Each card flips on hover to reveal ODL service labels
+   415→   415→
+   416→   416→**Scroll math:**
+   417→   417→- Morph progress: `scrollY [0, 600]` → `[0, 1]` (circle to arc)
+   418→   418→- Arc rotation: `scrollY [600, 3000]` → `[0, 360]` (shuffle cards)
+   419→   419→- Content fade: `morphProgress [0.8, 1]` → `[0, 1]`
+   420→   420→- CTA appearance: `morphProgress > 0.9`
+   421→   421→
+   422→   422→**Card labels:**
+   423→   423→Workflow Automation, Neural Processing, Data Pipeline, System Integration, Predictive Analytics, Agent Logic, Process Mining, API Mesh, Decision Trees, Real-Time Sync, Automation Grid, Smart Assistants, Cloud Infrastructure, Security Layer, Scaling Matrix, Client Portals, Dashboard UI, Report Engine, Notifications, Deployment Pipeline
+   424→   424→
+   425→   425→### Circuitry Background
+   426→   426→
+   427→   427→Canvas-based animated circuit board:
+   428→   428→- Nodes spaced 80px apart
+   429→   429→- Connections between nearby nodes (60% probability)
+   430→   430→- Mouse proximity causes node glow (300px radius)
+   431→   431→- Traveling pulses along connections
+   432→   432→- Opacity: 40% (subtle but visible)
+   433→   433→
+   434→   434→---
+   435→   435→
+   436→   436→## 5.3 Section 2: News/Announcement Strip
+   437→   437→
+   438→   438→### Layout
+   439→   439→
+   440→   440→```
+   441→   441→┌──────────────────────────────────────────────────────────────┐
+   442→   442→│  ● NOW ACCEPTING PROJECTS FOR Q3 2026 — BOOK YOUR            │
+   443→   443→│    FREE CONSULTATION TODAY  ●  NOW ACCEPTING PROJECTS        │
+   444→   444→│    FOR Q3 2026 — BOOK YOUR FREE CONSULTATION TODAY  ●       │
+   445→   445→└──────────────────────────────────────────────────────────────┘
+   446→   446→```
+   447→   447→
+   448→   448→### Design
+   449→   449→
+   450→   450→- **Background:** `#0A0A0A` (secondary)
+   451→   451→- **Text:** White, uppercase, 12px, letter-spacing 0.1em
+   452→   452→- **Animation:** Continuous horizontal marquee, 30s loop
+   453→   453→- **Separator:** Bullet point (●) between messages
+   454→   454→- **Height:** 48px
+   455→   455→- **Message:** "NOW ACCEPTING PROJECTS FOR Q3 2026 — BOOK YOUR FREE CONSULTATION TODAY"
+   456→   456→
+   457→   457→### Implementation
+   458→   458→
+   459→   459→```css
+   460→   460→@keyframes marquee {
+   461→   461→  0% { transform: translateX(0); }
+   462→   462→  100% { transform: translateX(-50%); }
+   463→   463→}
+   464→   464→```
+   465→   465→
+   466→   466→---
+   467→   467→
+   468→   468→## 5.4 Section 3: Trust Bar
+   469→   469→
+   470→   470→### Layout
+   471→   471→
+   472→   472→```
+   473→   473→┌──────────────────────────────────────────────────────────────┐
+   474→   474→│                                                              │
+   475→   475→│   ┌────────────────────────────────────────────────────┐    │
+   476→   476→│   │  LIQUID GLASS PANEL                                 │    │
+   477→   477→│   │                                                     │    │
+   478→   478→│   │   50+          99.8%        24/7         4.8★       │    │
+   479→   479→│   │   Automations   Uptime      Support      Rating    │    │
+   480→   480→│   │   Deployed                                                  │    │
+   481→   481→│   │                                                     │    │
+   482→   482→│   └────────────────────────────────────────────────────┘    │
+   483→   483→│                                                              │
+   484→   484→│   "Every number here represents a business that stopped      │
+   485→   485→│    doing things manually and started running smarter."       │
+   486→   486→│                                                              │
+   487→   487→└──────────────────────────────────────────────────────────────┘
+   488→   488→```
+   489→   489→
+   490→   490→### Design
+   491→   491→
+   492→   492→- **Container:** Liquid glass panel — `backdrop-filter: blur(20px)`, `bg: rgba(255,255,255,0.6)`, `border: 1px solid rgba(255,255,255,0.8)`
+   493→   493→- **Overlay:** Sits on top of primary background (circuitry visible through glass)
+   494→   494→- **Bleed:** Panel dynamically bleeds into next section with varying opacity at edges
+   495→   495→- **Numbers:** Count up from 0 on scroll (useInView trigger)
+   496→   496→- **Hover:** Subtle 3D tilt on each metric card
+   497→   497→
+   498→   498→### Metrics
+   499→   499→
+   500→   500→| Metric | Value | Label |
+   501→   501→|--------|-------|-------|
+   502→   502→| Counter 1 | 50+ | Automations Deployed |
+   503→   503→| Counter 2 | 99.8% | Uptime Guarantee |
+   504→   504→| Counter 3 | 24/7 | System Monitoring |
+   505→   505→| Counter 4 | 4.8★ | Client Rating |
+   506→   506→
+   507→   507→---
+   508→   508→
+   509→   509→## 5.5 Section 4: Services Overview
+   510→   510→
+   511→   511→### Layout
+   512→   512→
+   513→   513→```
+   514→   514→┌──────────────────────────────────────────────────────────────┐
+   515→   515→│                                                              │
+   516→   516→│         Systems That Scale                                   │
+   517→   517→│         Without Adding Headcount                              │
+   518→   518→│                                                              │
+   519→   519→│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐       │
+   520→   520→│  │ [Image]       │  │ [Image]       │  │ [Image]       │      │
+   521→   521→│  │ ⚡ Workflow   │  │ 🤖 Intelligent│  │ 💡 Smart      │      │
+   522→   522→│  │  Automation   │  │  Agents       │  │  Assistants   │      │
+   523→   523→│  │ [Features]    │  │ [Features]    │  │ [Features]    │      │
+   524→   524→│  │ Learn More →  │  │ Learn More →  │  │ Learn More →  │      │
+   525→   525→│  └──────────────┘  └──────────────┘  └──────────────┘       │
+   526→   526→│                                                              │
+   527→   527→│  ┌──────────────┐  ┌──────────────┐                          │
+   528→   528→│  │ [Image]       │  │ [Image]       │                         │
+   529→   529→│  │ 📊 Business  │  │ 🔧 Custom    │                          │
+   530→   530→│  │  Intelligence │  │  Solutions   │                          │
+   531→   531→│  │ [Features]    │  │ [Features]    │                         │
+   532→   532→│  │ Learn More →  │  │ Learn More →  │                         │
+   533→   533→│  └──────────────┘  └──────────────┘                          │
+   534→   534→│                                                              │
+   535→   535→│              [ View All Services → ]                         │
+   536→   536→│                                                              │
+   537→   537→└──────────────────────────────────────────────────────────────┘
+   538→   538→```
+   539→   539→
+   540→   540→### Card Design
+   541→   541→
+   542→   542→- **Background:** White (`#FFFFFF`)
+   543→   543→- **Border:** `1px solid #F3F4F6`
+   544→   544→- **Layout:** 55% image, 45% content
+   545→   545→- **Hover:** 3D tilt effect + frosted glass overlay (`backdrop-filter: blur(8px)`, `bg: rgba(255,255,255,0.7)`)
+   546→   546→- **Scroll reveal:** Staggered entrance with rotateX transform
+   547→   547→
+   548→   548→### Services
+   549→   549→
+   550→   550→| # | Service | Icon | Features |
+   551→   551→|---|---------|------|----------|
+   552→   552→| 1 | Workflow Automation | Workflow | Conditional Logic, Cross-Platform, Real-Time Monitoring |
+   553→   553→| 2 | Intelligent Agents | Bot | Natural Language, Multi-Step Reasoning, Tool Integration |
+   554→   554→| 3 | Smart Assistants | Headphones | Context-Aware, Calendar Management, Document Processing |
+   555→   555→| 4 | Business Intelligence | BarChart3 | Custom Dashboards, Automated Reports, KPI Tracking |
+   556→   556→| 5 | Custom Solutions | Code2 | Full-Stack Dev, API Design, Deployment & Support |
+   557→   557→
+   558→   558→---
+   559→   559→
+   560→   560→## 5.6 Section 5: How It Works
+   561→   561→
+   562→   562→### Layout
+   563→   563→
+   564→   564→```
+   565→   565→┌──────────────────────────────────────────────────────────────┐
+   566→   566→│                                                              │
+   567→   567→│               How Your Automation Gets Built                 │
+   568→   568→│                                                              │
+   569→   569→│    1  Discovery                                    [Icon]    │
+   570→   570→│       ─────────────────────────────────────────────          │
+   571→   571→│                                          [Icon]              │
+   572→   572→│    ─────────────────────────────────────────────────         │
+   573→   573→│    2  Solution Design                                    │
+   574→   574→│       ─────────────────────────────────────────────          │
+   575→   575→│    [Icon]                                                   │
+   576→   576→│    ─────────────────────────────────────────────────         │
+   577→   577→│    3  Development                                          │
+   578→   578→│       ─────────────────────────────────────────────          │
+   579→   579→│                                          [Icon]              │
+   580→   580→│    ─────────────────────────────────────────────────         │
+   581→   581→│    4  Testing                                              │
+   582→   582→│       ─────────────────────────────────────────────          │
+   583→   583→│    [Icon]                                                   │
+   584→   584→│    ─────────────────────────────────────────────────         │
+   585→   585→│    5  Deployment                                           │
+   586→   586→│       ─────────────────────────────────────────────          │
+   587→   587→│                                          [Icon]              │
+   588→   588→│    ─────────────────────────────────────────────────         │
+   589→   589→│    6  Optimization                                         │
+   590→   590→│                                                              │
+   591→   591→└──────────────────────────────────────────────────────────────┘
+   592→   592→```
+   593→   593→
+   594→   594→### Design
+   595→   595→
+   596→   596→- **Layout:** Vertical zigzag — steps alternate left/right
+   597→   597→- **Timeline:** Vertical line down center, animated progress fills on scroll
+   598→   598→- **Background:** Secondary/creative background (NOT primary white+circuitry)
+   599→   599→- **Animation:** Each step reveals with scroll, line draws progressively
+   600→   600→- **Active step:** Expanded card with full description
+   601→   601→
+   602→   602→### Steps
+   603→   603→
+   604→   604→| # | Step | Icon | Description |
+   605→   605→|---|------|------|-------------|
+   606→   606→| 1 | Discovery | 🔍 | We map your workflows and find the bottlenecks |
+   607→   607→| 2 | Solution Design | 📐 | Architecture that fits your business |
+   608→   608→| 3 | Development | 💻 | Build, integrate, connect everything |
+   609→   609→| 4 | Testing | ✅ | Break it on purpose so customers never have to |
+   610→   610→| 5 | Deployment | 🚀 | Launch, train, support |
+   611→   611→| 6 | Optimization | 📈 | Watch data, tune systems, maximize ROI |
+   612→   612→
+   613→   613→---
+   614→   614→
+   615→   615→## 5.7 Section 6: Problem/Solution Story
+   616→   616→
+   617→   617→### Layout
+   618→   618→
+   619→   619→```
+   620→   620→┌──────────────────────────────────────────────────────────────┐
+   621→   621→│                                                              │
+   622→   622→│   ┌─────────────────────────────────────────────────────┐   │
+   623→   623→│   │  THE OLD WAY                                         │   │
+   624→   624→│   │  • Manual data entry                                 │   │
+   625→   625→│   │  • Missed leads                                      │   │
+   626→   626→│   │  • Hours of reporting                                │   │
+   627→   627→│   │  • Human error                                       │   │
+   628→   628→│   │                                                      │   │
+   629→   629→│   │  ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │   │
+   630→   630→│   │                                                      │   │
+   631→   631→│   │  THE ODL WAY (overlays on scroll)                    │   │
+   632→   632→│   │  • Automated workflows                               │   │
+   633→   633→│   │  • 24/7 lead capture                                 │   │
+   634→   634→│   │  • Real-time dashboards                              │   │
+   635→   635→│   │  • Zero errors                                       │   │
+   636→   636→│   └─────────────────────────────────────────────────────┘   │
+   637→   637→│                                                              │
+   638→   638→└──────────────────────────────────────────────────────────────┘
+   639→   639→```
+   640→   640→
+   641→   641→### Design
+   642→   642→
+   643→   643→- **Animation:** Solution panel slides over problem panel on scroll
+   644→   644→- **Reveal:** Problem section visible first, solution overlays progressively
+   645→   645→- **Retraction:** On scroll back, solution retracts revealing problem again
+   646→   646→- **Background:** Primary (white + circuitry)
+   647→   647→- **Styling:** Problem in muted gray, Solution in crisp black/white
+   648→   648→
+   649→   649→### Copy
+   650→   650→
+   651→   651→**The Old Way:**
+   652→   652→- Manual data entry eating 20+ hours every week
+   653→   653→- Leads going cold because no one followed up fast enough
+   654→   654→- Friday afternoons spent compiling reports
+   655→   655→- Costly human errors in invoicing and scheduling
+   656→   656→
+   657→   657→**The ODL Way:**
+   658→   658→- Automated workflows that run around the clock
+   659→   659→- Every lead captured, qualified, and routed in under five minutes
+   660→   660→- Real-time dashboards that update themselves
+   661→   661→- Zero-error systems built to catch what humans miss
+   662→   662→
+   663→   663→---
+   664→   664→
+   665→   665→## 5.8 Section 7: Testimonials
+   666→   666→
+   667→   667→### Layout
+   668→   668→
+   669→   669→```
+   670→   670→┌──────────────────────────────────────────────────────────────┐
+   671→   671→│  Background: #FAFAF8 (warm off-white)                        │
+   672→   672→│                                                              │
+   673→   673→│        Businesses That Run on                                │
+   674→   674→│        ODL Systems                                           │
+   675→   675→│                                                              │
+   676→   676→│        ★★★★★ 4.8 / 5.0                                      │
+   677→   677→│        Based on 50+ client projects                          │
+   678→   678→│                                                              │
+   679→   679→│        ┌────────────────────────────────────┐               │
+   680→   680→│        │  [Stacking Card 1]                  │               │
+   681→   681→│        │  [Stacking Card 2]                  │               │
+   682→   682→│        │  [Stacking Card 3]                  │               │
+   683→   683→│        │  ... up to 36 cards                 │               │
+   684→   684→│        └────────────────────────────────────┘               │
+   685→   685→│                                                              │
+   686→   686→│        [Skip Section] ← appears after 15% scroll             │
+   687→   687→│                                                              │
+   688→   688→│        [Load More Stories] ← loads 8 at a time               │
+   689→   689→│                                                              │
+   690→   690→└──────────────────────────────────────────────────────────────┘
+   691→   691→```
+   692→   692→
+   693→   693→### Design
+   694→   694→
+   695→   695→- **Background:** `#FAFAF8` (warm off-white) — 3rd unique color
+   696→   696→- **Cards:** 36 total testimonials
+   697→   697→- **Card style:** Light variant, `bg-[#FAFAF8]`, subtle border
+   698→   698→- **Stacking:** Cards pile up on scroll, each revealing sequentially
+   699→   699→- **Skip button:** Fixed bottom-right, appears after 15% scroll, smooth scrolls to end
+   700→   700→- **Load more:** Shows 8 cards initially, adds 8 on click
+   701→   701→
+   702→   702→### Card Content (No Avatars)
+   703→   703→
+   704→   704→```
+   705→   705→┌─────────────────────────────────────┐
+   706→   706→│  "Quote from the client about their  │
+   707→   707→│   experience and results..."         │
+   708→   708→│                                      │
+   709→   709→│  ──────────────────────────────────  │
+   710→   710→│  Name, Role, Company        ★★★★★   │
+   711→   711→└─────────────────────────────────────┘
+   712→   712→```
+   713→   713→
+   714→   714→### Testimonials (36 Total)
+   715→   715→
+   716→   716→1. Marcus Chen — Phoenix Distribution Co — 5.0
+   717→   717→2. Sarah Mitchell — Bright Horizon Family Practice — 4.8
+   718→   718→3. David Rodriguez — Riverstone Properties — 4.9
+   719→   719→4. Jessica Thompson — Bloom & Grow Nursery — 4.7
+   720→   720→5. Michael Okafor — Atlas Freight Solutions — 5.0
+   721→   721→6. Rachel Kim — Skinlux Dermatology — 4.8
+   722→   722→7. James Whitfield — Whitfield & Associates Law — 4.9
+   723→   723→8. Amanda Foster — Peak Performance Fitness — 4.8
+   724→   724→9. Carlos Mendoza — Mendoza Construction Group — 4.7
+   725→   725→10. Lauren Chen — Paws & Claws Veterinary — 4.9
+   726→   726→11. Brian Callahan — Callahan Marketing Group — 4.8
+   727→   727→12. Priya Patel — Sweet Leaf Bakery — 5.0
+   728→   728→13. Tyler Brooks — Brooks Property Management — 4.9
+   729→   729→14. Stephanie Nguyen — Lumina Tech Solutions — 4.8
+   730→   730→15. Robert Harris — Harris Manufacturing — 4.7
+   731→   731→16. Emily Watson — Crestwood Academy — 4.9
+   732→   732→17. Marcus Johnson — Urban Plate Restaurant Group — 4.8
+   733→   733→18. Dana Sullivan — Sullivan Insurance Agency — 4.7
+   734→   734→19. Alex Rivera — Rivera Creative Studio — 5.0
+   735→   735→20. Megan O'Brien — Green Valley Landscaping — 4.8
+   736→   736→21. Kevin Tran — Tran Pharmacy Group — 4.9
+   737→   737→22. Lisa Campbell — Campbell Consulting — 4.8
+   738→   738→23. Thomas Reed — Reed & Sons Logistics — 4.9
+   739→   739→24. Nicole Adams — Adams Medical Group — 4.7
+   740→   740→25. Victor Morales — Coastal Hotels & Resorts — 5.0
+   741→   741→26. Angela Park — NovaTech Solutions — 4.8
+   742→   742→27. Derek Washington — Washington Transportation — 4.9
+   743→   743→28. Samantha Brooks — Elevate Digital Agency — 4.8
+   744→   744→29. Ryan Chen — Pacific Rim Imports — 4.7
+   745→   745→30. Diana Foster — Foster Family Dentistry — 5.0
+   746→   746→31. Marcus Williams — Summit Construction Group — 4.9
+   747→   747→32. Olivia Martinez — Sunshine Pediatric Care — 4.8
+   748→   748→33. Nathan Brooks — Meridian Financial Services — 4.7
+   749→   749→34. Isabella Nguyen — Bloom Beauty Co — 5.0
+   750→   750→35. Christopher Lee — Pacific Northwest Brewing — 4.9
+   751→   751→36. Patricia Adams — Adams & Partners Law Firm — 4.8
+   752→   752→
+   753→   753→---
+   754→   754→
+   755→   755→## 5.9 Section 8: CTA Banner
+   756→   756→
+   757→   757→### Layout
+   758→   758→
+   759→   759→```
+   760→   760→┌──────────────────────────────────────────────────────────────┐
+   761→   761→│                                                              │
+   762→   762→│         Done Losing Hours to Busywork?                       │
+   763→   763→│                                                              │
+   764→   764→│    Tell us what's slowing you down. We'll map out how        │
+   765→   765→│    automation can fix it — and show you exactly what         │
+   766→   766→│    the system would look like.                               │
+   767→   767→│                                                              │
+   768→   768→│              [ Get Started Today → ]                         │
+   769→   769→│                                                              │
+   770→   770→│         Free consultation. No commitment.                    │
+   771→   771→│         Response within 24 hours.                            │
+   772→   772→│                                                              │
+   773→   773→└──────────────────────────────────────────────────────────────┘
+   774→   774→```
+   775→   775→
+   776→   776→### Design
+   777→   777→
+   778→   778→- **Background:** Primary (white + circuitry)
+   779→   779→- **Unique reveal:** Content elements enter with different animations:
+   780→   780→  - Headline: Scale up from 0.9 → 1.0
+   781→   781→  - Body: Slide up with blur-to-clear
+   782→   782→  - CTA: Bounce in from bottom
+   783→   783→  - Subtext: Fade in last
+   784→   784→- **CTA button:** Subtle continuous pulse (`scale 1.0 → 1.02`)
+   785→   785→
+   786→   786→---
+   787→   787→
+   788→   788→# 6. ABOUT PAGE
+   789→   789→
+   790→   790→## 6.1 Page Structure
+   791→   791→
+   792→   792→| # | Section | Content | Background |
+   793→   793→|---|---------|---------|------------|
+   794→   794→| 1 | Hero | Company name + mission tagline | Primary |
+   795→   795→| 2 | Origin Story | Why ODL exists | Primary |
+   796→   796→| 3 | Core Values | 4 values with icons | Primary |
+   797→   797→| 4 | Vision | Where ODL is headed | Primary |
+   798→   798→| 5 | CTA | "Work With Us" | Primary |
+   799→   799→
+   800→   800→## 6.2 Expressive Image
+   801→   801→
+   802→   802→**Location:** `public/images/expressive/team-collaboration.jpg`
+   803→   803→**Search:** "diverse team working modern office", "teamwork collaboration"
+   804→   804→**Placement:** Between Origin Story and Core Values sections
+   805→   805→
+   806→   806→---
+   807→   807→
+   808→   808→# 7. SERVICES PAGE
+   809→   809→
+   810→   810→## 7.1 Page Structure
+   811→   811→
+   812→   812→| # | Section | Content | Background |
+   813→   813→|---|---------|---------|------------|
+   814→   814→| 1 | Hero | "What We Build (And Why It Matters)" | Primary |
+   815→   815→| 2 | Service 1 | Workflow Automation | Primary |
+   816→   816→| 3 | Service 2 | Intelligent Agents | Primary |
+   817→   817→| 4 | Service 3 | Smart Assistants | Primary |
+   818→   818→| 5 | Service 4 | Business Intelligence | Primary |
+   819→   819→| 6 | Service 5 | Custom Solutions | Primary |
+   820→   820→| 7 | Secondary | Web Dev, UI/UX, Digital Products | Primary |
+   821→   821→| 8 | CTA | "Let's Talk About What You Need" | Primary |
+   822→   822→
+   823→   823→## 7.2 Service Detail Pattern
+   824→   824→
+   825→   825→Each service section includes:
+   826→   826→- Title and description
+   827→   827→- Feature cards (3 per service)
+   828→   828→- Tool badges
+   829→   829→- CTA button
+   830→   830→- **Image:** From `public/images/services/` (5 images total, one per main service)
+   831→   831→
+   832→   832→---
+   833→   833→
+   834→   834→# 8. TESTIMONIALS PAGE
+   835→   835→
+   836→   836→## 8.1 Page Structure
+   837→   837→
+   838→   838→| # | Section | Content | Background |
+   839→   839→|---|---------|---------|------------|
+   840→   840→| 1 | Hero | "What Our Clients Say" | Testimonials (#FAFAF8) |
+   841→   841→| 2 | Overall Rating | 4.8/5 stars aggregate | Testimonials |
+   842→   842→| 3 | Testimonial Stack | 36 cards (scroll-stacking) | Testimonials |
+   843→   843→| 4 | CTA | "Start Your Success Story" | Testimonials |
+   844→   844→
+   845→   845→---
+   846→   846→
+   847→   847→# 9. GET STARTED / CONTACT PAGE
+   848→   848→
+   849→   849→## 9.1 Page Structure
+   850→   850→
+   851→   851→| # | Section | Content | Background |
+   852→   852→|---|---------|---------|------------|
+   853→   853→| 1 | Hero | "Let's Talk About What You Need" | Primary |
+   854→   854→| 2 | Form | Full contact/lead form | Primary |
+   855→   855→| 3 | Trust Signals | Response time, privacy | Primary |
+   856→   856→| 4 | Alternative Contact | Email, social links | Primary |
+   857→   857→
+   858→   858→## 9.2 Form Fields
+   859→   859→
+   860→   860→| Field | Type | Required |
+   861→   861→|-------|------|----------|
+   862→   862→| Full Name | text | ✅ |
+   863→   863→| Email Address | email | ✅ |
+   864→   864→| Phone Number | tel | ✅ |
+   865→   865→| Company Name | text | ❌ |
+   866→   866→| Service Interest | select | ✅ |
+   867→   867→| Budget Range | select | ❌ |
+   868→   868→| Tell Us About Your Project | textarea | ❌ |
+   869→   869→| WhatsApp checkbox | checkbox | ❌ |
+   870→   870→
+   871→   871→### Budget Range Options
+   872→   872→
+   873→   873→- Under $1,000
+   874→   874→- $1,000 – $5,000
+   875→   875→- $5,000 – $10,000
+   876→   876→- $10,000 – $15,000
+   877→   877→- Let's discuss
+   878→   878→
+   879→   879→## 9.3 Expressive Image
+   880→   880→
+   881→   881→**Location:** `public/images/expressive/contact-visual.jpg`
+   882→   882→**Search:** "communication network abstract", "connection concept"
+   883→   883→**Placement:** Alongside form (desktop), above form (mobile)
+   884→   884→
+   885→   885→---
+   886→   886→
+   887→   887→# 10. IMAGE & VIDEO ASSETS
+   888→   888→
+   889→   889→## 10.1 Image Strategy
+   890→   890→
+   891→   891→**All images downloaded from Pinterest — no AI generation required.**
+   892→   892→
+   893→   893→### Hero Images (20)
+   894→   894→
+   895→   895→**Location:** `public/images/hero/`
+   896→   896→
+   897→   897→| # | Filename | Pinterest Search |
+   898→   898→|---|----------|-----------------|
+   899→   899→| 1 | workflow-nodes.jpg | "abstract technology nodes connected" |
+   900→   900→| 2 | neural-network.jpg | "neural network visualization dark" |
+   901→   901→| 3 | data-flow.jpg | "data flow visualization" |
+   902→   902→| 4 | system-integration.jpg | "system integration diagram" |
+   903→   903→| 5 | predictive-analytics.jpg | "analytics graph abstract dark" |
+   904→   904→| 6 | agent-logic.jpg | "decision tree abstract" |
+   905→   905→| 7 | process-mining.jpg | "process flow diagram" |
+   906→   906→| 8 | api-mesh.jpg | "API network mesh" |
+   907→   907→| 9 | decision-tree.jpg | "branching paths abstract" |
+   908→   908→| 10 | real-time-sync.jpg | "synchronization abstract" |
+   909→   909→| 11 | automation-grid.jpg | "grid pattern technology" |
+   910→   910→| 12 | smart-assistants.jpg | "floating UI elements dark" |
+   911→   911→| 13 | cloud-infra.jpg | "cloud infrastructure abstract" |
+   912→   912→| 14 | security-layer.jpg | "security shield abstract" |
+   913→   913→| 15 | scaling-matrix.jpg | "expanding grid pattern" |
+   914→   914→| 16 | client-portal.jpg | "dashboard cards floating" |
+   915→   915→| 17 | dashboard-ui.jpg | "minimal dashboard dark" |
+   916→   916→| 18 | report-engine.jpg | "document automation abstract" |
+   917→   917→| 19 | notification-system.jpg | "notification bells abstract" |
+   918→   918→| 20 | deployment-pipe.jpg | "pipeline stages abstract" |
+   919→   919→
+   920→   920→### Service Images (5)
+   921→   921→
+   922→   922→**Location:** `public/images/services/`
+   923→   923→
+   924→   924→| # | Filename | Pinterest Search |
+   925→   925→|---|----------|-----------------|
+   926→   926→| 1 | workflow-automation.jpg | "workflow diagram minimal white" |
+   927→   927→| 2 | intelligent-agents.jpg | "neural network white background" |
+   928→   928→| 3 | smart-assistants.jpg | "dashboard elements white" |
+   929→   929→| 4 | business-intelligence.jpg | "charts graphs minimal white" |
+   930→   930→| 5 | custom-solutions.jpg | "code blocks abstract white" |
+   931→   931→
+   932→   932→### Expressive Images (8)
+   933→   933→
+   934→   934→**Location:** `public/images/expressive/`
+   935→   935→
+   936→   936→| # | Filename | Section | Pinterest Search |
+   937→   937→|---|----------|---------|-----------------|
+   938→   938→| 1 | automation-hero.jpg | Hero Background | "futuristic automation city" |
+   939→   939→| 2 | team-collaboration.jpg | About | "diverse team working modern office" |
+   940→   940→| 3 | business-growth.jpg | Problem/Solution | "business growth abstract" |
+   941→   941→| 4 | technology-abstract.jpg | CTA | "digital transformation art" |
+   942→   942→| 5 | automation-process.jpg | How It Works | "workflow process isometric" |
+   943→   943→| 6 | client-success.jpg | Testimonials | "success celebration abstract" |
+   944→   944→| 7 | contact-visual.jpg | Get Started | "communication network abstract" |
+   945→   945→| 8 | orlando-skyline.jpg | Footer/About | "Orlando skyline night" |
+   946→   946→
+   947→   947→## 10.2 Video Assets (AI Generate)
+   948→   948→
+   949→   949→**Location:** `public/videos/`
+   950→   950→
+   951→   951→| # | Filename | Section | Description | Tool |
+   952→   952→|---|----------|---------|-------------|------|
+   953→   953→| 1 | hero-loop.mp4 | Hero | 5s loop: data flowing through connected nodes, dark bg, subtle glow | Runway ML, Pika Labs |
+   954→   954→| 2 | service-reveal.mp4 | Services | 3s: workflow building itself, nodes appearing | After Effects, Rive |
+   955→   955→| 3 | success-moment.mp4 | CTA | 2s: abstract confetti burst | Lottie, Rive |
+   956→   956→
+   957→   957→**Runway/Pika Prompt:**
+   958→   958→> "Abstract dark technology background, glowing white nodes connecting in a network, data flowing between points, smooth animation, minimalist, no text, 4K, cinematic"
+   959→   959→
+   960→   960→## 10.3 File Structure
+   961→   961→
+   962→   962→```
+   963→   963→public/
+   964→   964→├── images/
+   965→   965→│   ├── hero/           (20 images)
+   966→   966→│   ├── services/       (5 images)
+   967→   967→│   ├── expressive/     (8 images)
+   968→   968→│   └── logo-white.png
+   969→   969→└── videos/             (3 videos, optional)
+   970→   970→```
+   971→   971→
+   972→   972→---
+   973→   973→
+   974→   974→# 11. ANIMATION SYSTEM
+   975→   975→
+   976→   976→## 11.1 Architecture
+   977→   977→
+   978→   978→| Layer | Technology | Used For |
+   979→   979→|-------|-----------|----------|
+   980→   980→| **Canvas layer** | CircuitryBackground + Lenis | Hero interactive background |
+   981→   981→| **Component layer** | `motion` (framer-motion) | All sections — scroll reveals, card animations, transitions |
+   982→   982→
+   983→   983→## 11.2 Unique Animation Per Section
+   984→   984→
+   985→   985→**Every section has a distinct animation — no repeating patterns:**
+   986→   986→
+   987→   987→| Section | Animation |
+   988→   988→|---------|-----------|
+   989→   989→| Hero | Card morph (scatter → circle → arc) + mouse parallax |
+   990→   990→| News Strip | Continuous horizontal marquee |
+   991→   991→| Trust Bar | Liquid glass overlay + number counters |
+   992→   992→| Services | 3D card tilt + frosted glass hover |
+   993→   993→| How It Works | Vertical zigzag timeline with progressive reveal |
+   994→   994→| Problem/Solution | Overlay revelation (solution slides over problem) |
+   995→   995→| Testimonials | Stacking cards with scroll-driven pile |
+   996→   996→| CTA | Multi-element staggered entrance |
+   997→   997→| Footer | Standard fade-in |
+   998→   998→
+   999→   999→## 11.3 Easing Tokens
+  1000→  1000→
+  1001→  1001→```css
+  1002→  1002→:root {
+  1003→  1003→  --ease-premium: cubic-bezier(0.32, 0.72, 0, 1);
+  1004→  1004→  --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
+  1005→  1005→  --ease-sharp: cubic-bezier(0.5, 0, 0.75, 0);
+  1006→  1006→}
+  1007→  1007→```
+  1008→  1008→
+  1009→  1009→## 11.4 Performance Rules
+  1010→  1010→
+  1011→  1011→- Animate only `transform` and `opacity`
+  1012→  1012→- `will-change: transform` only on actively animating elements
+  1013→  1013→- Canvas: DPR-aware sizing, passive listeners, RAF-guarded updates
+  1014→  1014→- `prefers-reduced-motion: reduce` → disable all animations
+  1015→  1015→
+  1016→  1016→---
+  1017→  1017→
+  1018→  1018→# 12. SEO & LLMO OPTIMIZATION
+  1019→  1019→
+  1020→  1020→## 12.1 Meta Tags (Per Page)
+  1021→  1021→
+  1022→  1022→### Homepage
+  1023→  1023→
+  1024→  1024→```html
+  1025→  1025→<title>Origin Dev Labs | Automation Systems That Work While You Sleep | Orlando, FL</title>
+  1026→  1026→<meta name="description" content="Origin Dev Labs builds automation systems, smart agents, and custom solutions that save businesses time and money. Based in Orlando, FL. Free consultation." />
+  1027→  1027→```
+  1028→  1028→
+  1029→  1029→### About Page
+  1030→  1030→
+  1031→  1031→```html
+  1032→  1032→<title>About Origin Dev Labs | Our Story & Mission | Orlando, FL</title>
+  1033→  1033→<meta name="description" content="Learn about Origin Dev Labs — our mission to make automation practical for every business, our core values, and where we're headed." />
+  1034→  1034→```
+  1035→  1035→
+  1036→  1036→### Services Page
+  1037→  1037→
+  1038→  1038→```html
+  1039→  1039→<title>Services | Workflow Automation, Smart Agents & Custom Solutions | Origin Dev Labs</title>
+  1040→  1040→<meta name="description" content="Workflow automation, intelligent agents, smart assistants, business intelligence, and custom solutions. See how Origin Dev Labs can automate your operations." />
+  1041→  1041→```
+  1042→  1042→
+  1043→  1043→### Testimonials Page
+  1044→  1044→
+  1045→  1045→```html
+  1046→  1046→<title>Client Stories | Origin Dev Labs</title>
+  1047→  1047→<meta name="description" content="See what our clients say about Origin Dev Labs. 4.8/5 rating from 50+ automation projects delivered." />
+  1048→  1048→```
+  1049→  1049→
+  1050→  1050→### Get Started Page
+  1051→  1051→
+  1052→  1052→```html
+  1053→  1053→<title>Get Started | Free Automation Consultation | Origin Dev Labs | Orlando, FL</title>
+  1054→  1054→<meta name="description" content="Ready to automate your business? Tell us about your project and get a free consultation within 24 hours." />
+  1055→  1055→```
+  1056→  1056→
+  1057→  1057→---
+  1058→  1058→
+  1059→  1059→# 13. RESPONSIVE DESIGN
+  1060→  1060→
+  1061→  1061→## 13.1 Breakpoints
+  1062→  1062→
+  1063→  1063→| Name | Width |
+  1064→  1064→|------|-------|
+  1065→  1065→| Mobile | < 768px |
+  1066→  1066→| Desktop | ≥ 768px |
+  1067→  1067→
+  1068→  1068→## 13.2 Universal Mobile Rules
+  1069→  1069→
+  1070→  1070→- All asymmetric layouts fall back to `w-full`, `px-4`, `py-8` below 768px
+  1071→  1071→- Use `min-h-[100dvh]` instead of `h-screen` (iOS Safari safe)
+  1072→  1072→- Remove all rotations and negative-margin overlaps below 768px
+  1073→  1073→- Minimum touch target: 44×44px
+  1074→  1074→- Minimum body text: 16px
+  1075→  1075→
+  1076→  1076→## 13.3 Section Mobile Adaptations
+  1077→  1077→
+  1078→  1078→| Section | Desktop | Mobile |
+  1079→  1079→|---------|---------|--------|
+  1080→  1080→| Hero | Full arc with cards | Stacked layout, reduced card count |
+  1081→  1081→| Trust Bar | 4-column glass panel | 2×2 grid |
+  1082→  1082→| Services | 3-column grid | Single column stack |
+  1083→  1083→| How It Works | Zigzag timeline | Linear vertical |
+  1084→  1084→| Problem/Solution | Side-by-side overlay | Stacked vertically |
+  1085→  1085→| Testimonials | Stacking cards | Swipeable stack |
+  1086→  1086→| Footer | 4-column | Single column |
+  1087→  1087→
+  1088→  1088→---
+  1089→  1089→
+  1090→  1090→# 14. COPY GUIDELINES & VOICE
+  1091→  1091→
+  1092→  1092→## 14.1 Banned Words
+  1093→  1093→
+  1094→  1094→| Banned | Why | Use Instead |
+  1095→  1095→|--------|-----|-------------|
+  1096→  1096→| AI | Overused | "intelligent", "smart", "powered" |
+  1097→  1097→| Chatbot | Feels cheap | "assistant", "agent" |
+  1098→  1098→| Disruptive | Cliché | "transformative", "effective" |
+  1099→  1099→| Synergy | Corporate jargon | "working together" |
+  1100→  1100→| Cutting-edge | Cliché | "modern", "proven" |
+  1101→  1101→| Innovative | Cliché | "smart", "purpose-built" |
+  1102→  1102→| Seamless | AI crutch | "smooth", "reliable" |
+  1103→  1103→| Empower | Overused | "help", "enable" |
+  1104→  1104→| Transform | Overused | "improve", "upgrade" |
+  1105→  1105→| Delve | AI marker | "explore", "examine" |
+  1106→  1106→| Robust | Overused | "strong", "solid" |
+  1107→  1107→| Streamline | AI marker | "simplify", "speed up" |
+  1108→  1108→
+  1109→  1109→## 14.2 Tone of Voice
+  1110→  1110→
+  1111→  1111→| Attribute | Description |
+  1112→  1112→|-----------|-------------|
+  1113→  1113→| **Professional** | Confident without being stiff |
+  1114→  1114→| **Warm** | Approachable, human, not corporate |
+  1115→  1115→| **Results-focused** | Every sentence connects to outcomes |
+  1116→  1116→| **Clear** | No jargon, no fluff |
+  1117→  1117→| **Honest** | We don't oversell |
+  1118→  1118→
+  1119→  1119→## 14.3 Writing Formula
+  1120→  1120→
+  1121→  1121→```
+  1122→  1122→[Problem] → [Solution] → [Outcome]
+  1123→  1123→```
+  1124→  1124→
+  1125→  1125→---
+  1126→  1126→
+  1127→  1127→# 15. TECH STACK & DEPENDENCIES
+  1128→  1128→
+  1129→  1129→## 15.1 Core Stack
+  1130→  1130→
+  1131→  1131→| Technology | Version | Purpose |
+  1132→  1132→|------------|---------|---------|
+  1133→  1133→| Next.js | 16.2.2 | React framework |
+  1134→  1134→| React | 19.2.4 | UI library |
+  1135→  1135→| TypeScript | 5.x | Type safety |
+  1136→  1136→| Tailwind CSS | v4 | Styling |
+  1137→  1137→| motion | 12.38.0 | Animations |
+  1138→  1138→| Lenis | 1.3.21 | Smooth scroll |
+  1139→  1139→
+  1140→  1140→## 15.2 UI & Icons
+  1141→  1141→
+  1142→  1142→| Library | Purpose |
+  1143→  1143→|---------|---------|
+  1144→  1144→| lucide-react | Icon system |
+  1145→  1145→| clsx | Conditional classes |
+  1146→  1146→| tailwind-merge | Tailwind class merging |
+  1147→  1147→| class-variance-authority | Component variants |
+  1148→  1148→
+  1149→  1149→## 15.3 Forms & Validation
+  1150→  1150→
+  1151→  1151→| Library | Purpose |
+  1152→  1152→|---------|---------|
+  1153→  1153→| React Hook Form | Form state |
+  1154→  1154→| Zod | Schema validation |
+  1155→  1155→
+  1156→  1156→## 15.4 Database & Backend
+  1157→  1157→
+  1158→  1158→| Technology | Purpose |
+  1159→  1159→|------------|---------|
+  1160→  1160→| Supabase | PostgreSQL, auth, Edge Functions |
+  1161→  1161→| @supabase/supabase-js | Client |
+  1162→  1162→| @supabase/ssr | Server-side |
+  1163→  1163→
+  1164→  1164→## 15.5 Fonts
+  1165→  1165→
+  1166→  1166→| Font | Source | Usage |
+  1167→  1167→|------|--------|-------|
+  1168→  1168→| Space Grotesk | Google Fonts | Headings |
+  1169→  1169→| Plus Jakarta Sans | Google Fonts | Body |
+  1170→  1170→| JetBrains Mono | Google Fonts | Code, metrics |
+  1171→  1171→
+  1172→  1172→---
+  1173→  1173→
+  1174→  1174→# APPENDIX A: COMPONENT FILES
+  1175→  1175→
+  1176→  1176→| Component | File | Status |
+  1177→  1177→|-----------|------|--------|
+  1178→  1178→| Hero Section | `HERO_SECTION.tsx` | ✅ Complete |
+  1179→  1179→| Services Section | `SERVICES_SECTION.tsx` | ✅ Complete |
+  1180→  1180→| Testimonials Section | `TESTIMONIALS_SECTION.tsx` | ✅ Complete |
+  1181→  1181→| Footer Section | `FOOTER_SECTION.tsx` | ✅ Complete |
+  1182→  1182→
+  1183→  1183→---
+  1184→  1184→
+  1185→  1185→*This design file is the single source of truth for the Origin Dev Labs website build. Version 2.0 incorporates all design revisions including updated backgrounds, unique animations per section, Pinterest-sourced imagery, and expanded testimonial deck.*
+  1186→  1186→
