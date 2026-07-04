@@ -243,7 +243,7 @@ const IMAGES = [
     { src: "/images/hero/decision-tree.jpg", label: "Decision Trees" },
     { src: "/images/hero/real-time-sync.jpg", label: "Real-Time Sync" },
     { src: "/images/hero/automation-grid.jpg", label: "Automation Grid" },
-    { src: "/images/hero/智能助手.jpg", label: "Smart Assistants" },
+    { src: "/images/hero/smart-assistants.jpg", label: "Smart Assistants" },
     { src: "/images/hero/cloud-infra.jpg", label: "Cloud Infrastructure" },
     { src: "/images/hero/security-layer.jpg", label: "Security Layer" },
     { src: "/images/hero/scaling-matrix.jpg", label: "Scaling Matrix" },

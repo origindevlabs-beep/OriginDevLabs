@@ -28,3 +28,23 @@ Stage Summary:
 - Budget range: $500–$15,000 referenced in design
 - Lint passes clean, no console errors
 - All images generated and placed in correct public/ directories
+
+---
+Task ID: 2
+Agent: Main Agent
+Task: Re-load workspace from tar, fix broken imports, verify site renders
+
+Work Log:
+- Extracted workspace-e9a57715-f191-4f04-8e35-2fc92792edd2.tar
+- Found `motion` package was not properly installed (motion/react subpath missing)
+- Ran `bun add motion@latest` to reinstall — motion@12.42.2 now works
+- Fixed broken hero image path: `智能助手.jpg` → `smart-assistants.jpg`
+- Restarted dev server, confirmed HTTP 200 on /
+- Verified via agent-browser + VLM: Hero (circular card arc), Services (cards), Testimonials, Footer all render correctly
+- Lint passes clean
+
+Stage Summary:
+- Site is fully operational on port 3000
+- All 9 homepage sections render as designed
+- Minor image path fix applied
+- Ready for next development phase
