@@ -154,6 +154,8 @@ export default function GetStartedPage() {
 
   const [state, setState] = useState<QuestionnaireState>(INITIAL_STATE)
   const [direction, setDirection] = useState(1)
+  const [submitting, setSubmitting] = useState(false)
+  const [submitError, setSubmitError] = useState("")
 
   const update = useCallback(<K extends keyof QuestionnaireState>(key: K, value: QuestionnaireState[K]) => {
     setState((prev) => ({ ...prev, [key]: value }))
@@ -163,6 +165,46 @@ export default function GetStartedPage() {
     setDirection(1)
     setState((prev) => ({ ...prev, step: Math.min(prev.step + 1, 7) as Step }))
   }, [])
+
+  const submitLead = useCallback(async () => {
+    setSubmitting(true)
+    setSubmitError("")
+    try {
+      const res = await fetch("/api/leads", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          firstName: state.firstName,
+          lastName: state.lastName,
+          email: state.email,
+          phone: state.phone,
+          company: state.company,
+          services: state.selectedServices,
+          painPoints: state.selectedPains.filter((p) => p !== "__custom__"),
+          painCustomText: state.painCustomText,
+          projectDetails: state.selectedProjects.filter((p) => p !== "__custom_project__"),
+          projectCustomText: state.projectCustomText,
+          contactPreferences: state.contactPrefs,
+          bestTime: state.bestTime,
+          budget: state.budget,
+          additionalNotes: state.additionalNotes,
+        }),
+      })
+      const data = await res.json()
+      if (!res.ok) {
+        setSubmitError(data.error || "Something went wrong. Please try again.")
+        setSubmitting(false)
+        return
+      }
+      // Success — advance to step 7
+      setDirection(1)
+      setState((prev) => ({ ...prev, step: 7 as Step }))
+    } catch {
+      setSubmitError("Network error. Please check your connection and try again.")
+    } finally {
+      setSubmitting(false)
+    }
+  }, [state])
 
   const goBack = useCallback(() => {
     setDirection(-1)
@@ -368,7 +410,9 @@ export default function GetStartedPage() {
                     state={state}
                     selectedBudget={selectedBudget}
                     goToStep={goToStep}
-                    goNext={goNext}
+                    goNext={submitLead}
+                    submitting={submitting}
+                    submitError={submitError}
                   />
                 )}
               </motion.div>
@@ -1000,11 +1044,15 @@ function Step6({
   selectedBudget,
   goToStep,
   goNext,
+  submitting,
+  submitError,
 }: {
   state: QuestionnaireState
   selectedBudget: { label: string; followUp: string } | undefined
   goToStep: (s: Step) => void
   goNext: () => void
+  submitting: boolean
+  submitError: string
 }) {
   const displayName = state.firstName || "friend"
 
@@ -1126,21 +1174,39 @@ function Step6({
       </div>
 
       {/* Navigation */}
-      <div className="flex items-center justify-center gap-4 mt-8">
-        <button
-          onClick={() => goToStep(5)}
-          className="text-gray-500 hover:text-gray-900 transition-colors text-sm"
-          suppressHydrationWarning
-        >
-          ← Go back
-        </button>
-        <button
-          onClick={goNext}
-          className="animate-cta-pulse bg-gray-900 text-white rounded-full px-8 py-3 text-sm font-medium hover:bg-gray-800 transition-colors cursor-pointer"
-          suppressHydrationWarning
-        >
-          Yeah, send it →
-        </button>
+      <div className="flex flex-col items-center gap-3 mt-8">
+        {submitError && (
+          <p className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg px-4 py-2 max-w-md text-center">
+            {submitError}
+          </p>
+        )}
+        <div className="flex items-center gap-4">
+          <button
+            onClick={() => goToStep(5)}
+            className="text-gray-500 hover:text-gray-900 transition-colors text-sm"
+            suppressHydrationWarning
+          >
+            ← Go back
+          </button>
+          <button
+            onClick={goNext}
+            disabled={submitting}
+            className="animate-cta-pulse bg-gray-900 text-white rounded-full px-8 py-3 text-sm font-medium hover:bg-gray-800 transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed disabled:animate-none flex items-center gap-2"
+            suppressHydrationWarning
+          >
+            {submitting ? (
+              <>
+                <svg className="w-4 h-4 animate-spin" viewBox="0 0 24 24" fill="none">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                </svg>
+                Sending…
+              </>
+            ) : (
+              "Yeah, send it →"
+            )}
+          </button>
+        </div>
       </div>
     </div>
   )

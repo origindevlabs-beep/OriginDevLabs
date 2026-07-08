@@ -54,13 +54,34 @@ const serviceLinks = [
 export default function FooterSection() {
   const [email, setEmail] = React.useState("")
   const [submitted, setSubmitted] = React.useState(false)
+  const [newsletterError, setNewsletterError] = React.useState("")
+  const [isSubmitting, setIsSubmitting] = React.useState(false)
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (email.trim()) {
+    const trimmed = email.trim()
+    if (!trimmed) return
+
+    setIsSubmitting(true)
+    setNewsletterError("")
+    try {
+      const res = await fetch("/api/newsletter", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: trimmed }),
+      })
+      const data = await res.json()
+      if (!res.ok) {
+        setNewsletterError(data.error || "Something went wrong.")
+        return
+      }
       setSubmitted(true)
       setEmail("")
-      setTimeout(() => setSubmitted(false), 3000)
+      setTimeout(() => setSubmitted(false), 4000)
+    } catch {
+      setNewsletterError("Network error. Please try again.")
+    } finally {
+      setIsSubmitting(false)
     }
   }
 
@@ -121,13 +142,31 @@ export default function FooterSection() {
                 />
                 <button
                   type="submit"
-                  className="absolute right-1.5 top-1/2 -translate-y-1/2 rounded-md bg-white/10 p-2 hover:bg-white/20 transition-colors"
+                  disabled={isSubmitting}
+                  className="absolute right-1.5 top-1/2 -translate-y-1/2 rounded-md bg-white/10 p-2 hover:bg-white/20 transition-colors disabled:opacity-50"
                   aria-label="Subscribe"
                   suppressHydrationWarning
                 >
-                  <Send className="h-4 w-4 text-white" />
+                  {isSubmitting ? (
+                    <svg className="h-4 w-4 text-white animate-spin" viewBox="0 0 24 24" fill="none">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                    </svg>
+                  ) : (
+                    <Send className="h-4 w-4 text-white" />
+                  )}
                 </button>
               </form>
+              {newsletterError && (
+                <motion.p
+                  initial={{ opacity: 0, y: -4 }}
+                  suppressHydrationWarning
+                  animate={{ opacity: 1, y: 0 }}
+                  className="mt-2 text-xs text-red-400"
+                >
+                  {newsletterError}
+                </motion.p>
+              )}
               {submitted && (
                 <motion.p
                   initial={{ opacity: 0, y: -4 }}

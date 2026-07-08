@@ -1,0 +1,1235 @@
+     1→"use client"
+     2→
+     3→import { useState, useRef, useMemo, useCallback } from "react"
+     4→import Link from "next/link"
+     5→import { motion, AnimatePresence } from "motion/react"
+     6→import { useMousePosition } from "@/lib/use-mouse-position"
+     7→import CircuitryBackground from "@/components/CircuitryBackground"
+     8→
+     9→// ─── Data ───────────────────────────────────────────────────────────────────
+    10→
+    11→const EASE = [0.23, 1, 0.32, 1] as const
+    12→
+    13→const SERVICE_PAIN_MAP: Record<string, { label: string; icon: string; painPoints: string[]; projectDetails: string[] }> = {
+    14→  "workflow-automation": {
+    15→    label: "Workflow Automation", icon: "⚙️",
+    16→    painPoints: ["Copy-pasting data between tools all day", "Same tasks repeated every week with no end in sight", "Manual approval processes bottlenecking everything", "Errors from human data entry costing me money", "Onboarding new employees takes forever"],
+    17→    projectDetails: ["I need to automate data entry between tools", "I want a system that handles approvals without me chasing people", "I need recurring tasks to run on autopilot", "I want to reduce errors in a specific process"],
+    18→  },
+    19→  "intelligent-agents": {
+    20→    label: "Intelligent Agents", icon: "🤖",
+    21→    painPoints: ["Customers waiting too long for responses", "Losing leads because nobody followed up in time", "Support team buried in repetitive questions", "Inconsistent quality across customer interactions", "Can't scale customer service without hiring more people"],
+    22→    projectDetails: ["I need something to handle customer support 24/7", "I want agents to qualify and follow up with leads", "I need an internal operations agent for my team", "I want to automate a specific workflow with smart decisions"],
+    23→  },
+    24→  "smart-assistants": {
+    25→    label: "Smart Assistants", icon: "🧠",
+    26→    painPoints: ["Email overload — important messages getting buried", "Scheduling wars — too many back-and-forths", "Documents piling up with no system to process them", "Admin work eating into billable hours", "Team spending more time organizing than working"],
+    27→    projectDetails: ["I need help managing my email and calendar", "I want document processing automated", "I need an assistant that keeps my team organized", "I want to automate a specific admin task"],
+    28→  },
+    29→  "business-intelligence": {
+    30→    label: "Business Intelligence", icon: "📊",
+    31→    painPoints: ["Flying blind — no idea what's actually happening in my business", "Building reports by hand every week or month", "Data scattered across 5 different tools", "Can't spot problems until they're expensive", "No real-time visibility into performance"],
+    32→    projectDetails: ["I need a real-time dashboard for my business", "I want automated reports delivered on a schedule", "I need to connect data from multiple tools into one view", "I want to track specific KPIs automatically"],
+    33→  },
+    34→  "custom-solutions": {
+    35→    label: "Custom Solutions", icon: "🛠️",
+    36→    painPoints: ["Off-the-shelf software doesn't fit how I actually work", "Patching together 4 tools to do what 1 should", "Need something specific that doesn't exist yet", "My current system is held together with duct tape", "Scaling is impossible with what I have now"],
+    37→    projectDetails: ["I need an internal tool built from scratch", "I want a customer-facing portal or app", "I need an API integration between systems", "I want to build something specific from the ground up"],
+    38→  },
+    39→  "web-development": {
+    40→    label: "Web Development", icon: "🌐",
+    41→    painPoints: ["My website doesn't represent who I am anymore", "Visitors come but don't convert into customers", "My site is slow, broken on mobile, or just ugly", "I need a site but my developer disappeared", "I'm embarrassed to send people to my website"],
+    42→    projectDetails: ["I need a brand new website built from scratch", "I need a landing page for a campaign or product", "I want to redesign my existing site", "I need an e-commerce store or booking system"],
+    43→  },
+    44→  "ui-ux-design": {
+    45→    label: "UI/UX Design", icon: "🎨",
+    46→    painPoints: ["My app looks outdated and unprofessional", "Users are confused and dropping off", "My team wastes time debating design decisions", "I need a design system but don't know where to start", "I want a mobile app that feels premium"],
+    47→    projectDetails: ["I need a full UI/UX redesign of my product", "I need wireframes and prototypes before building", "I want a design system for consistency", "I need a mobile app design that feels native"],
+    48→  },
+    49→  "digital-products": {
+    50→    label: "Digital Products", icon: "📱",
+    51→    painPoints: ["I have an idea but no technical co-founder", "I tried building it myself and it's a mess", "My current product is losing users to better alternatives", "I can't find developers who understand my vision", "I need to ship an MVP before my window closes"],
+    52→    projectDetails: ["I want to build a SaaS product from scratch", "I need help scoping and building an MVP", "I want to turn my process into a product others can buy", "I need a technical partner, not just a dev shop"],
+    53→  },
+    54→}
+    55→
+    56→const ALWAYS_PAIN = ["It's a mix of everything, honestly", "I just need someone who gets it"]
+    57→const ALWAYS_PROJECT = ["I'm not 100% sure yet — help me figure it out", "I need the full package — design, build, and deploy"]
+    58→
+    59→const BUDGET_OPTIONS = [
+    60→  { value: "under-1k", label: "Under $1,000", sub: "I need something simple", followUp: "We can work with that. Simple doesn't mean ineffective." },
+    61→  { value: "1k-5k", label: "$1,000 – $5,000", sub: "I want a real solution", followUp: "Solid range. We'll maximize every dollar." },
+    62→  { value: "5k-10k", label: "$5,000 – $10,000", sub: "I'm ready to invest properly", followUp: "Now we're building something real." },
+    63→  { value: "10k-15k", label: "$10,000 – $15,000", sub: "Let's do this right", followUp: "That budget unlocks serious systems." },
+    64→  { value: "15k+", label: "$15,000+", sub: "I want the best, not the cheapest", followUp: "World-class budget. Let's build something incredible." },
+    65→  { value: "dont-know", label: "I don't know yet", sub: "Help me scope it first", followUp: "No problem. We'll scope it first so you know exactly what you're paying for." },
+    66→  { value: "discuss", label: "Let's discuss", sub: "It depends on what you propose", followUp: "Smart. The right solution is worth more than a round number." },
+    67→]
+    68→
+    69→// ─── Types ──────────────────────────────────────────────────────────────────
+    70→
+    71→type Step = 1 | 2 | 3 | 4 | 5 | 6 | 7
+    72→
+    73→interface QuestionnaireState {
+    74→  step: Step
+    75→  selectedServices: string[]
+    76→  selectedPains: string[]
+    77→  painCustomText: string
+    78→  selectedProjects: string[]
+    79→  projectCustomText: string
+    80→  firstName: string
+    81→  lastName: string
+    82→  email: string
+    83→  phone: string
+    84→  company: string
+    85→  contactPrefs: string[]
+    86→  bestTime: string
+    87→  additionalNotes: string
+    88→  budget: string
+    89→}
+    90→
+    91→const INITIAL_STATE: QuestionnaireState = {
+    92→  step: 1,
+    93→  selectedServices: [],
+    94→  selectedPains: [],
+    95→  painCustomText: "",
+    96→  selectedProjects: [],
+    97→  projectCustomText: "",
+    98→  firstName: "",
+    99→  lastName: "",
+   100→  email: "",
+   101→  phone: "",
+   102→  company: "",
+   103→  contactPrefs: [],
+   104→  bestTime: "",
+   105→  additionalNotes: "",
+   106→  budget: "",
+   107→}
+   108→
+   109→// ─── Helpers ────────────────────────────────────────────────────────────────
+   110→
+   111→function getPainLimit(serviceCount: number): number {
+   112→  if (serviceCount === 1) return 2
+   113→  if (serviceCount === 2) return 3
+   114→  return 4
+   115→}
+   116→
+   117→function getAvailablePains(services: string[]): string[] {
+   118→  const pains = new Set<string>()
+   119→  for (const svc of services) {
+   120→    const entry = SERVICE_PAIN_MAP[svc]
+   121→    if (entry) entry.painPoints.forEach((p) => pains.add(p))
+   122→  }
+   123→  return [...pains]
+   124→}
+   125→
+   126→function getAvailableProjects(services: string[]): string[] {
+   127→  const projects = new Set<string>()
+   128→  for (const svc of services) {
+   129→    const entry = SERVICE_PAIN_MAP[svc]
+   130→    if (entry) entry.projectDetails.forEach((p) => projects.add(p))
+   131→  }
+   132→  return [...projects]
+   133→}
+   134→
+   135→// ─── Step Transition Wrapper ────────────────────────────────────────────────
+   136→
+   137→const STEP_VARIANTS = {
+   138→  enter: (dir: number) => ({
+   139→    x: dir > 0 ? 80 : -80,
+   140→    opacity: 0,
+   141→  }),
+   142→  center: { x: 0, opacity: 1 },
+   143→  exit: (dir: number) => ({
+   144→    x: dir > 0 ? -80 : 80,
+   145→    opacity: 0,
+   146→  }),
+   147→}
+   148→
+   149→// ─── Main Component ─────────────────────────────────────────────────────────
+   150→
+   151→export default function GetStartedPage() {
+   152→  const pageRef = useRef<HTMLDivElement>(null)
+   153→  const mousePosition = useMousePosition(pageRef)
+   154→
+   155→  const [state, setState] = useState<QuestionnaireState>(INITIAL_STATE)
+   156→  const [direction, setDirection] = useState(1)
+   157→
+   158→  const update = useCallback(<K extends keyof QuestionnaireState>(key: K, value: QuestionnaireState[K]) => {
+   159→    setState((prev) => ({ ...prev, [key]: value }))
+   160→  }, [])
+   161→
+   162→  const goNext = useCallback(() => {
+   163→    setDirection(1)
+   164→    setState((prev) => ({ ...prev, step: Math.min(prev.step + 1, 7) as Step }))
+   165→  }, [])
+   166→
+   167→  const goBack = useCallback(() => {
+   168→    setDirection(-1)
+   169→    setState((prev) => ({ ...prev, step: Math.max(prev.step - 1, 1) as Step }))
+   170→  }, [])
+   171→
+   172→  const goToStep = useCallback((step: Step) => {
+   173→    setDirection(step > state.step ? 1 : -1)
+   174→    setState((prev) => ({ ...prev, step }))
+   175→  }, [state.step])
+   176→
+   177→  const toggleService = useCallback((svc: string) => {
+   178→    setState((prev) => {
+   179→      const has = prev.selectedServices.includes(svc)
+   180→      const next = has
+   181→        ? prev.selectedServices.filter((s) => s !== svc)
+   182→        : [...prev.selectedServices, svc]
+   183→      // Reset downstream state
+   184→      return { ...prev, selectedServices: next, selectedPains: [], painCustomText: "", selectedProjects: [], projectCustomText: "" }
+   185→    })
+   186→  }, [])
+   187→
+   188→  const togglePain = useCallback((pain: string) => {
+   189→    setState((prev) => {
+   190→      if (pain === "__custom__") {
+   191→        const has = prev.selectedPains.includes("__custom__")
+   192→        if (!has && prev.selectedPains.length >= getPainLimit(prev.selectedServices.length)) return prev
+   193→        const next = has
+   194→          ? prev.selectedPains.filter((p) => p !== "__custom__")
+   195→          : [...prev.selectedPains, "__custom__"]
+   196→        return { ...prev, selectedPains: next }
+   197→      }
+   198→      const has = prev.selectedPains.includes(pain)
+   199→      if (!has && prev.selectedPains.length >= getPainLimit(prev.selectedServices.length)) return prev
+   200→      const next = has
+   201→        ? prev.selectedPains.filter((p) => p !== pain)
+   202→        : [...prev.selectedPains, pain]
+   203→      return { ...prev, selectedPains: next }
+   204→    })
+   205→  }, [])
+   206→
+   207→  const toggleProject = useCallback((proj: string) => {
+   208→    setState((prev) => {
+   209→      if (proj === "__custom_project__") {
+   210→        const has = prev.selectedProjects.includes("__custom_project__")
+   211→        if (!has && prev.selectedProjects.length >= 3) return prev
+   212→        const next = has
+   213→          ? prev.selectedProjects.filter((p) => p !== "__custom_project__")
+   214→          : [...prev.selectedProjects, "__custom_project__"]
+   215→        return { ...prev, selectedProjects: next }
+   216→      }
+   217→      const has = prev.selectedProjects.includes(proj)
+   218→      if (!has && prev.selectedProjects.length >= 3) return prev
+   219→      const next = has
+   220→        ? prev.selectedProjects.filter((p) => p !== proj)
+   221→        : [...prev.selectedProjects, proj]
+   222→      return { ...prev, selectedProjects: next }
+   223→    })
+   224→  }, [])
+   225→
+   226→  const toggleContactPref = useCallback((pref: string) => {
+   227→    setState((prev) => {
+   228→      const has = prev.contactPrefs.includes(pref)
+   229→      return { ...prev, contactPrefs: has ? prev.contactPrefs.filter((p) => p !== pref) : [...prev.contactPrefs, pref] }
+   230→    })
+   231→  }, [])
+   232→
+   233→  // Derived values
+   234→  const painLimit = getPainLimit(state.selectedServices.length)
+   235→  const availablePains = useMemo(() => getAvailablePains(state.selectedServices), [state.selectedServices])
+   236→  const availableProjects = useMemo(() => getAvailableProjects(state.selectedServices), [state.selectedServices])
+   237→  const selectedBudget = BUDGET_OPTIONS.find((b) => b.value === state.budget)
+   238→  const totalSteps = 6
+   239→  const progressPct = state.step <= 6 ? (state.step / totalSteps) * 100 : 100
+   240→
+   241→  // Validation helpers
+   242→  const canStep1 = state.selectedServices.length >= 1
+   243→  const canStep2 = state.selectedPains.length >= 1
+   244→  const canStep3 = state.selectedProjects.length >= 1
+   245→  const canStep4 = state.firstName.trim() !== "" && state.email.trim() !== "" && state.contactPrefs.length >= 1
+   246→  const canStep5 = state.budget !== ""
+   247→
+   248→  const canProceed = state.step === 1 ? canStep1
+   249→    : state.step === 2 ? canStep2
+   250→    : state.step === 3 ? canStep3
+   251→    : state.step === 4 ? canStep4
+   252→    : state.step === 5 ? canStep5
+   253→    : true
+   254→
+   255→  // ─── Render ─────────────────────────────────────────────────────────────────
+   256→
+   257→  return (
+   258→    <main ref={pageRef} className="relative min-h-screen bg-white">
+   259→      {/* Step 7 uses its own dark background, steps 1-6 use circuitry */}
+   260→      {state.step <= 6 && (
+   261→        <CircuitryBackground mousePosition={mousePosition} />
+   262→      )}
+   263→
+   264→      {/* ── Progress Bar (steps 1-6 only) ── */}
+   265→      {state.step <= 6 && (
+   266→        <div className="fixed top-0 left-0 right-0 z-50 h-[2px] bg-gray-100">
+   267→          <motion.div
+   268→            className="h-full bg-[#111111]"
+   269→            initial={false}
+   270→            animate={{ width: `${progressPct}%` }}
+   271→            transition={{ duration: 0.4, ease: EASE }}
+   272→          />
+   273→        </div>
+   274→      )}
+   275→
+   276→      {/* ── Hero (compact, steps 1-6 only) ── */}
+   277→      {state.step <= 6 && (
+   278→        <section className="relative min-h-[40vh] flex items-center justify-center px-4 pt-8 pb-4">
+   279→          <div className="text-center max-w-3xl mx-auto relative z-10">
+   280→            <motion.span
+   281→              className="inline-block px-4 py-1.5 bg-gray-100 text-gray-600 text-xs font-medium tracking-wider uppercase rounded-full mb-6 border border-gray-200"
+   282→              initial={{ scale: 0.8, opacity: 0 }}
+   283→              animate={{ scale: 1, opacity: 1 }}
+   284→              transition={{ duration: 0.5, ease: EASE }}
+   285→            >
+   286→              Get Started
+   287→            </motion.span>
+   288→            <motion.h1
+   289→              className="text-4xl md:text-6xl font-bold tracking-tight leading-tight text-gray-900"
+   290→              style={{ fontFamily: "var(--font-space-grotesk)" }}
+   291→              initial={{ y: 30, opacity: 0 }}
+   292→              animate={{ y: 0, opacity: 1 }}
+   293→              transition={{ duration: 0.7, ease: EASE }}
+   294→            >
+   295→              Let&apos;s Build Something
+   296→            </motion.h1>
+   297→            <motion.p
+   298→              className="mt-6 text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed"
+   299→              initial={{ y: 20, opacity: 0 }}
+   300→              animate={{ y: 0, opacity: 1 }}
+   301→              transition={{ duration: 0.7, delay: 0.2, ease: EASE }}
+   302→            >
+   303→              A few quick questions so we can hit the ground running. Takes about 2 minutes.
+   304→            </motion.p>
+   305→          </div>
+   306→        </section>
+   307→      )}
+   308→
+   309→      {/* ── Step 7: Full dark receipt page ── */}
+   310→      {state.step === 7 && (
+   311→        <Step7 firstName={state.firstName} />
+   312→      )}
+   313→
+   314→      {/* ── Steps 1-6: Questionnaire Area ── */}
+   315→      {state.step <= 6 && (
+   316→        <section className="relative z-10 pb-32 md:pb-20">
+   317→          <div className="max-w-3xl mx-auto px-4">
+   318→            <AnimatePresence mode="wait" custom={direction}>
+   319→              <motion.div
+   320→                key={state.step}
+   321→                custom={direction}
+   322→                variants={STEP_VARIANTS}
+   323→                initial="enter"
+   324→                animate="center"
+   325→                exit="exit"
+   326→                transition={{ duration: 0.4, ease: EASE }}
+   327→              >
+   328→                {state.step === 1 && (
+   329→                  <Step1
+   330→                    selectedServices={state.selectedServices}
+   331→                    toggleService={toggleService}
+   332→                  />
+   333→                )}
+   334→                {state.step === 2 && (
+   335→                  <Step2
+   336→                    selectedPains={state.selectedPains}
+   337→                    painCustomText={state.painCustomText}
+   338→                    painLimit={painLimit}
+   339→                    availablePains={availablePains}
+   340→                    togglePain={togglePain}
+   341→                    updatePainCustom={(v) => update("painCustomText", v)}
+   342→                  />
+   343→                )}
+   344→                {state.step === 3 && (
+   345→                  <Step3
+   346→                    selectedProjects={state.selectedProjects}
+   347→                    projectCustomText={state.projectCustomText}
+   348→                    availableProjects={availableProjects}
+   349→                    toggleProject={toggleProject}
+   350→                    updateProjectCustom={(v) => update("projectCustomText", v)}
+   351→                  />
+   352→                )}
+   353→                {state.step === 4 && (
+   354→                  <Step4
+   355→                    state={state}
+   356→                    update={update}
+   357→                    toggleContactPref={toggleContactPref}
+   358→                  />
+   359→                )}
+   360→                {state.step === 5 && (
+   361→                  <Step5
+   362→                    budget={state.budget}
+   363→                    selectBudget={(v) => update("budget", v)}
+   364→                  />
+   365→                )}
+   366→                {state.step === 6 && (
+   367→                  <Step6
+   368→                    state={state}
+   369→                    selectedBudget={selectedBudget}
+   370→                    goToStep={goToStep}
+   371→                    goNext={goNext}
+   372→                  />
+   373→                )}
+   374→              </motion.div>
+   375→            </AnimatePresence>
+   376→          </div>
+   377→
+   378→          {/* ── Desktop Navigation (bottom) ── */}
+   379→          {state.step >= 1 && state.step <= 5 && (
+   380→            <div className="hidden md:flex items-center justify-between max-w-3xl mx-auto px-4 mt-8">
+   381→              <button
+   382→                onClick={goBack}
+   383→                className="text-gray-500 hover:text-gray-900 transition-colors text-sm"
+   384→                suppressHydrationWarning
+   385→              >
+   386→                ← Back
+   387→              </button>
+   388→              <button
+   389→                onClick={goNext}
+   390→                disabled={!canProceed}
+   391→                className={`animate-cta-pulse rounded-full px-8 py-3 text-sm font-medium transition-colors ${
+   392→                  canProceed
+   393→                    ? "bg-gray-900 text-white hover:bg-gray-800 cursor-pointer"
+   394→                    : "bg-gray-200 text-gray-400 cursor-not-allowed"
+   395→                }`}
+   396→                suppressHydrationWarning
+   397→              >
+   398→                Next →
+   399→              </button>
+   400→            </div>
+   401→          )}
+   402→
+   403→          {/* ── Mobile Navigation (fixed bottom bar) ── */}
+   404→          {state.step >= 1 && state.step <= 5 && (
+   405→            <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md border-t border-gray-200 px-4 py-3 flex items-center justify-between">
+   406→              <button
+   407→                onClick={goBack}
+   408→                className="text-gray-500 hover:text-gray-900 transition-colors text-sm py-2 px-4"
+   409→                suppressHydrationWarning
+   410→              >
+   411→                ← Back
+   412→              </button>
+   413→              <button
+   414→                onClick={goNext}
+   415→                disabled={!canProceed}
+   416→                className={`animate-cta-pulse rounded-full px-6 py-2.5 text-sm font-medium transition-colors ${
+   417→                  canProceed
+   418→                    ? "bg-gray-900 text-white hover:bg-gray-800 cursor-pointer"
+   419→                    : "bg-gray-200 text-gray-400 cursor-not-allowed"
+   420→                }`}
+   421→                suppressHydrationWarning
+   422→              >
+   423→                Next →
+   424→              </button>
+   425→            </div>
+   426→          )}
+   427→        </section>
+   428→      )}
+   429→    </main>
+   430→  )
+   431→}
+   432→
+   433→// ─── Step 1: What do you need help with? ───────────────────────────────────
+   434→
+   435→function Step1({
+   436→  selectedServices,
+   437→  toggleService,
+   438→}: {
+   439→  selectedServices: string[]
+   440→  toggleService: (s: string) => void
+   441→}) {
+   442→  return (
+   443→    <div>
+   444→      <h2
+   445→        className="text-2xl md:text-3xl font-bold text-gray-900 tracking-tight"
+   446→        style={{ fontFamily: "var(--font-space-grotesk)" }}
+   447→      >
+   448→        What do you need help with?
+   449→      </h2>
+   450→      <p className="text-gray-500 text-sm mt-2 mb-2">Pick as many as you like.</p>
+   451→      {selectedServices.length > 0 && (
+   452→        <motion.p
+   453→          initial={{ opacity: 0, y: 8 }}
+   454→          animate={{ opacity: 1, y: 0 }}
+   455→          className="text-gray-400 text-xs mb-4"
+   456→        >
+   457→          You picked {selectedServices.length} service{selectedServices.length !== 1 ? "s" : ""}
+   458→        </motion.p>
+   459→      )}
+   460→
+   461→      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-6">
+   462→        {Object.entries(SERVICE_PAIN_MAP).map(([key, svc]) => {
+   463→          const selected = selectedServices.includes(key)
+   464→          return (
+   465→            <motion.button
+   466→              key={key}
+   467→              onClick={() => toggleService(key)}
+   468→              className={`text-left px-6 py-4 rounded-xl border cursor-pointer transition-all duration-300 ${
+   469→                selected
+   470→                  ? "border-gray-900 bg-gray-50 shadow-sm"
+   471→                  : "bg-white border-gray-200 hover:border-gray-400 hover:shadow-md"
+   472→              }`}
+   473→              whileTap={{ scale: 0.97 }}
+   474→              suppressHydrationWarning
+   475→            >
+   476→              <div className="flex items-center justify-between">
+   477→                <div className="flex items-center gap-3">
+   478→                  <span className="text-xl">{svc.icon}</span>
+   479→                  <span className={`text-sm font-medium ${selected ? "text-gray-900" : "text-gray-700"}`}>
+   480→                    {svc.label}
+   481→                  </span>
+   482→                </div>
+   483→                {selected && (
+   484→                  <motion.span
+   485→                    initial={{ scale: 0 }}
+   486→                    animate={{ scale: 1 }}
+   487→                    transition={{ type: "spring", stiffness: 400, damping: 20 }}
+   488→                    className="text-gray-900 font-bold text-sm"
+   489→                  >
+   490→                    ✓
+   491→                  </motion.span>
+   492→                )}
+   493→              </div>
+   494→            </motion.button>
+   495→          )
+   496→        })}
+   497→      </div>
+   498→    </div>
+   499→  )
+   500→}
+   501→
+   502→// ─── Step 2: What's broken? ────────────────────────────────────────────────
+   503→
+   504→function Step2({
+   505→  selectedPains,
+   506→  painCustomText,
+   507→  painLimit,
+   508→  availablePains,
+   509→  togglePain,
+   510→  updatePainCustom,
+   511→}: {
+   512→  selectedPains: string[]
+   513→  painCustomText: string
+   514→  painLimit: number
+   515→  availablePains: string[]
+   516→  togglePain: (p: string) => void
+   517→  updatePainCustom: (v: string) => void
+   518→}) {
+   519→  const allPains = [...availablePains, ...ALWAYS_PAIN]
+   520→  const atLimit = selectedPains.length >= painLimit
+   521→  const hasCustom = selectedPains.includes("__custom__")
+   522→
+   523→  return (
+   524→    <div>
+   525→      <h2
+   526→        className="text-2xl md:text-3xl font-bold text-gray-900 tracking-tight"
+   527→        style={{ fontFamily: "var(--font-space-grotesk)" }}
+   528→      >
+   529→        What&apos;s broken?
+   530→      </h2>
+   531→      <p className="text-gray-500 text-sm mt-2 mb-2">
+   532→        Pick up to {painLimit} that resonate.
+   533→      </p>
+   534→
+   535→      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-6">
+   536→        {allPains.map((pain) => {
+   537→          const selected = selectedPains.includes(pain)
+   538→          return (
+   539→            <motion.button
+   540→              key={pain}
+   541→              onClick={() => togglePain(pain)}
+   542→              disabled={!selected && atLimit}
+   543→              className={`text-left px-6 py-4 rounded-xl border cursor-pointer transition-all duration-300 ${
+   544→                selected
+   545→                  ? "border-gray-900 bg-gray-50 shadow-sm"
+   546→                  : atLimit
+   547→                    ? "bg-white border-gray-100 text-gray-300 cursor-not-allowed"
+   548→                    : "bg-white border-gray-200 hover:border-gray-400 hover:shadow-md"
+   549→              }`}
+   550→              whileTap={atLimit && !selected ? {} : { scale: 0.97 }}
+   551→              suppressHydrationWarning
+   552→            >
+   553→              <div className="flex items-center justify-between">
+   554→                <span className={`text-sm ${selected ? "text-gray-900 font-medium" : atLimit ? "text-gray-300" : "text-gray-700"}`}>
+   555→                  {pain}
+   556→                </span>
+   557→                {selected && (
+   558→                  <motion.span
+   559→                    initial={{ scale: 0 }}
+   560→                    animate={{ scale: 1 }}
+   561→                    transition={{ type: "spring", stiffness: 400, damping: 20 }}
+   562→                    className="text-gray-900 font-bold text-sm shrink-0 ml-2"
+   563→                  >
+   564→                    ✓
+   565→                  </motion.span>
+   566→                )}
+   567→              </div>
+   568→            </motion.button>
+   569→          )
+   570→        })}
+   571→
+   572→        {/* Custom "Something else..." option */}
+   573→        <motion.button
+   574→          onClick={() => togglePain("__custom__")}
+   575→          disabled={!hasCustom && atLimit}
+   576→          className={`text-left px-6 py-4 rounded-xl border cursor-pointer transition-all duration-300 ${
+   577→            hasCustom
+   578→              ? "border-gray-900 bg-gray-50 shadow-sm"
+   579→              : atLimit
+   580→                ? "bg-white border-gray-100 text-gray-300 cursor-not-allowed"
+   581→                : "bg-white border-gray-200 hover:border-gray-400 hover:shadow-md"
+   582→          }`}
+   583→          whileTap={atLimit && !hasCustom ? {} : { scale: 0.97 }}
+   584→          suppressHydrationWarning
+   585→        >
+   586→          <div className="flex items-center justify-between">
+   587→            <span className={`text-sm italic ${hasCustom ? "text-gray-900 font-medium" : atLimit ? "text-gray-300" : "text-gray-500"}`}>
+   588→              Something else...
+   589→            </span>
+   590→            {hasCustom && (
+   591→              <motion.span
+   592→                initial={{ scale: 0 }}
+   593→                animate={{ scale: 1 }}
+   594→                transition={{ type: "spring", stiffness: 400, damping: 20 }}
+   595→                className="text-gray-900 font-bold text-sm"
+   596→              >
+   597→                ✓
+   598→              </motion.span>
+   599→            )}
+   600→          </div>
+   601→        </motion.button>
+   602→      </div>
+   603→
+   604→      {/* Custom textarea */}
+   605→      <AnimatePresence>
+   606→        {hasCustom && (
+   607→          <motion.div
+   608→            initial={{ height: 0, opacity: 0 }}
+   609→            animate={{ height: "auto", opacity: 1 }}
+   610→            exit={{ height: 0, opacity: 0 }}
+   611→            transition={{ duration: 0.3, ease: EASE }}
+   612→            className="overflow-hidden mt-3"
+   613→          >
+   614→            <textarea
+   615→              value={painCustomText}
+   616→              onChange={(e) => updatePainCustom(e.target.value)}
+   617→              placeholder="Tell us what's going on..."
+   618→              rows={3}
+   619→              className="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-3 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-900/10 focus:border-gray-900 transition-colors resize-none"
+   620→              suppressHydrationWarning
+   621→            />
+   622→          </motion.div>
+   623→        )}
+   624→      </AnimatePresence>
+   625→    </div>
+   626→  )
+   627→}
+   628→
+   629→// ─── Step 3: Tell me more about your project ───────────────────────────────
+   630→
+   631→function Step3({
+   632→  selectedProjects,
+   633→  projectCustomText,
+   634→  availableProjects,
+   635→  toggleProject,
+   636→  updateProjectCustom,
+   637→}: {
+   638→  selectedProjects: string[]
+   639→  projectCustomText: string
+   640→  availableProjects: string[]
+   641→  toggleProject: (p: string) => void
+   642→  updateProjectCustom: (v: string) => void
+   643→}) {
+   644→  const allProjects = [...availableProjects, ...ALWAYS_PROJECT]
+   645→  const atLimit = selectedProjects.length >= 3
+   646→  const hasCustom = selectedProjects.includes("__custom_project__")
+   647→
+   648→  return (
+   649→    <div>
+   650→      <h2
+   651→        className="text-2xl md:text-3xl font-bold text-gray-900 tracking-tight"
+   652→        style={{ fontFamily: "var(--font-space-grotesk)" }}
+   653→      >
+   654→        Tell me more about your project
+   655→      </h2>
+   656→      <p className="text-gray-500 text-sm mt-2 mb-2">
+   657→        Pick up to 3 that describe what you&apos;re looking for.
+   658→      </p>
+   659→
+   660→      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-6">
+   661→        {allProjects.map((proj) => {
+   662→          const selected = selectedProjects.includes(proj)
+   663→          return (
+   664→            <motion.button
+   665→              key={proj}
+   666→              onClick={() => toggleProject(proj)}
+   667→              disabled={!selected && atLimit}
+   668→              className={`text-left px-6 py-4 rounded-xl border cursor-pointer transition-all duration-300 ${
+   669→                selected
+   670→                  ? "border-gray-900 bg-gray-50 shadow-sm"
+   671→                  : atLimit
+   672→                    ? "bg-white border-gray-100 text-gray-300 cursor-not-allowed"
+   673→                    : "bg-white border-gray-200 hover:border-gray-400 hover:shadow-md"
+   674→              }`}
+   675→              whileTap={atLimit && !selected ? {} : { scale: 0.97 }}
+   676→              suppressHydrationWarning
+   677→            >
+   678→              <div className="flex items-center justify-between">
+   679→                <span className={`text-sm ${selected ? "text-gray-900 font-medium" : atLimit ? "text-gray-300" : "text-gray-700"}`}>
+   680→                  {proj}
+   681→                </span>
+   682→                {selected && (
+   683→                  <motion.span
+   684→                    initial={{ scale: 0 }}
+   685→                    animate={{ scale: 1 }}
+   686→                    transition={{ type: "spring", stiffness: 400, damping: 20 }}
+   687→                    className="text-gray-900 font-bold text-sm shrink-0 ml-2"
+   688→                  >
+   689→                    ✓
+   690→                  </motion.span>
+   691→                )}
+   692→              </div>
+   693→            </motion.button>
+   694→          )
+   695→        })}
+   696→
+   697→        {/* Custom option */}
+   698→        <motion.button
+   699→          onClick={() => toggleProject("__custom_project__")}
+   700→          disabled={!hasCustom && atLimit}
+   701→          className={`text-left px-6 py-4 rounded-xl border cursor-pointer transition-all duration-300 ${
+   702→            hasCustom
+   703→              ? "border-gray-900 bg-gray-50 shadow-sm"
+   704→              : atLimit
+   705→                ? "bg-white border-gray-100 text-gray-300 cursor-not-allowed"
+   706→                : "bg-white border-gray-200 hover:border-gray-400 hover:shadow-md"
+   707→          }`}
+   708→          whileTap={atLimit && !hasCustom ? {} : { scale: 0.97 }}
+   709→          suppressHydrationWarning
+   710→        >
+   711→          <div className="flex items-center justify-between">
+   712→            <span className={`text-sm italic ${hasCustom ? "text-gray-900 font-medium" : atLimit ? "text-gray-300" : "text-gray-500"}`}>
+   713→              I&apos;ll explain...
+   714→            </span>
+   715→            {hasCustom && (
+   716→              <motion.span
+   717→                initial={{ scale: 0 }}
+   718→                animate={{ scale: 1 }}
+   719→                transition={{ type: "spring", stiffness: 400, damping: 20 }}
+   720→                className="text-gray-900 font-bold text-sm"
+   721→              >
+   722→                ✓
+   723→              </motion.span>
+   724→            )}
+   725→          </div>
+   726→        </motion.button>
+   727→      </div>
+   728→
+   729→      {/* Custom textarea */}
+   730→      <AnimatePresence>
+   731→        {hasCustom && (
+   732→          <motion.div
+   733→            initial={{ height: 0, opacity: 0 }}
+   734→            animate={{ height: "auto", opacity: 1 }}
+   735→            exit={{ height: 0, opacity: 0 }}
+   736→            transition={{ duration: 0.3, ease: EASE }}
+   737→            className="overflow-hidden mt-3"
+   738→          >
+   739→            <textarea
+   740→              value={projectCustomText}
+   741→              onChange={(e) => updateProjectCustom(e.target.value)}
+   742→              placeholder="Describe your project in your own words..."
+   743→              rows={3}
+   744→              className="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-3 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-900/10 focus:border-gray-900 transition-colors resize-none"
+   745→              suppressHydrationWarning
+   746→            />
+   747→          </motion.div>
+   748→        )}
+   749→      </AnimatePresence>
+   750→    </div>
+   751→  )
+   752→}
+   753→
+   754→// ─── Step 4: Who are we talking to? ────────────────────────────────────────
+   755→
+   756→function Step4({
+   757→  state,
+   758→  update,
+   759→  toggleContactPref,
+   760→}: {
+   761→  state: QuestionnaireState
+   762→  update: <K extends keyof QuestionnaireState>(key: K, value: QuestionnaireState[K]) => void
+   763→  toggleContactPref: (p: string) => void
+   764→}) {
+   765→  const inputClass = "w-full px-4 py-3 rounded-xl border border-gray-200 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-900/10 focus:border-gray-900 transition-colors bg-white"
+   766→  const labelClass = "block text-sm font-medium text-gray-900 mb-1.5"
+   767→
+   768→  return (
+   769→    <div>
+   770→      <h2
+   771→        className="text-2xl md:text-3xl font-bold text-gray-900 tracking-tight"
+   772→        style={{ fontFamily: "var(--font-space-grotesk)" }}
+   773→      >
+   774→        Quick intro — who are we talking to?
+   775→      </h2>
+   776→      <p className="text-gray-500 text-sm mt-2">
+   777→        So we know who to reach out to.
+   778→      </p>
+   779→
+   780→      <div className="mt-8 space-y-5">
+   781→        {/* Name row */}
+   782→        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+   783→          <div>
+   784→            <label className={labelClass}>
+   785→              First Name <span className="text-gray-400">*</span>
+   786→            </label>
+   787→            <input
+   788→              type="text"
+   789→              value={state.firstName}
+   790→              onChange={(e) => update("firstName", e.target.value)}
+   791→              placeholder="John"
+   792→              className={inputClass}
+   793→              suppressHydrationWarning
+   794→            />
+   795→          </div>
+   796→          <div>
+   797→            <label className={labelClass}>Last Name</label>
+   798→            <input
+   799→              type="text"
+   800→              value={state.lastName}
+   801→              onChange={(e) => update("lastName", e.target.value)}
+   802→              placeholder="Smith"
+   803→              className={inputClass}
+   804→              suppressHydrationWarning
+   805→            />
+   806→          </div>
+   807→        </div>
+   808→
+   809→        {/* Email */}
+   810→        <div>
+   811→          <label className={labelClass}>
+   812→            Email <span className="text-gray-400">*</span>
+   813→          </label>
+   814→          <input
+   815→            type="email"
+   816→            value={state.email}
+   817→            onChange={(e) => update("email", e.target.value)}
+   818→            placeholder="john@company.com"
+   819→            className={inputClass}
+   820→            suppressHydrationWarning
+   821→          />
+   822→        </div>
+   823→
+   824→        {/* Phone */}
+   825→        <div>
+   826→          <label className={labelClass}>Phone</label>
+   827→          <input
+   828→            type="tel"
+   829→            value={state.phone}
+   830→            onChange={(e) => update("phone", e.target.value)}
+   831→            placeholder="(407) 555-0123"
+   832→            className={inputClass}
+   833→            suppressHydrationWarning
+   834→          />
+   835→        </div>
+   836→
+   837→        {/* Company */}
+   838→        <div>
+   839→          <label className={labelClass}>Company Name</label>
+   840→          <input
+   841→            type="text"
+   842→            value={state.company}
+   843→            onChange={(e) => update("company", e.target.value)}
+   844→            placeholder="Acme Inc (optional)"
+   845→            className={inputClass}
+   846→            suppressHydrationWarning
+   847→          />
+   848→        </div>
+   849→
+   850→        {/* Preferred contact */}
+   851→        <div>
+   852→          <label className={labelClass}>
+   853→            Preferred Contact <span className="text-gray-400">*</span>
+   854→          </label>
+   855→          <div className="flex flex-wrap gap-4 mt-2">
+   856→            {(["email", "phone", "whatsapp"] as const).map((pref) => {
+   857→              const checked = state.contactPrefs.includes(pref)
+   858→              return (
+   859→                <label
+   860→                  key={pref}
+   861→                  className={`flex items-center gap-2 cursor-pointer px-4 py-2.5 rounded-xl border transition-all duration-200 ${
+   862→                    checked
+   863→                      ? "border-gray-900 bg-gray-50"
+   864→                      : "border-gray-200 hover:border-gray-400"
+   865→                  }`}
+   866→                >
+   867→                  <input
+   868→                    type="checkbox"
+   869→                    checked={checked}
+   870→                    onChange={() => toggleContactPref(pref)}
+   871→                    className="w-4 h-4 rounded border-gray-300 text-gray-900 focus:ring-gray-900/20"
+   872→                    suppressHydrationWarning
+   873→                  />
+   874→                  <span className={`text-sm capitalize ${checked ? "text-gray-900 font-medium" : "text-gray-600"}`}>
+   875→                    {pref === "whatsapp" ? "WhatsApp" : pref}
+   876→                  </span>
+   877→                </label>
+   878→              )
+   879→            })}
+   880→          </div>
+   881→        </div>
+   882→
+   883→        {/* Best time */}
+   884→        <div>
+   885→          <label className={labelClass}>Best time to reach you</label>
+   886→          <div className="flex flex-wrap gap-4 mt-2">
+   887→            {["Morning", "Afternoon", "Evening", "Anytime"].map((time) => {
+   888→              const val = time.toLowerCase()
+   889→              return (
+   890→                <label
+   891→                  key={val}
+   892→                  className={`flex items-center gap-2 cursor-pointer px-4 py-2.5 rounded-xl border transition-all duration-200 ${
+   893→                    state.bestTime === val
+   894→                      ? "border-gray-900 bg-gray-50"
+   895→                      : "border-gray-200 hover:border-gray-400"
+   896→                  }`}
+   897→                >
+   898→                  <input
+   899→                    type="radio"
+   900→                    name="bestTime"
+   901→                    checked={state.bestTime === val}
+   902→                    onChange={() => update("bestTime", val)}
+   903→                    className="w-4 h-4 border-gray-300 text-gray-900 focus:ring-gray-900/20"
+   904→                    suppressHydrationWarning
+   905→                  />
+   906→                  <span className={`text-sm ${state.bestTime === val ? "text-gray-900 font-medium" : "text-gray-600"}`}>
+   907→                    {time}
+   908→                  </span>
+   909→                </label>
+   910→              )
+   911→            })}
+   912→          </div>
+   913→        </div>
+   914→
+   915→        {/* Additional notes */}
+   916→        <div>
+   917→          <label className={labelClass}>Additional Notes</label>
+   918→          <textarea
+   919→            value={state.additionalNotes}
+   920→            onChange={(e) => update("additionalNotes", e.target.value)}
+   921→            placeholder="Anything else you want us to know?"
+   922→            rows={3}
+   923→            className={`${inputClass} resize-none`}
+   924→            suppressHydrationWarning
+   925→          />
+   926→        </div>
+   927→      </div>
+   928→    </div>
+   929→  )
+   930→}
+   931→
+   932→// ─── Step 5: Budget ────────────────────────────────────────────────────────
+   933→
+   934→function Step5({
+   935→  budget,
+   936→  selectBudget,
+   937→}: {
+   938→  budget: string
+   939→  selectBudget: (v: string) => void
+   940→}) {
+   941→  return (
+   942→    <div>
+   943→      <h2
+   944→        className="text-2xl md:text-3xl font-bold text-gray-900 tracking-tight"
+   945→        style={{ fontFamily: "var(--font-space-grotesk)" }}
+   946→      >
+   947→        How much are you willing to invest?
+   948→      </h2>
+   949→      <p className="text-gray-500 text-sm mt-2">
+   950→        This helps us scope the right solution. No wrong answers.
+   951→      </p>
+   952→
+   953→      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-6">
+   954→        {BUDGET_OPTIONS.map((opt) => {
+   955→          const selected = budget === opt.value
+   956→          return (
+   957→            <motion.button
+   958→              key={opt.value}
+   959→              onClick={() => selectBudget(opt.value)}
+   960→              className={`text-left px-6 py-4 rounded-xl border cursor-pointer transition-all duration-300 ${
+   961→                selected
+   962→                  ? "border-gray-900 bg-gray-50 shadow-sm"
+   963→                  : "bg-white border-gray-200 hover:border-gray-400 hover:shadow-md"
+   964→              }`}
+   965→              whileTap={{ scale: 0.97 }}
+   966→              suppressHydrationWarning
+   967→            >
+   968→              <div className="flex items-center justify-between">
+   969→                <div>
+   970→                  <div className={`text-sm font-medium ${selected ? "text-gray-900" : "text-gray-700"}`}>
+   971→                    {opt.label}
+   972→                  </div>
+   973→                  <div className={`text-xs mt-0.5 ${selected ? "text-gray-500" : "text-gray-400"}`}>
+   974→                    {opt.sub}
+   975→                  </div>
+   976→                </div>
+   977→                {selected && (
+   978→                  <motion.span
+   979→                    initial={{ scale: 0 }}
+   980→                    animate={{ scale: 1 }}
+   981→                    transition={{ type: "spring", stiffness: 400, damping: 20 }}
+   982→                    className="text-gray-900 font-bold text-sm ml-3 shrink-0"
+   983→                  >
+   984→                    ✓
+   985→                  </motion.span>
+   986→                )}
+   987→              </div>
+   988→            </motion.button>
+   989→          )
+   990→        })}
+   991→      </div>
+   992→    </div>
+   993→  )
+   994→}
+   995→
+   996→// ─── Step 6: Summary ───────────────────────────────────────────────────────
+   997→
+   998→function Step6({
+   999→  state,
+  1000→  selectedBudget,
+  1001→  goToStep,
+  1002→  goNext,
+  1003→}: {
+  1004→  state: QuestionnaireState
+  1005→  selectedBudget: { label: string; followUp: string } | undefined
+  1006→  goToStep: (s: Step) => void
+  1007→  goNext: () => void
+  1008→}) {
+  1009→  const displayName = state.firstName || "friend"
+  1010→
+  1011→  // Build display lists
+  1012→  const serviceLabels = state.selectedServices.map((s) => SERVICE_PAIN_MAP[s]?.label || s)
+  1013→  const painLabels = state.selectedPains
+  1014→    .filter((p) => p !== "__custom__")
+  1015→    .map((p) => p)
+  1016→  const projectLabels = state.selectedProjects
+  1017→    .filter((p) => p !== "__custom_project__")
+  1018→    .map((p) => p)
+  1019→
+  1020→  const contactLabel = state.contactPrefs
+  1021→    .map((p) => (p === "whatsapp" ? "WhatsApp" : p.charAt(0).toUpperCase() + p.slice(1)))
+  1022→    .join(", ")
+  1023→
+  1024→  const sections = [
+  1025→    {
+  1026→      title: "What You Need",
+  1027→      step: 1 as Step,
+  1028→      content: serviceLabels.join(", "),
+  1029→    },
+  1030→    {
+  1031→      title: "What's Broken",
+  1032→      step: 2 as Step,
+  1033→      content: [
+  1034→        ...painLabels,
+  1035→        state.painCustomText ? `Other: ${state.painCustomText}` : "",
+  1036→      ].filter(Boolean).join(", "),
+  1037→    },
+  1038→    {
+  1039→      title: "Your Project",
+  1040→      step: 3 as Step,
+  1041→      content: [
+  1042→        ...projectLabels,
+  1043→        state.projectCustomText ? `Custom: ${state.projectCustomText}` : "",
+  1044→      ].filter(Boolean).join(", "),
+  1045→    },
+  1046→    {
+  1047→      title: "Who You Are",
+  1048→      step: 4 as Step,
+  1049→      content: [
+  1050→        state.firstName && state.lastName ? `${state.firstName} ${state.lastName}` : state.firstName,
+  1051→        state.email,
+  1052→        state.phone,
+  1053→        state.company,
+  1054→      ].filter(Boolean).join(" · "),
+  1055→    },
+  1056→    {
+  1057→      title: "How to Reach You",
+  1058→      step: 4 as Step,
+  1059→      content: [
+  1060→        contactLabel,
+  1061→        state.bestTime ? `Best time: ${state.bestTime}` : "",
+  1062→      ].filter(Boolean).join(" · "),
+  1063→    },
+  1064→    {
+  1065→      title: "Your Investment",
+  1066→      step: 5 as Step,
+  1067→      content: selectedBudget?.label || "",
+  1068→    },
+  1069→  ].filter((s) => s.content)
+  1070→
+  1071→  return (
+  1072→    <div>
+  1073→      <h2
+  1074→        className="text-2xl md:text-3xl font-bold text-gray-900 tracking-tight"
+  1075→        style={{ fontFamily: "var(--font-space-grotesk)" }}
+  1076→      >
+  1077→        Here&apos;s what we heard, {displayName}.
+  1078→      </h2>
+  1079→
+  1080→      {selectedBudget && (
+  1081→        <motion.p
+  1082→          initial={{ opacity: 0, y: 8 }}
+  1083→          animate={{ opacity: 1, y: 0 }}
+  1084→          transition={{ delay: 0.4, duration: 0.4, ease: EASE }}
+  1085→          className="text-gray-500 text-sm italic mt-2 mb-6"
+  1086→        >
+  1087→          {selectedBudget.followUp}
+  1088→        </motion.p>
+  1089→      )}
+  1090→
+  1091→      <div className="bg-white border border-gray-200 rounded-2xl p-6 md:p-8 max-w-2xl mx-auto mt-6 space-y-6">
+  1092→        {sections.map((section, i) => (
+  1093→          <motion.div
+  1094→            key={section.title}
+  1095→            initial={{ opacity: 0, y: 16 }}
+  1096→            animate={{ opacity: 1, y: 0 }}
+  1097→            transition={{ delay: 0.1 * i, duration: 0.4, ease: EASE }}
+  1098→          >
+  1099→            <div className="flex items-center justify-between mb-1.5">
+  1100→              <span className="text-xs font-medium uppercase tracking-wider text-gray-400">
+  1101→                {section.title}
+  1102→              </span>
+  1103→              <button
+  1104→                onClick={() => goToStep(section.step)}
+  1105→                className="text-sm text-gray-400 hover:text-gray-900 transition-colors"
+  1106→                suppressHydrationWarning
+  1107→              >
+  1108→                Edit
+  1109→              </button>
+  1110→            </div>
+  1111→            <p className="text-sm text-gray-700 leading-relaxed">{section.content}</p>
+  1112→          </motion.div>
+  1113→        ))}
+  1114→
+  1115→        {/* Budget follow-up */}
+  1116→        {selectedBudget && (
+  1117→          <motion.div
+  1118→            initial={{ opacity: 0, y: 16 }}
+  1119→            animate={{ opacity: 1, y: 0 }}
+  1120→            transition={{ delay: 0.1 * sections.length, duration: 0.4, ease: EASE }}
+  1121→            className="pt-4 border-t border-gray-100"
+  1122→          >
+  1123→            <p className="text-sm text-gray-500 italic">{selectedBudget.followUp}</p>
+  1124→          </motion.div>
+  1125→        )}
+  1126→      </div>
+  1127→
+  1128→      {/* Navigation */}
+  1129→      <div className="flex items-center justify-center gap-4 mt-8">
+  1130→        <button
+  1131→          onClick={() => goToStep(5)}
+  1132→          className="text-gray-500 hover:text-gray-900 transition-colors text-sm"
+  1133→          suppressHydrationWarning
+  1134→        >
+  1135→          ← Go back
+  1136→        </button>
+  1137→        <button
+  1138→          onClick={goNext}
+  1139→          className="animate-cta-pulse bg-gray-900 text-white rounded-full px-8 py-3 text-sm font-medium hover:bg-gray-800 transition-colors cursor-pointer"
+  1140→          suppressHydrationWarning
+  1141→        >
+  1142→          Yeah, send it →
+  1143→        </button>
+  1144→      </div>
+  1145→    </div>
+  1146→  )
+  1147→}
+  1148→
+  1149→// ─── Step 7: Receipt / Success ─────────────────────────────────────────────
+  1150→
+  1151→function Step7({ firstName }: { firstName: string }) {
+  1152→  const displayName = firstName || "friend"
+  1153→
+  1154→  const checkItems = [
+  1155→    "We received your details",
+  1156→    "Our team is reviewing your project",
+  1157→    "We'll reach out within 24 hours",
+  1158→  ]
+  1159→
+  1160→  return (
+  1161→    <div className="bg-[#0A0A0A] min-h-screen flex flex-col items-center justify-center px-4 text-white">
+  1162→      <div className="max-w-md mx-auto text-center">
+  1163→        {/* Main heading */}
+  1164→        <motion.h1
+  1165→          className="text-3xl md:text-5xl font-bold tracking-tight"
+  1166→          style={{ fontFamily: "var(--font-space-grotesk)" }}
+  1167→          initial={{ y: 30, opacity: 0 }}
+  1168→          animate={{ y: 0, opacity: 1 }}
+  1169→          transition={{ duration: 0.7, ease: EASE }}
+  1170→        >
+  1171→          We got it, {displayName}.
+  1172→        </motion.h1>
+  1173→
+  1174→        <motion.p
+  1175→          className="mt-4 text-gray-400 text-base leading-relaxed"
+  1176→          initial={{ y: 20, opacity: 0 }}
+  1177→          animate={{ y: 0, opacity: 1 }}
+  1178→          transition={{ duration: 0.7, delay: 0.2, ease: EASE }}
+  1179→        >
+  1180→          Thanks for taking the time. Here&apos;s what happens next:
+  1181→        </motion.p>
+  1182→
+  1183→        {/* Checkmark items */}
+  1184→        <div className="mt-10 space-y-4 text-left">
+  1185→          {checkItems.map((item, i) => (
+  1186→            <motion.div
+  1187→              key={item}
+  1188→              initial={{ opacity: 0, x: -20 }}
+  1189→              animate={{ opacity: 1, x: 0 }}
+  1190→              transition={{ delay: 0.5 + 0.2 * i, duration: 0.5, ease: EASE }}
+  1191→              className="flex items-center gap-3"
+  1192→            >
+  1193→              <motion.div
+  1194→                initial={{ scale: 0 }}
+  1195→                animate={{ scale: 1 }}
+  1196→                transition={{ delay: 0.5 + 0.2 * i, type: "spring", stiffness: 400, damping: 20 }}
+  1197→                className="w-6 h-6 rounded-full bg-white/10 border border-white/20 flex items-center justify-center shrink-0"
+  1198→              >
+  1199→                <svg
+  1200→                  className="w-3.5 h-3.5 text-white"
+  1201→                  fill="none"
+  1202→                  stroke="currentColor"
+  1203→                  viewBox="0 0 24 24"
+  1204→                >
+  1205→                  <path
+  1206→                    strokeLinecap="round"
+  1207→                    strokeLinejoin="round"
+  1208→                    strokeWidth={2.5}
+  1209→                    d="M5 13l4 4L19 7"
+  1210→                  />
+  1211→                </svg>
+  1212→              </motion.div>
+  1213→              <span className="text-sm text-gray-300">{item}</span>
+  1214→            </motion.div>
+  1215→          ))}
+  1216→        </div>
+  1217→
+  1218→        {/* Back to Home */}
+  1219→        <motion.div
+  1220→          initial={{ opacity: 0, y: 20 }}
+  1221→          animate={{ opacity: 1, y: 0 }}
+  1222→          transition={{ delay: 1.4, duration: 0.5, ease: EASE }}
+  1223→          className="mt-12"
+  1224→        >
+  1225→          <Link
+  1226→            href="/"
+  1227→            className="inline-block bg-white text-gray-900 rounded-full px-8 py-3 text-sm font-medium hover:bg-gray-100 transition-colors"
+  1228→          >
+  1229→            Back to Home
+  1230→          </Link>
+  1231→        </motion.div>
+  1232→      </div>
+  1233→    </div>
+  1234→  )
+  1235→}

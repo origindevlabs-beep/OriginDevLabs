@@ -470,3 +470,34 @@ Stage Summary:
 - Mobile navbar now properly centered by reducing content to logo icon + hamburger button only
 - Hamburger button has visible liquid glass casing (frosted bg, border, shadow) on all page backgrounds
 - All changes pass lint with zero errors
+
+---
+Task ID: 2
+Agent: Main
+Task: Set up Supabase database, API routes, form submissions, and site security
+
+Work Log:
+- Installed @supabase/supabase-js and postgres packages
+- Created .env.local with Supabase URL, anon key, and service role key
+- Created src/lib/supabase/server.ts (service role client for API routes)
+- Created src/lib/supabase/client.ts (anon client for browser-side)
+- Created supabase/schema.sql with 3 tables: leads, newsletter_subscribers, rate_limits
+- Includes RLS policies, indexes, updated_at trigger, cleanup function
+- Created POST /api/leads with input sanitization, rate limiting (5/min), duplicate detection
+- Created POST /api/newsletter with rate limiting (3/min), upsert on duplicate email
+- Created POST /api/setup-db endpoint that tries 3 approaches to create tables
+- Wired Get Started questionnaire Step 6 "Yeah, send it" button to POST /api/leads
+- Added loading spinner and error display to submission button
+- Wired footer newsletter form to POST /api/newsletter with loading/error states
+- Implemented security headers in next.config.ts: X-Frame-Options DENY, X-Content-Type-Options nosniff, XSS protection, Referrer-Policy, Permissions-Policy, HSTS, CSP
+- CSP allows connections only to self and Supabase project URL
+- Rate limiting verified: 5 requests then 429 on /api/leads
+- All 5 pages load HTTP 200, all API routes respond correctly
+- Lint passes clean, zero errors in dev log
+- Sandbox blocks outbound PostgreSQL (5432/6543), so tables must be created via Supabase Dashboard SQL Editor
+
+Stage Summary:
+- Full Supabase integration code complete, awaiting one-time SQL setup by user
+- Security headers active on all routes
+- Rate limiting working on both API endpoints
+- Form submissions gracefully handle missing tables (503) with setup instructions
