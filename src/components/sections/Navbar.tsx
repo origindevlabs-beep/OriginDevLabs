@@ -145,10 +145,10 @@ export default function Navbar({ ctaVisible = false, heroSectionRef }: NavbarPro
               <img
                 src="/odl-logo.png"
                 alt="Origin Dev Labs"
-                className="h-6 w-auto"
+                className="h-5 w-auto md:h-6"
               />
               <span
-                className="hidden md:inline text-sm font-semibold tracking-tight text-gray-900"
+                className="text-xs font-semibold tracking-tight text-gray-900 md:text-sm"
                 style={{ fontFamily: "var(--font-heading), system-ui" }}
               >
                 Origin Dev Labs
@@ -172,6 +172,14 @@ export default function Navbar({ ctaVisible = false, heroSectionRef }: NavbarPro
             <Link
               href="/get-started"
               className="hidden md:inline-flex animate-cta-pulse px-5 py-2 bg-gray-900 text-white text-sm font-medium rounded-full"
+            >
+              Get Started
+            </Link>
+
+            {/* Mobile Pulsating CTA Button */}
+            <Link
+              href="/get-started"
+              className="md:hidden inline-flex animate-cta-pulse px-2.5 py-1 bg-gray-900 text-white text-[11px] font-medium rounded-full"
             >
               Get Started
             </Link>
