@@ -1,0 +1,41 @@
+# Origin Dev Labs
+> Origin Dev Labs builds automation systems, intelligent agents, and custom software solutions that save businesses time and money. Based in Orlando, FL.
+
+## About
+Origin Dev Labs (ODL) is a technology company specializing in business automation. We build systems that handle repetitive work so teams can focus on what matters. Our approach is practical, results-driven, and systems-oriented — we don't build features, we build systems that work together.
+
+## Services
+- **Workflow Automation**: Connect existing tools and build automated workflows that handle repetitive tasks 24/7. Uses n8n, Zapier, Make, and custom APIs.
+- **Intelligent Agents**: Autonomous agents that handle multi-step tasks, reason through problems, and integrate with existing tools. Built with LangChain, OpenAI, and custom LLM pipelines.
+- **Smart Assistants**: Context-aware assistants that manage schedules, process documents, and handle communications. Built with OpenAI Assistants, custom NLP, and RAG pipelines.
+- **Business Intelligence**: Custom dashboards and automated reports for real-time operational visibility. Uses Metabase, custom React dashboards, and PostgreSQL.
+- **Custom Solutions**: Full-stack development when off-the-shelf tools don't fit. Built with Next.js, TypeScript, PostgreSQL, AWS/Vercel.
+- **Web Development**: Custom websites and web applications with modern frameworks.
+- **UI/UX Design**: Interfaces that are intuitive, beautiful, and built for conversion.
+- **Digital Products**: From concept to launch — full software product development.
+
+## Contact
+- Website: https://origindevlabs.com
+- Email: hello@origindevlabs.com
+- WhatsApp: +1 (407) 123-4567
+- Location: Orlando, FL, USA
+- Free consultation available
+- Response within 24 hours
+
+## Pages
+- Home: https://origindevlabs.com/
+- About: https://origindevlabs.com/about
+- Services: https://origindevlabs.com/services
+- Client Stories: https://origindevlabs.com/testimonials
+- Get Started: https://origindevlabs.com/get-started
+
+## Core Values
+- Practical Over Theoretical: If a system needs a manual to operate, it's not finished yet.
+- Results You Can Measure: Automation should pay for itself — in hours saved, errors avoided, or revenue gained.
+- Systems Thinking: We don't build features. We build systems that work together.
+- Honest Communication: We don't oversell. We tell you what's possible and deliver it.
+
+## Social Media
+- TikTok: https://tiktok.com/@origindevlabs
+- Instagram: https://instagram.com/origindevlabs
+- Twitter/X: https://twitter.com/origindevlabs

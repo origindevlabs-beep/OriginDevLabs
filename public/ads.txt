@@ -1,0 +1,5 @@
+# Origin Dev Labs - Ads.txt
+# https://origindevlabs.com
+
+# This domain has no advertising inventory to sell.
+# This file is present to prevent ads.txt warnings.

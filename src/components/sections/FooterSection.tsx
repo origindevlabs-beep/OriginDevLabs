@@ -4,7 +4,7 @@ import * as React from "react"
 import { motion } from "motion/react"
 import { Send, ArrowUp } from "lucide-react"
 
-// --- Social Icons ---
+// --- Inline SVG Social Icons ---
 const TikTokIcon = ({ className }: { className?: string }) => (
   <svg className={className} viewBox="0 0 24 24" fill="currentColor">
     <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1v-3.51a6.37 6.37 0 0 0-.79-.05A6.34 6.34 0 0 0 3.15 15.2a6.34 6.34 0 0 0 10.86 4.46V13a8.28 8.28 0 0 0 5.58 2.15v-3.44a4.85 4.85 0 0 1-5.58-2.72V6.69h3.58z" />
@@ -23,23 +23,44 @@ const WhatsAppIcon = ({ className }: { className?: string }) => (
   </svg>
 )
 
-const TwitterIcon = ({ className }: { className?: string }) => (
+const TwitterXIcon = ({ className }: { className?: string }) => (
   <svg className={className} viewBox="0 0 24 24" fill="currentColor">
     <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
   </svg>
 )
 
-// --- Footer Component ---
+const socialLinks = [
+  { icon: TikTokIcon, href: "https://tiktok.com/@origindevlabs", label: "TikTok" },
+  { icon: InstagramIcon, href: "https://instagram.com/origindevlabs", label: "Instagram" },
+  { icon: WhatsAppIcon, href: "https://wa.me/1XXXXXXXXXX", label: "WhatsApp" },
+  { icon: TwitterXIcon, href: "https://twitter.com/origindevlabs", label: "Twitter/X" },
+]
+
+const companyLinks = [
+  { label: "About", href: "/about" },
+  { label: "Services", href: "/services" },
+  { label: "Client Stories", href: "/testimonials" },
+  { label: "Get Started", href: "/get-started" },
+]
+
+const serviceLinks = [
+  { label: "Workflow Automation", href: "/services#automation" },
+  { label: "Intelligent Agents", href: "/services#agents" },
+  { label: "Smart Assistants", href: "/services#assistants" },
+  { label: "Business Intelligence", href: "/services#intelligence" },
+  { label: "Custom Solutions", href: "/services#custom" },
+]
+
 export default function FooterSection() {
   const [email, setEmail] = React.useState("")
-  const [isSubmitted, setIsSubmitted] = React.useState(false)
+  const [submitted, setSubmitted] = React.useState(false)
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    if (email) {
-      setIsSubmitted(true)
+    if (email.trim()) {
+      setSubmitted(true)
       setEmail("")
-      setTimeout(() => setIsSubmitted(false), 3000)
+      setTimeout(() => setSubmitted(false), 3000)
     }
   }
 
@@ -49,64 +70,68 @@ export default function FooterSection() {
 
   return (
     <footer className="relative bg-[#0a0a0a] text-white overflow-hidden">
-      {/* Subtle Pattern Background */}
+      {/* Dot pattern overlay */}
       <div className="absolute inset-0 pointer-events-none opacity-[0.03]">
         <svg width="100%" height="100%">
           <defs>
-            <pattern id="footerDots" width="24" height="24" patternUnits="userSpaceOnUse">
+            <pattern id="footer-dots" width="24" height="24" patternUnits="userSpaceOnUse">
               <circle cx="12" cy="12" r="0.5" fill="white" />
             </pattern>
           </defs>
-          <rect width="100%" height="100%" fill="url(#footerDots)" />
+          <rect width="100%" height="100%" fill="url(#footer-dots)" />
         </svg>
       </div>
 
-      <div className="relative z-10 container mx-auto px-4 py-16 md:px-6 lg:px-8">
+      <div className="relative z-10 mx-auto max-w-7xl px-4 py-16 md:px-6 lg:px-8">
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
-          {/* Brand & Newsletter */}
-          <div className="lg:col-span-1">
-            {/* Logo */}
-            <div className="mb-6">
-              <a href="/" className="inline-block">
-                <img
-                  src="/logo-white.png"
-                  alt="Origin Dev Labs"
-                  className="h-8 w-auto"
-                  onError={(e) => {
-                    const target = e.target as HTMLImageElement
-                    target.style.display = "none"
-                    target.parentElement!.innerHTML = '<span class="text-xl font-bold tracking-tight">ODL</span>'
-                  }}
-                />
-              </a>
-            </div>
+          {/* Column 1 — Brand */}
+          <div className="space-y-5">
+            {/* Logo + text inline */}
+            <a href="/" className="inline-flex items-center gap-2.5 group">
+              <img
+                src="/logo-white.png"
+                alt="Origin Dev Labs"
+                className="h-7 w-auto"
+              />
+              <span
+                className="text-sm font-semibold tracking-tight text-white group-hover:text-gray-200 transition-colors"
+                style={{ fontFamily: "var(--font-heading), system-ui" }}
+              >
+                Origin Dev Labs
+              </span>
+            </a>
 
-            <p className="mb-6 text-sm text-gray-400 leading-relaxed">
+            <p className="text-sm leading-relaxed text-gray-400">
               Automation systems that work while you sleep. Built in Orlando, serving businesses everywhere.
             </p>
 
-            {/* Newsletter */}
+            {/* Newsletter form */}
             <div>
-              <p className="mb-3 text-sm font-medium text-white">Stay updated</p>
+              <p className="mb-2.5 text-sm font-medium text-white">Stay updated</p>
               <form onSubmit={handleSubmit} className="relative">
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Enter your email"
-                  className="w-full px-4 py-2.5 pr-12 bg-white/5 border border-white/10 rounded-lg text-sm text-white placeholder:text-gray-500 focus:outline-none focus:border-white/30 transition-colors"
+                  className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 pr-12 text-sm text-white placeholder:text-gray-500 focus:border-white/30 focus:outline-none transition-colors"
                   required
+                  aria-label="Email for newsletter"
+                  suppressHydrationWarning
                 />
                 <button
                   type="submit"
-                  className="absolute right-1.5 top-1/2 -translate-y-1/2 p-2 bg-white/10 rounded-md hover:bg-white/20 transition-colors"
+                  className="absolute right-1.5 top-1/2 -translate-y-1/2 rounded-md bg-white/10 p-2 hover:bg-white/20 transition-colors"
+                  aria-label="Subscribe"
+                  suppressHydrationWarning
                 >
-                  <Send className="w-4 h-4 text-white" />
+                  <Send className="h-4 w-4 text-white" />
                 </button>
               </form>
-              {isSubmitted && (
+              {submitted && (
                 <motion.p
-                  initial={{ opacity: 0, y: -5 }}
+                  initial={{ opacity: 0, y: -4 }}
+                  suppressHydrationWarning
                   animate={{ opacity: 1, y: 0 }}
                   className="mt-2 text-xs text-gray-400"
                 >
@@ -116,124 +141,100 @@ export default function FooterSection() {
             </div>
           </div>
 
-          {/* Quick Links */}
+          {/* Column 2 — Company */}
           <div>
-            <h3 className="mb-4 text-sm font-semibold text-white uppercase tracking-wider">Company</h3>
+            <h3 className="mb-4 text-xs font-semibold uppercase tracking-widest text-white">
+              Company
+            </h3>
             <nav className="space-y-3">
-              <a href="/about" className="block text-sm text-gray-400 hover:text-white transition-colors">
-                About
-              </a>
-              <a href="/services" className="block text-sm text-gray-400 hover:text-white transition-colors">
-                Services
-              </a>
-              <a href="/testimonials" className="block text-sm text-gray-400 hover:text-white transition-colors">
-                Client Stories
-              </a>
-              <a href="/get-started" className="block text-sm text-gray-400 hover:text-white transition-colors">
-                Get Started
-              </a>
+              {companyLinks.map((link) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  className="block text-sm text-gray-400 transition-colors hover:text-white"
+                >
+                  {link.label}
+                </a>
+              ))}
             </nav>
           </div>
 
-          {/* Services */}
+          {/* Column 3 — Services */}
           <div>
-            <h3 className="mb-4 text-sm font-semibold text-white uppercase tracking-wider">Services</h3>
+            <h3 className="mb-4 text-xs font-semibold uppercase tracking-widest text-white">
+              Services
+            </h3>
             <nav className="space-y-3">
-              <a href="/services#automation" className="block text-sm text-gray-400 hover:text-white transition-colors">
-                Workflow Automation
-              </a>
-              <a href="/services#agents" className="block text-sm text-gray-400 hover:text-white transition-colors">
-                Intelligent Agents
-              </a>
-              <a href="/services#assistants" className="block text-sm text-gray-400 hover:text-white transition-colors">
-                Smart Assistants
-              </a>
-              <a href="/services#intelligence" className="block text-sm text-gray-400 hover:text-white transition-colors">
-                Business Intelligence
-              </a>
-              <a href="/services#custom" className="block text-sm text-gray-400 hover:text-white transition-colors">
-                Custom Solutions
-              </a>
+              {serviceLinks.map((link) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  className="block text-sm text-gray-400 transition-colors hover:text-white"
+                >
+                  {link.label}
+                </a>
+              ))}
             </nav>
           </div>
 
-          {/* Contact */}
+          {/* Column 4 — Contact */}
           <div>
-            <h3 className="mb-4 text-sm font-semibold text-white uppercase tracking-wider">Contact</h3>
-            <address className="space-y-3 text-sm text-gray-400 not-italic">
+            <h3 className="mb-4 text-xs font-semibold uppercase tracking-widest text-white">
+              Contact
+            </h3>
+            <address className="space-y-2 text-sm not-italic text-gray-400">
               <p>100 South Orange Avenue, Suite 1200</p>
               <p>Orlando, FL 32801</p>
-              <p className="pt-2">
-                <a href="mailto:hello@origindevlabs.com" className="hover:text-white transition-colors">
+              <p className="pt-1">
+                <a
+                  href="mailto:hello@origindevlabs.com"
+                  className="transition-colors hover:text-white"
+                >
                   hello@origindevlabs.com
                 </a>
               </p>
             </address>
 
-            {/* Social Icons */}
-            <div className="mt-6 flex items-center gap-3">
-              <a
-                href="https://tiktok.com/@origindevlabs"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2.5 bg-white/5 rounded-lg hover:bg-white/10 transition-colors"
-                aria-label="TikTok"
-              >
-                <TikTokIcon className="w-4 h-4 text-gray-400 hover:text-white" />
-              </a>
-              <a
-                href="https://instagram.com/origindevlabs"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2.5 bg-white/5 rounded-lg hover:bg-white/10 transition-colors"
-                aria-label="Instagram"
-              >
-                <InstagramIcon className="w-4 h-4 text-gray-400 hover:text-white" />
-              </a>
-              <a
-                href="https://wa.me/1XXXXXXXXXX"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2.5 bg-white/5 rounded-lg hover:bg-white/10 transition-colors"
-                aria-label="WhatsApp"
-              >
-                <WhatsAppIcon className="w-4 h-4 text-gray-400 hover:text-white" />
-              </a>
-              <a
-                href="https://twitter.com/origindevlabs"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2.5 bg-white/5 rounded-lg hover:bg-white/10 transition-colors"
-                aria-label="Twitter"
-              >
-                <TwitterIcon className="w-4 h-4 text-gray-400 hover:text-white" />
-              </a>
+            {/* Social icons */}
+            <div className="mt-5 flex items-center gap-2.5">
+              {socialLinks.map(({ icon: Icon, href, label }) => (
+                <a
+                  key={label}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="rounded-lg bg-white/5 p-2.5 transition-colors hover:bg-white/10"
+                  aria-label={label}
+                >
+                  <Icon className="h-4 w-4 text-gray-400" />
+                </a>
+              ))}
             </div>
           </div>
         </div>
 
-        {/* Bottom Bar */}
-        <div className="mt-16 pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4">
+        {/* Bottom bar */}
+        <div className="mt-16 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-8 md:flex-row">
           <p className="text-xs text-gray-500">
-            © {new Date().getFullYear()} Origin Dev Labs. All rights reserved.
+            © 2025 Origin Dev Labs. All rights reserved.
           </p>
 
           <nav className="flex items-center gap-6 text-xs text-gray-500">
-            <a href="/privacy" className="hover:text-white transition-colors">
+            <a href="/privacy" className="transition-colors hover:text-white">
               Privacy Policy
             </a>
-            <a href="/terms" className="hover:text-white transition-colors">
+            <a href="/terms" className="transition-colors hover:text-white">
               Terms of Service
             </a>
           </nav>
 
-          {/* Back to Top */}
           <button
             onClick={scrollToTop}
-            className="p-2 bg-white/5 rounded-lg hover:bg-white/10 transition-colors"
+            className="rounded-lg bg-white/5 p-2 transition-colors hover:bg-white/10"
             aria-label="Back to top"
+            suppressHydrationWarning
           >
-            <ArrowUp className="w-4 h-4 text-gray-400" />
+            <ArrowUp className="h-4 w-4 text-gray-400" />
           </button>
         </div>
       </div>

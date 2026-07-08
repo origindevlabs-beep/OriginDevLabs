@@ -1,0 +1,766 @@
+     1→# ODL ONBOARDING QUESTIONNAIRE — DESIGN FILE
+     2→
+     3→> **Version:** 3.0
+     4→> **Date:** July 2026
+     5→> **Route:** `/get-started` (replaces existing contact form)
+     6→> **Stack:** Next.js 16 · motion · Supabase · React Hook Form + Zod
+     7→
+     8→---
+     9→
+    10→## 1. PHILOSOPHY
+    11→
+    12→### This Is Not a Form. It's a Discovery Conversation.
+    13→
+    14→The old form asked: "What do you want?" and left it at that. This questionnaire asks the right questions in the right order — so by the end, we know exactly what they need, why they need it, and how to help.
+    15→
+    16→Every step builds on the last. Their purpose shapes their pain. Their pain shapes the project details. The project details shape the solution. No wasted questions.
+    17→
+    18→### The Emotional Arc
+    19→
+    20→```
+    21→Step 1: "What do you need?"           → Purpose — pick the service(s)
+    22→Step 2: "What's broken?"             → Pain — tailored to their purpose
+    23→Step 3: "Tell me more"               → Project details — tailored to their pain
+    24→Step 4: "Who are you?"               → Name, email, company (optional)
+    25→Step 5: "How much to fix this?"      → Budget — realistic investment
+    26→Step 6: "Did we get it right?"       → Full summary confirmation
+    27→```
+    28→
+    29→---
+    30→
+    31→## 2. QUESTIONNAIRE STRUCTURE
+    32→
+    33→### Step 1: The Opening
+    34→
+    35→```
+    36→┌─────────────────────────────────────────────────┐
+    37→│                                                   │
+    38→│         What do you need help with?               │
+    39→│                                                   │
+    40→│    Pick everything that applies. We'll            │
+    41→│    ask the right follow-up questions.             │
+    42→│                                                   │
+    43→└─────────────────────────────────────────────────┘
+    44→```
+    45→
+    46→**Options (multi-select):**
+    47→
+    48→| # | Service | Icon | Description (shown below option on select) |
+    49→|---|---------|------|---------------------------------------------|
+    50→| 1 | Workflow Automation | ⚙️ | Repetitive tasks, data entry, cross-tool syncing |
+    51→| 2 | Intelligent Agents | 🤖 | Customer support, sales qualification, operations |
+    52→| 3 | Smart Assistants | 🧠 | Calendar, email triage, document processing |
+    53→| 4 | Business Intelligence | 📊 | Dashboards, reports, KPI tracking |
+    54→| 5 | Web Development | 🌐 | Websites, landing pages, web apps |
+    55→| 6 | UI/UX Design | 🎨 | App design, interface design, user experience |
+    56→| 7 | Digital Products | 📱 | SaaS tools, mobile apps, proprietary software |
+    57→| 8 | Custom Solutions | 🛠️ | Internal tools, portals, something from scratch |
+    58→
+    59→**Behavior:**
+    60→- Multi-select (checkbox cards, no limit)
+    61→- Each selected option highlights with `border-gray-900 bg-gray-50`
+    62→- A small counter appears: "You picked 3 services"
+    63→- If they pick 0 and click Next → error: "Pick at least one"
+    64→
+    65→**Follow-up micro-text:**
+    66→> "Great choices. Let's dig into what's going on."
+    67→
+    68→---
+    69→
+    70→### Step 2: "What's broken?"
+    71→
+    72→**This step changes based on what they selected in Step 1.**
+    73→
+    74→The pain options are pulled from a service→pain map. If they selected multiple services, all relevant pain options appear (deduplicated). The more services they picked, the more pain options appear — and the more they can select.
+    75→
+    76→**Selection rules:**
+    77→- 1 service selected → up to 2 pain points
+    78→- 2 services selected → up to 3 pain points
+    79→- 3+ services selected → up to 4 pain points
+    80→
+    81→#### Service → Pain Map
+    82→
+    83→**Workflow Automation →**
+    84→- Copy-pasting data between tools all day
+    85→- Same tasks repeated every week with no end in sight
+    86→- Manual approval processes bottlenecking everything
+    87→- Errors from human data entry costing me money
+    88→- Onboarding new employees takes forever
+    89→
+    90→**Intelligent Agents →**
+    91→- Customers waiting too long for responses
+    92→- Losing leads because nobody followed up in time
+    93→- Support team buried in repetitive questions
+    94→- Inconsistent quality across customer interactions
+    95→- Can't scale customer service without hiring more people
+    96→
+    97→**Smart Assistants →**
+    98→- Email overload — important messages getting buried
+    99→- Scheduling wars — too many back-and-forths
+   100→- Documents piling up with no system to process them
+   101→- Admin work eating into billable hours
+   102→- Team spending more time organizing than working
+   103→
+   104→**Business Intelligence →**
+   105→- Flying blind — no idea what's actually happening in my business
+   106→- Building reports by hand every week/month
+   107→- Data scattered across 5 different tools
+   108→- Can't spot problems until they're expensive
+   109→- No real-time visibility into performance
+   110→
+   111→**Custom Solutions →**
+   112→- Off-the-shelf software doesn't fit how I actually work
+   113→- Patching together 4 tools to do what 1 should
+   114→- Need something specific that doesn't exist yet
+   115→- My current system is held together with duct tape
+   116→- Scaling is impossible with what I have now
+   117→
+   118→#### Always shown (regardless of service selection):
+   119→- It's a mix of everything, honestly
+   120→- I just need someone who gets it
+   121→- [Something else...]
+   122→
+   123→**Custom option:** [Something else...]
+   124→→ Expands text input: "Tell us what's going on"
+   125→
+   126→**Behavior:**
+   127→- Multi-select (checkbox cards, limit varies by service count)
+   128→- After selection, personalized follow-up:
+   129→
+   130→> "That's the kind of stuff we love fixing."
+   131→
+   132→---
+   133→
+   134→### Step 3: "Tell me more about your project"
+   135→
+   136→**This step changes based on both their purpose (Step 1) AND their pain (Step 2).**
+   137→
+   138→The project detail options are a combination of service-specific and pain-specific follow-ups. This gives us the most useful context for scoping.
+   139→
+   140→#### If they picked Workflow Automation:
+   141→- I need to automate data entry between [tool] and [tool]
+   142→- I want a system that handles approvals without me chasing people
+   143→- I need recurring tasks to run on autopilot
+   144→- I want to reduce errors in [specific process]
+   145→
+   146→#### If they picked Intelligent Agents:
+   147→- I need something to handle customer support 24/7
+   148→- I want agents to qualify and follow up with leads
+   149→- I need an internal operations agent for my team
+   150→- I want to automate [specific workflow] with smart decisions
+   151→
+   152→#### If they picked Smart Assistants:
+   153→- I need help managing my email and calendar
+   154→- I want document processing automated
+   155→- I need an assistant that keeps my team organized
+   156→- I want to automate [specific admin task]
+   157→
+   158→#### If they picked Business Intelligence:
+   159→- I need a real-time dashboard for my business
+   160→- I want automated reports delivered on a schedule
+   161→- I need to connect data from multiple tools into one view
+   162→- I want to track [specific KPIs]
+   163→
+   164→#### If they picked Custom Solutions:
+   165→- I need an internal tool built from scratch
+   166→- I want a customer-facing portal or app
+   167→- I need an API integration between systems
+   168→- I want to build [specific thing]
+   169→
+   170→#### If they picked Web Development:
+   171→- My website doesn't represent who I am anymore
+   172→- I need a site that actually converts visitors into customers
+   173→- My site is slow, broken on mobile, or just ugly
+   174→- I need a landing page for a specific campaign or product
+   175→- I want to redesign my site without rebuilding from scratch
+   176→
+   177→#### If they picked UI/UX Design:
+   178→- My app looks like it was built in 2010
+   179→- Users are confused by my interface — they keep dropping off
+   180→- I need a design system that keeps everything consistent
+   181→- I want a mobile app that actually feels good to use
+   182→- I need wireframes and prototypes before building anything
+   183→
+   184→#### If they picked Digital Products:
+   185→- I want to build a SaaS product and need a technical partner
+   186→- I have an idea for an app but don't know where to start
+   187→- I need to turn my existing process into a product others can use
+   188→- I want to monetize my expertise through a digital tool
+   189→- I need help scoping and building an MVP
+   190→
+   191→#### Always shown (regardless of service selection):
+   192→- I'm not 100% sure yet — help me figure it out
+   193→- I need the full package — design, build, and deploy
+   194→- [I'll explain...]
+   195→
+   196→**Custom option:** [I'll explain...]
+   197→→ Expands text input: "Tell us about your project — what does it look like, what tools do you use, what would make your life easier?"
+   198→
+   199→**Behavior:**
+   200→- Multi-select (checkbox cards, up to 3)
+   201→- Custom option always available
+   202→- Answers stored as `project_details` array + optional `project_description` text
+   203→
+   204→**Follow-up micro-text:**
+   205→> "That gives us a lot to work with. Perfect."
+   206→
+   207→---
+   208→
+   209→### Step 4: "Who are you?"
+   210→
+   211→**Layout:**
+   212→
+   213→```
+   214→┌─────────────────────────────────────────────────┐
+   215→│                                                   │
+   216→│         Quick intro — who are we talking to?      │
+   217→│                                                   │
+   218→│    ┌──────────────────────────────────────┐       │
+   219→│    │  First Name *                        │       │
+   220→│    └──────────────────────────────────────┘       │
+   221→│    ┌──────────────────────────────────────┐       │
+   222→│    │  Last Name                           │       │
+   223→│    └──────────────────────────────────────┘       │
+   224→│    ┌──────────────────────────────────────┐       │
+   225→│    │  Email *                             │       │
+   226→│    └──────────────────────────────────────┘       │
+   227→│    ┌──────────────────────────────────────┐       │
+   228→│    │  Phone                               │       │
+   229→│    └──────────────────────────────────────┘       │
+   230→│    ┌──────────────────────────────────────┐       │
+   231→│    │  Company Name (optional)             │       │
+   232→│    └──────────────────────────────────────┘       │
+   233→│                                                   │
+   234→│    How do you prefer we reach you?                │
+   235→│                                                   │
+   236→│    [ ✉️ Email ]  [ 📱 Phone ]  [ 💬 WhatsApp ]   │
+   237→│                                                   │
+   238→│    Best time to reach you?                        │
+   239→│    [ Morning ] [ Afternoon ] [ Evening ] [ Any ]  │
+   240→│                                                   │
+   241→│    Anything else we should know?                  │
+   242→│    ┌──────────────────────────────────────┐       │
+   243→│    │                                     │       │
+   244→│    └──────────────────────────────────────┘       │
+   245→│                                                   │
+   246→└─────────────────────────────────────────────────┘
+   247→```
+   248→
+   249→**Fields:**
+   250→
+   251→| Field | Type | Required |
+   252→|-------|------|----------|
+   253→| First Name | text | ✅ |
+   254→| Last Name | text | ❌ |
+   255→| Email | email | ✅ |
+   256→| Phone | tel | ❌ |
+   257→| Company Name | text | ❌ |
+   258→| Preferred contact method | checkboxes (Email / Phone / WhatsApp) | ✅ (at least one) |
+   259→| Best time to reach you | radio (Morning / Afternoon / Evening / Anytime) | ❌ |
+   260→| Anything else? | textarea | ❌ |
+   261→
+   262→**Behavior:**
+   263→- Email is always required (even if they don't check "Email" as preference — it's added automatically)
+   264→- If they check Phone → phone field appears with validation
+   265→- If they check WhatsApp → WhatsApp field appears with validation
+   266→- Company field is always visible but marked optional
+   267→- Contact preference stored as array, individual fields stored separately
+   268→
+   269→**Follow-up micro-text:**
+   270→> "Nice to meet you, [first name]."
+   271→
+   272→---
+   273→
+   274→### Step 5: "How much to solve this?"
+   275→
+   276→**Question:** How much are you willing to spend to solve this problem realistically?
+   277→
+   278→**Options:**
+   279→- Under $1,000 — I need something simple
+   280→- $1,000 – $5,000 — I want a real solution
+   281→- $5,000 – $10,000 — I'm ready to invest properly
+   282→- $10,000 – $15,000 — let's do this right
+   283→- $15,000+ — I want the best, not the cheapest
+   284→- I don't know yet — help me scope it first
+   285→- Let's discuss — it depends on what you propose
+   286→
+   287→**Behavior:**
+   288→- Single select (radio-style cards)
+   289→- Answer stored as `budget_willingness` field
+   290→- Follow-up micro-text (varies):
+   291→  - Under $1,000: "We can work with that. Simple doesn't mean ineffective."
+   292→  - $1,000 – $5,000: "Solid range. We'll maximize every dollar."
+   293→  - $5,000 – $10,000: "Now we're building something real."
+   294→  - $10,000 – $15,000: "That budget unlocks serious systems."
+   295→  - $15,000+: "World-class budget. Let's build something incredible."
+   296→  - Don't know: "No problem. We'll scope it first so you know exactly what you're paying for."
+   297→  - Let's discuss: "Smart. The right solution is worth more than a round number."
+   298→
+   299→---
+   300→
+   301→### Step 6: "Did we get it right?"
+   302→
+   303→**Full summary of everything they've told us, displayed as a clean card.**
+   304→
+   305→```
+   306→┌─────────────────────────────────────────────────┐
+   307→│                                                   │
+   308→│         Here's what we heard, [Name].             │
+   309→│                                                   │
+   310→│  ──────────────────────────────────────────────  │
+   311→│                                                   │
+   312→│  WHAT YOU NEED                                    │
+   313→>  [Service 1], [Service 2]                          │
+   314→│                                                   │
+   315→│  WHAT'S BROKEN                                    │
+   316→>  [Pain 1], [Pain 2]                                │
+   317→│                                                   │
+   318→│  YOUR PROJECT                                      │
+   319→>  [Project detail 1], [Project detail 2]           │
+   320→│  [Custom project description if provided]          │
+   321→│                                                   │
+   322→│  WHO YOU ARE                                       │
+   323→│  Name: [First] [Last]                              │
+   324→│  Email: [email]                                    │
+   325→│  Phone: [phone] (if provided)                      │
+   326→│  Company: [company] (if provided)                  │
+   327→│                                                   │
+   328→│  HOW TO REACH YOU                                  │
+   329→│  Preferred: [contact methods]                      │
+   330→│  Best time: [best time]                            │
+   331→│                                                   │
+   332→│  YOUR INVESTMENT                                   │
+   333→>  [budget willingness]                              │
+   334→│                                                   │
+   335→│  ──────────────────────────────────────────────  │
+   336→│                                                   │
+   337→│  Looks right?                                     │
+   338→│                                                   │
+   339→│  [ Yeah, send it → ]     [ ← Go back ]            │
+   340→│                                                   │
+   341→└─────────────────────────────────────────────────┘
+   342→```
+   343→
+   344→**Each section has a clickable "Edit" link** that jumps back to that step.
+   345→
+   346→**Design:**
+   347→- Background: White with circuitry
+   348→- Summary card: `bg-white border border-gray-200 rounded-2xl p-8`
+   349→- Sections animate in with stagger (0.1s delay)
+   350→- "Go back" on each section
+   351→- CTA: "Yeah, send it →"
+   352→
+   353→---
+   354→
+   355→### Step 7: The Receipt
+   356→
+   357→```
+   358→┌─────────────────────────────────────────────────┐
+   359→│                                                   │
+   360→│           We got it, [Name].                      │
+   361→│                                                   │
+   362→│    Here's what happens next:                      │
+   363→│                                                   │
+   364→│    ✓  We read your answers                        │
+   365→│    ✓  We map out a solution                       │
+   366→│    ✓  We reach out within 24 hours                │
+   367→│                                                   │
+   368→│    No pitch. No commitment. Just a plan.          │
+   369→│                                                   │
+   370→│              [ Back to Home ]                      │
+   371→│                                                   │
+   372→└─────────────────────────────────────────────────┘
+   373→```
+   374→
+   375→---
+   376→
+   377→## 3. VISUAL DESIGN
+   378→
+   379→### Layout
+   380→
+   381→```
+   382→┌─────────────────────────────────────────────────┐
+   383→│  ← ODL Logo (top left)                           │
+   384→│  ═══════════════════════════════════════════════  │ ← progress bar
+   385→│                                                   │
+   386→│         [ Question Text ]                         │
+   387→│         [ Optional subtext ]                      │
+   388→│                                                   │
+   389→│    ┌──────────────────────┐                       │
+   390→│    │  Option 1      [ ✓ ] │                       │
+   391→│    └──────────────────────┘                       │
+   392→│    ┌──────────────────────┐                       │
+   393→│    │  Option 2            │                       │
+   394→│    └──────────────────────┘                       │
+   395→│    ┌──────────────────────┐                       │
+   396→│    │  Option 3            │                       │
+   397→│    └──────────────────────┘                       │
+   398→│    ┌──────────────────────┐                       │
+   399→│    │  Something else...   │                       │
+   400→│    └──────────────────────┘                       │
+   401→│                                                   │
+   402→│  ──────────────────────────────────────────────  │
+   403→│  Step 1 of 5              [ Back ]  [ Next → ]   │
+   404→└─────────────────────────────────────────────────┘
+   405→```
+   406→
+   407→### Progress Bar
+   408→- Thin line at very top of viewport
+   409→- Fills left-to-right as steps complete
+   410→- Color: `#111111` on white
+   411→- Height: 2px
+   412→
+   413→### Option Cards
+   414→
+   415→```
+   416→Default:   bg-white border border-gray-200 rounded-xl px-6 py-4 cursor-pointer
+   417→Hover:     border-gray-400 shadow-md
+   418→Selected:  border-gray-900 bg-gray-50 shadow-sm
+   419→```
+   420→
+   421→### Custom Input
+   422→- Appears when "Something else..." or "I'll explain..." is selected
+   423→- Slides down (0.3s)
+   424→- Style: `bg-gray-50 border border-gray-200 rounded-lg px-4 py-3`
+   425→
+   426→### Navigation
+   427→
+   428→| Button | Style |
+   429→|--------|-------|
+   430→| **Next** | `bg-gray-900 text-white rounded-full px-8 py-3 hover:bg-gray-800` |
+   431→| **Back** | `text-gray-500 hover:text-gray-900 transition-colors` |
+   432→| **Start** | `bg-white text-gray-900 rounded-full px-8 py-3 hover:bg-gray-100` |
+   433→
+   434→### Transitions
+   435→- Step out: slide left + fade (0.4s)
+   436→- Step in: slide from right (0.4s)
+   437→- Easing: `[0.23, 1, 0.32, 1]`
+   438→- Follow-up text: fade in from below (0.3s delay)
+   439→
+   440→### Backgrounds
+   441→- Steps 1-5: White + circuitry canvas
+   442→- Step 6 (Confirmation): White + subtle dot pattern
+   443→- Step 7 (Receipt): `#0A0A0A` + dot pattern
+   444→
+   445→---
+   446→
+   447→## 4. SERVICE → PAIN → PROJECT DETAIL MAP
+   448→
+   449→This is the core data structure that powers the dynamic questionnaire.
+   450→
+   451→```typescript
+   452→const SERVICE_PAIN_MAP = {
+   453→  "workflow-automation": {
+   454→    label: "Workflow Automation",
+   455→    icon: "⚙️",
+   456→    painPoints: [
+   457→      "Copy-pasting data between tools all day",
+   458→      "Same tasks repeated every week with no end in sight",
+   459→      "Manual approval processes bottlenecking everything",
+   460→      "Errors from human data entry costing me money",
+   461→      "Onboarding new employees takes forever",
+   462→    ],
+   463→    projectDetails: [
+   464→      "I need to automate data entry between tools",
+   465→      "I want a system that handles approvals without me chasing people",
+   466→      "I need recurring tasks to run on autopilot",
+   467→      "I want to reduce errors in a specific process",
+   468→    ],
+   469→  },
+   470→  "intelligent-agents": {
+   471→    label: "Intelligent Agents",
+   472→    icon: "🤖",
+   473→    painPoints: [
+   474→      "Customers waiting too long for responses",
+   475→      "Losing leads because nobody followed up in time",
+   476→      "Support team buried in repetitive questions",
+   477→      "Inconsistent quality across customer interactions",
+   478→      "Can't scale customer service without hiring more people",
+   479→    ],
+   480→    projectDetails: [
+   481→      "I need something to handle customer support 24/7",
+   482→      "I want agents to qualify and follow up with leads",
+   483→      "I need an internal operations agent for my team",
+   484→      "I want to automate a specific workflow with smart decisions",
+   485→    ],
+   486→  },
+   487→  "smart-assistants": {
+   488→    label: "Smart Assistants",
+   489→    icon: "🧠",
+   490→    painPoints: [
+   491→      "Email overload — important messages getting buried",
+   492→      "Scheduling wars — too many back-and-forths",
+   493→      "Documents piling up with no system to process them",
+   494→      "Admin work eating into billable hours",
+   495→      "Team spending more time organizing than working",
+   496→    ],
+   497→    projectDetails: [
+   498→      "I need help managing my email and calendar",
+   499→      "I want document processing automated",
+   500→      "I need an assistant that keeps my team organized",
+   501→      "I want to automate a specific admin task",
+   502→    ],
+   503→  },
+   504→  "business-intelligence": {
+   505→    label: "Business Intelligence",
+   506→    icon: "📊",
+   507→    painPoints: [
+   508→      "Flying blind — no idea what's actually happening in my business",
+   509→      "Building reports by hand every week or month",
+   510→      "Data scattered across 5 different tools",
+   511→      "Can't spot problems until they're expensive",
+   512→      "No real-time visibility into performance",
+   513→    ],
+   514→    projectDetails: [
+   515→      "I need a real-time dashboard for my business",
+   516→      "I want automated reports delivered on a schedule",
+   517→      "I need to connect data from multiple tools into one view",
+   518→      "I want to track specific KPIs automatically",
+   519→    ],
+   520→  },
+   521→  "custom-solutions": {
+   522→    label: "Custom Solutions",
+   523→    icon: "🛠️",
+   524→    painPoints: [
+   525→      "Off-the-shelf software doesn't fit how I actually work",
+   526→      "Patching together 4 tools to do what 1 should",
+   527→      "Need something specific that doesn't exist yet",
+   528→      "My current system is held together with duct tape",
+   529→      "Scaling is impossible with what I have now",
+   530→    ],
+   531→    projectDetails: [
+   532→      "I need an internal tool built from scratch",
+   533→      "I want a customer-facing portal or app",
+   534→      "I need an API integration between systems",
+   535→      "I want to build something specific from the ground up",
+   536→    ],
+   537→  },
+   538→  "web-development": {
+   539→    label: "Web Development",
+   540→    icon: "🌐",
+   541→    painPoints: [
+   542→      "My website doesn't represent who I am anymore",
+   543→      "Visitors come but don't convert into customers",
+   544→      "My site is slow, broken on mobile, or just ugly",
+   545→      "I need a site but my developer disappeared",
+   546→      "I'm embarrassed to send people to my website",
+   547→    ],
+   548→    projectDetails: [
+   549→      "I need a brand new website built from scratch",
+   550→      "I need a landing page for a campaign or product",
+   551→      "I want to redesign my existing site",
+   552→      "I need an e-commerce store or booking system",
+   553→    ],
+   554→  },
+   555→  "ui-ux-design": {
+   556→    label: "UI/UX Design",
+   557→    icon: "🎨",
+   558→    painPoints: [
+   559→      "My app looks outdated and unprofessional",
+   560→      "Users are confused and dropping off",
+   561→      "My team wastes time debating design decisions",
+   562→      "I need a design system but don't know where to start",
+   563→      "I want a mobile app that feels premium",
+   564→    ],
+   565→    projectDetails: [
+   566→      "I need a full UI/UX redesign of my product",
+   567→      "I need wireframes and prototypes before building",
+   568→      "I want a design system for consistency",
+   569→      "I need a mobile app design that feels native",
+   570→    ],
+   571→  },
+   572→  "digital-products": {
+   573→    label: "Digital Products",
+   574→    icon: "📱",
+   575→    painPoints: [
+   576→      "I have an idea but no technical co-founder",
+   577→      "I tried building it myself and it's a mess",
+   578→      "My current product is losing users to better alternatives",
+   579→      "I can't find developers who understand my vision",
+   580→      "I need to ship an MVP before my window closes",
+   581→    ],
+   582→    projectDetails: [
+   583→      "I want to build a SaaS product from scratch",
+   584→      "I need help scoping and building an MVP",
+   585→      "I want to turn my process into a product others can buy",
+   586→      "I need a technical partner, not just a dev shop",
+   587→    ],
+   588→  },
+   589→};
+   590→
+   591→// Always-available options (shown regardless of service selection)
+   592→const ALWAYS_PAIN = [
+   593→  "It's a mix of everything, honestly",
+   594→  "I just need someone who gets it",
+   595→];
+   596→
+   597→const ALWAYS_PROJECT = [
+   598→  "I'm not 100% sure yet — help me figure it out",
+   599→  "I need the full package — design, build, and deploy",
+   600→];
+   601→```
+   602→
+   603→---
+   604→
+   605→## 5. DATABASE SCHEMA
+   606→
+   607→```sql
+   608→CREATE TABLE onboarding_submissions (
+   609→  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+   610→
+   611→  -- Identity
+   612→  first_name TEXT NOT NULL,
+   613→  last_name TEXT,
+   614→  email TEXT NOT NULL,
+   615→  phone TEXT,
+   616→  company TEXT,
+   617→
+   618→  -- Purpose
+   619→  services_needed TEXT[] NOT NULL DEFAULT '{}',
+   620→
+   621→  -- Pain
+   622→  pain_points TEXT[] NOT NULL DEFAULT '{}',
+   623→  pain_description TEXT,
+   624→
+   625→  -- Project
+   626→  project_details TEXT[] NOT NULL DEFAULT '{}',
+   627→  project_description TEXT,
+   628→
+   629→  -- Contact preferences
+   630→  contact_preferences TEXT[] NOT NULL DEFAULT '{}',
+   631→  best_time TEXT CHECK (best_time IN ('morning', 'afternoon', 'evening', 'anytime')),
+   632→
+   633→  -- Investment
+   634→  budget_willingness TEXT NOT NULL,
+   635→
+   636→  -- Additional
+   637→  additional_notes TEXT,
+   638→
+   639→  -- Metadata
+   640→  completed_at TIMESTAMPTZ DEFAULT NOW(),
+   641→  created_at TIMESTAMPTZ DEFAULT NOW(),
+   642→
+   643→  -- CRM
+   644→  status TEXT DEFAULT 'new' CHECK (status IN ('new', 'contacted', 'qualified', 'proposal', 'won', 'lost')),
+   645→  summary TEXT,
+   646→  tags TEXT[] DEFAULT '{}'
+   647→);
+   648→
+   649→CREATE INDEX idx_onboarding_email ON onboarding_submissions(email);
+   650→CREATE INDEX idx_onboarding_status ON onboarding_submissions(status);
+   651→CREATE INDEX idx_onboarding_created ON onboarding_submissions(created_at DESC);
+   652→
+   653→CREATE TABLE onboarding_responses (
+   654→  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+   655→  submission_id UUID REFERENCES onboarding_submissions(id) ON DELETE CASCADE,
+   656→  step_number INT NOT NULL,
+   657→  step_key TEXT NOT NULL,
+   658→  question TEXT NOT NULL,
+   659→  answer TEXT NOT NULL,
+   660→  answer_type TEXT CHECK (answer_type IN ('selection', 'custom', 'multiple', 'text')),
+   661→  created_at TIMESTAMPTZ DEFAULT NOW()
+   662→);
+   663→
+   664→CREATE INDEX idx_responses_submission ON onboarding_responses(submission_id);
+   665→
+   666→ALTER TABLE onboarding_submissions ENABLE ROW LEVEL SECURITY;
+   667→ALTER TABLE onboarding_responses ENABLE ROW LEVEL SECURITY;
+   668→
+   669→CREATE POLICY "Allow anonymous inserts" ON onboarding_submissions
+   670→  FOR INSERT WITH CHECK (true);
+   671→CREATE POLICY "Allow anonymous inserts" ON onboarding_responses
+   672→  FOR INSERT WITH CHECK (true);
+   673→CREATE POLICY "Allow authenticated reads" ON onboarding_submissions
+   674→  FOR SELECT USING (auth.role() = 'authenticated');
+   675→CREATE POLICY "Allow authenticated reads" ON onboarding_responses
+   676→  FOR SELECT USING (auth.role() = 'authenticated');
+   677→```
+   678→
+   679→---
+   680→
+   681→## 6. DATA SHAPE
+   682→
+   683→```typescript
+   684→{
+   685→  first_name: "Sarah",
+   686→  last_name: "Mitchell",
+   687→  email: "sarah@brightdental.com",
+   688→  phone: "+14075551234",
+   689→  company: "Bright Dental Group",
+   690→  services_needed: ["workflow-automation", "business-intelligence"],
+   691→  pain_points: [
+   692→    "Copy-pasting data between tools all day",
+   693→    "Flying blind — no idea what's actually happening in my business",
+   694→    "Building reports by hand every week or month"
+   695→  ],
+   696→  pain_description: null,
+   697→  project_details: [
+   698→    "I need to automate data entry between tools",
+   699→    "I need a real-time dashboard for my business"
+   700→  ],
+   701→  project_description: null,
+   702→  contact_preferences: ["email", "whatsapp"],
+   703→  best_time: "morning",
+   704→  budget_willingness: "$5,000 – $10,000",
+   705→  additional_notes: "We're a dental practice with 3 locations.",
+   706→  tags: ["dental", "multi-location", "workflow", "bi"]
+   707→}
+   708→```
+   709→
+   710→---
+   711→
+   712→## 7. ANIMATION SYSTEM
+   713→
+   714→| Animation | Trigger | Duration | Easing |
+   715→|-----------|---------|----------|--------|
+   716→| Slide left + fade | Step complete | 0.4s | `[0.23, 1, 0.32, 1]` |
+   717→| Slide in from right | New step | 0.4s | `[0.23, 1, 0.32, 1]` |
+   718→| Option hover | Mouse enter | 0.2s | `ease-out` |
+   719→| Option select | Click | 0.3s | spring |
+   720→| Custom input expand | Selection | 0.3s | `[0.23, 1, 0.32, 1]` |
+   721→| Follow-up text | Answer selected | 0.3s delay | 0.4s |
+   722→| Progress bar | Step complete | 0.4s | `[0.23, 1, 0.32, 1]` |
+   723→| Confirmation sections | Page load | 0.5s each | staggered 0.1s |
+   724→| Receipt checkmarks | Page load | 0.5s each | staggered 0.2s |
+   725→
+   726→---
+   727→
+   728→## 8. RESPONSIVE DESIGN
+   729→
+   730→### Mobile (< 768px)
+   731→- Options stack vertically (full width)
+   732→- Reduced padding: `px-4 py-3`
+   733→- Progress bar: top of viewport
+   734→- Navigation: fixed bottom bar
+   735→- Question text: `text-xl`
+   736→- Step 4 form: full width, stacked fields
+   737→- Confirmation: scrollable card
+   738→
+   739→### Desktop (≥ 768px)
+   740→- Options in 2-column grid
+   741→- Generous padding: `px-6 py-4`
+   742→- Navigation: inline below options
+   743→- Question text: `text-2xl md:text-3xl`
+   744→- Step 4 form: 2-column layout for name fields
+   745→- Confirmation: centered card, max-width 600px
+   746→
+   747→---
+   748→
+   749→## 9. ERROR HANDLING
+   750→
+   751→### Validation Errors
+   752→- Inline below field: `text-sm text-red-600 mt-1`
+   753→- Appear on blur or "Next" click
+   754→
+   755→### Network Errors
+   756→- Retry button: `bg-red-600 hover:bg-red-700 text-white rounded-full`
+   757→- Message: "Something went wrong. Try again?"
+   758→
+   759→### Edge Function Failure
+   760→- Non-blocking — submission saves regardless
+   761→- Summary field remains null (filled later)
+   762→
+   763→---
+   764→
+   765→*This design file replaces the static form in Section 9 of the main design file. Version 3.0 uses dynamic pain/project options based on service selection.*
+   766→

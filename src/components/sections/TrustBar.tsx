@@ -1,14 +1,14 @@
-"use client"
+"use client";
 
-import { useRef, useState, useEffect } from "react"
-import { motion, useInView } from "framer-motion"
+import { useRef, useState, useEffect } from "react";
+import { motion } from "motion/react";
 
 const METRICS = [
   { value: 50, suffix: "+", label: "Automations Deployed" },
-  { value: 99.8, suffix: "%", label: "Uptime Guarantee", decimals: 1 },
-  { value: 24, suffix: "/7", label: "System Monitoring" },
-  { value: 4.8, suffix: "\u2605", label: "Client Rating", decimals: 1 },
-]
+  { value: 99.8, suffix: "%", label: "Uptime", decimals: 1 },
+  { value: 24, suffix: "/7", label: "Monitoring" },
+  { value: 4.8, suffix: "★", label: "Client Rating", decimals: 1 },
+];
 
 function AnimatedCounter({
   value,
@@ -16,43 +16,60 @@ function AnimatedCounter({
   decimals = 0,
   inView,
 }: {
-  value: number
-  suffix: string
-  decimals?: number
-  inView: boolean
+  value: number;
+  suffix: string;
+  decimals?: number;
+  inView: boolean;
 }) {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
 
   useEffect(() => {
-    if (!inView) return
-    let start = 0
-    const duration = 2000
-    const startTime = Date.now()
+    if (!inView) return;
+    const duration = 3500;
+    const startTime = Date.now();
 
     const animate = () => {
-      const elapsed = Date.now() - startTime
-      const progress = Math.min(elapsed / duration, 1)
-      // Ease out cubic
-      const eased = 1 - Math.pow(1 - progress, 3)
-      start = eased * value
-      setCount(start)
-      if (progress < 1) requestAnimationFrame(animate)
-    }
+      const elapsed = Date.now() - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      // Ease-out quart: 1 - (1 - t)^4
+      const eased = 1 - Math.pow(1 - progress, 4);
+      setCount(eased * value);
+      if (progress < 1) requestAnimationFrame(animate);
+    };
 
-    requestAnimationFrame(animate)
-  }, [inView, value])
+    requestAnimationFrame(animate);
+  }, [inView, value]);
 
   return (
     <span className="font-mono">
       {decimals > 0 ? count.toFixed(decimals) : Math.round(count)}
       {suffix}
     </span>
-  )
+  );
 }
 
 export default function TrustBar() {
-  const sectionRef = useRef<HTMLElement>(null)
-  const isInView = useInView(sectionRef, { once: true, margin: "-100px" })
+  const sectionRef = useRef<HTMLElement>(null);
+  const [isInView, setIsInView] = useState(false);
+
+  // Trigger counter at 40% of the section being visible
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsInView(true);
+          observer.unobserve(entry.target);
+        }
+      },
+      { threshold: 0.4 }
+    );
+
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <section
@@ -62,12 +79,12 @@ export default function TrustBar() {
       <div className="max-w-5xl mx-auto px-4 md:px-8">
         {/* Liquid Glass Panel */}
         <motion.div
-          className="relative rounded-3xl border border-white/80 overflow-hidden"
+          className="relative rounded-3xl border border-white/80 overflow-hidden backdrop-blur-xl"
           style={{
-            backdropFilter: "blur(20px)",
             backgroundColor: "rgba(255, 255, 255, 0.6)",
           }}
           initial={{ opacity: 0, y: 40 }}
+          suppressHydrationWarning
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, ease: [0.32, 0.72, 0, 1] }}
         >
@@ -77,6 +94,7 @@ export default function TrustBar() {
                 key={metric.label}
                 className="relative p-8 md:p-10 text-center group cursor-default"
                 initial={{ opacity: 0, y: 30 }}
+                suppressHydrationWarning
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{
                   duration: 0.6,
@@ -85,9 +103,12 @@ export default function TrustBar() {
                 }}
                 whileHover={{
                   scale: 1.03,
-                  transition: { type: "spring", stiffness: 300, damping: 20 },
+                  transition: {
+                    type: "spring",
+                    stiffness: 300,
+                    damping: 20,
+                  },
                 }}
-                style={{ transformStyle: "preserve-3d" }}
               >
                 {/* Divider (not on first item) */}
                 {i > 0 && (
@@ -122,6 +143,7 @@ export default function TrustBar() {
         <motion.p
           className="text-center mt-8 text-gray-500 text-sm md:text-base max-w-xl mx-auto leading-relaxed"
           initial={{ opacity: 0 }}
+          suppressHydrationWarning
           animate={isInView ? { opacity: 1 } : {}}
           transition={{ duration: 0.6, delay: 0.6 }}
         >
@@ -130,5 +152,5 @@ export default function TrustBar() {
         </motion.p>
       </div>
     </section>
-  )
+  );
 }

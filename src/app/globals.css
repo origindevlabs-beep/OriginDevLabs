@@ -8,7 +8,7 @@
   --color-background: #FFFFFF;
   --color-foreground: #111111;
   --color-odl-dark: #0A0A0A;
-  --color-odl-offwhite: #FAFAF8;
+  --color-odl-offwhite: #F5F4F1;
   --color-odl-gray-700: #374151;
   --color-odl-gray-500: #6B7280;
   --color-odl-gray-300: #D1D5DB;
@@ -64,24 +64,37 @@
   animation: marquee 30s linear infinite;
 }
 
-/* --- Load Screen Pulse --- */
-@keyframes logo-pulse {
-  0%, 100% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.05); opacity: 0.8; }
+/* --- Load Screen Logo Pulse (single) --- */
+@keyframes logo-pulse-once {
+  0% { transform: scale(0.8); opacity: 0; }
+  30% { transform: scale(1.08); opacity: 1; }
+  60% { transform: scale(0.95); }
+  100% { transform: scale(1); opacity: 1; }
 }
 
-.animate-logo-pulse {
-  animation: logo-pulse 2s ease-in-out infinite;
+.animate-logo-pulse-once {
+  animation: logo-pulse-once 1.2s ease-out forwards;
 }
 
-/* --- CTA Button Pulse --- */
-@keyframes cta-pulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.02); }
+/* --- Typewriter Cursor Blink --- */
+@keyframes blink-cursor {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.animate-blink-cursor {
+  animation: blink-cursor 0.8s step-end infinite;
+}
+
+/* --- CTA Button Pulsating Attention --- */
+@keyframes cta-attention-pulse {
+  0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0,0,0,0.25); }
+  50% { transform: scale(1.06); box-shadow: 0 0 20px 4px rgba(0,0,0,0.12); }
+  100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0,0,0,0.25); }
 }
 
 .animate-cta-pulse {
-  animation: cta-pulse 3s ease-in-out infinite;
+  animation: cta-attention-pulse 2.5s ease-in-out infinite;
 }
 
 /* --- Reduced Motion --- */

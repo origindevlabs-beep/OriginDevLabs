@@ -1,0 +1,4 @@
+Contact: security@origindevlabs.com
+Preferred-Languages: en
+Canonical-URI: https://origindevlabs.com/.well-known/security.txt
+Policy: https://origindevlabs.com/security

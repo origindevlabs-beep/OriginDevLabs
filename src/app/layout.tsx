@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import { Space_Grotesk, Plus_Jakarta_Sans, JetBrains_Mono } from "next/font/google"
 import "./globals.css"
+import ClientLayout from "@/components/ClientLayout"
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
@@ -24,9 +25,14 @@ const jetbrainsMono = JetBrains_Mono({
 })
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://origindevlabs.com"),
   title: "Origin Dev Labs | Automation Systems That Work While You Sleep | Orlando, FL",
   description:
     "Origin Dev Labs builds automation systems, smart agents, and custom solutions that save businesses time and money. Based in Orlando, FL. Free consultation.",
+  icons: {
+    icon: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
+  },
   keywords: [
     "automation",
     "business automation",
@@ -64,7 +70,7 @@ export default function RootLayout({
       className={`${spaceGrotesk.variable} ${plusJakarta.variable} ${jetbrainsMono.variable}`}
     >
       <body className="antialiased bg-white text-gray-900">
-        {children}
+        <ClientLayout>{children}</ClientLayout>
       </body>
     </html>
   )

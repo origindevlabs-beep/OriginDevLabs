@@ -1,177 +1,337 @@
 "use client"
 
-import { useRef } from "react"
-import { motion, useScroll, useTransform, useInView } from "framer-motion"
-import { Search, Compass, Code, CheckCircle, Rocket, TrendingUp } from "lucide-react"
+import { useRef, useEffect, useCallback, useState } from "react"
+import { motion, useScroll, useTransform, useMotionValueEvent } from "motion/react"
+import { Search, Compass, Code, CheckCircle, Rocket, TrendingUp, Check } from "lucide-react"
 
+/* ------------------------------------------------------------------ */
+/*  Data                                                               */
+/* ------------------------------------------------------------------ */
 const STEPS = [
-  {
-    number: 1,
-    title: "Discovery",
-    description:
-      "We map your workflows and find the bottlenecks. No assumptions — just a clear picture of where your time and money are going, and where automation can make the biggest impact.",
-    icon: Search,
-  },
-  {
-    number: 2,
-    title: "Solution Design",
-    description:
-      "Architecture that fits your business. We design systems around your actual processes, not generic templates. Every workflow is custom-planned for maximum efficiency.",
-    icon: Compass,
-  },
-  {
-    number: 3,
-    title: "Development",
-    description:
-      "Build, integrate, connect everything. Our team assembles the automation using proven tools and clean code — no black boxes, no vendor lock-in.",
-    icon: Code,
-  },
-  {
-    number: 4,
-    title: "Testing",
-    description:
-      "Break it on purpose so customers never have to. We stress-test every edge case, every failure mode, and every integration point before anything goes live.",
-    icon: CheckCircle,
-  },
-  {
-    number: 5,
-    title: "Deployment",
-    description:
-      "Launch, train, and support. We handle the full rollout, train your team, and make sure everyone knows how the new system works before we step back.",
-    icon: Rocket,
-  },
-  {
-    number: 6,
-    title: "Optimization",
-    description:
-      "Watch data, tune systems, maximize ROI. Post-launch monitoring and continuous improvement — because automation that isn't improving is slowing down.",
-    icon: TrendingUp,
-  },
+  { number: 1, title: "Discovery", description: "We map your workflows and find the bottlenecks", icon: Search, progress: 0 },
+  { number: 2, title: "Solution Design", description: "Architecture that fits your business", icon: Compass, progress: 0.11 },
+  { number: 3, title: "Development", description: "Build, integrate, connect everything", icon: Code, progress: 0.22 },
+  { number: 4, title: "Testing", description: "Break it on purpose so customers never have to", icon: CheckCircle, progress: 0.33 },
+  { number: 5, title: "Deployment", description: "Launch, train, and support", icon: Rocket, progress: 0.44 },
+  { number: 6, title: "Optimization", description: "Watch data, tune systems, maximize ROI", icon: TrendingUp, progress: 0.55 },
 ]
 
+/* ------------------------------------------------------------------ */
+/*  Canvas Background Hook                                             */
+/* ------------------------------------------------------------------ */
+function useCircuitBackground(
+  canvasRef: React.RefObject<HTMLCanvasElement | null>,
+  containerRef: React.RefObject<HTMLDivElement | null>,
+  dark = true,
+) {
+  const mouseRef = useRef({ x: -9999, y: -9999 })
+
+  const handleMouseMove = useCallback((e: MouseEvent) => {
+    const canvas = canvasRef.current
+    if (!canvas) return
+    const rect = canvas.getBoundingClientRect()
+    mouseRef.current = { x: e.clientX - rect.left, y: e.clientY - rect.top }
+  }, [canvasRef])
+
+  useEffect(() => {
+    const canvas = canvasRef.current
+    if (!canvas) return
+
+    const ctx = canvas.getContext("2d")
+    if (!ctx) return
+
+    const nodeColor = dark ? "255,255,255" : "0,0,0"
+    const glowColor = dark ? "255,255,255" : "0,0,0"
+
+    /* Generate nodes */
+    const nodeCount = 50
+    const nodes: { x: number; y: number; vx: number; vy: number; radius: number }[] = []
+    for (let i = 0; i < nodeCount; i++) {
+      nodes.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        vx: (Math.random() - 0.5) * 0.3,
+        vy: (Math.random() - 0.5) * 0.3,
+        radius: Math.random() * 1.5 + 0.5,
+      })
+    }
+
+    /* Connections */
+    const connections: [number, number][] = []
+    for (let i = 0; i < nodeCount; i++) {
+      const closest = [...Array(nodeCount).keys()]
+        .filter((j) => j !== i)
+        .sort((a, b) => {
+          const da = (nodes[a].x - nodes[i].x) ** 2 + (nodes[a].y - nodes[i].y) ** 2
+          const db = (nodes[b].x - nodes[i].x) ** 2 + (nodes[b].y - nodes[i].y) ** 2
+          return da - db
+        })
+      const connectCount = Math.floor(Math.random() * 2) + 1
+      for (let c = 0; c < connectCount && c < closest.length; c++) {
+        const j = closest[c]
+        if (j > i) connections.push([i, j])
+      }
+    }
+
+    let raf: number
+    function draw() {
+      if (!canvas || !ctx) return
+      const w = canvas.width
+      const h = canvas.height
+      ctx.clearRect(0, 0, w, h)
+
+      const mx = mouseRef.current.x
+      const my = mouseRef.current.y
+
+      /* Update positions */
+      for (const n of nodes) {
+        n.x += n.vx
+        n.y += n.vy
+        if (n.x < 0 || n.x > w) n.vx *= -1
+        if (n.y < 0 || n.y > h) n.vy *= -1
+        n.x = Math.max(0, Math.min(w, n.x))
+        n.y = Math.max(0, Math.min(h, n.y))
+      }
+
+      /* Draw connections */
+      for (const [a, b] of connections) {
+        const na = nodes[a]
+        const nb = nodes[b]
+        const dist = Math.sqrt((na.x - nb.x) ** 2 + (na.y - nb.y) ** 2)
+        if (dist > 200) continue
+
+        const midX = (na.x + nb.x) / 2
+        const midY = (na.y + nb.y) / 2
+        const mouseDist = Math.sqrt((mx - midX) ** 2 + (my - midY) ** 2)
+        const glow = Math.max(0, 1 - mouseDist / 180)
+
+        const baseAlpha = dark ? 0.06 : 0.08
+        const alpha = baseAlpha + glow * 0.2
+        ctx.strokeStyle = `rgba(${nodeColor},${alpha})`
+        ctx.lineWidth = 0.5 + glow * 1.5
+        ctx.beginPath()
+        ctx.moveTo(na.x, na.y)
+        /* Right-angle paths for circuitry feel */
+        if (Math.random() > 0.5) {
+          ctx.lineTo(na.x, nb.y)
+          ctx.lineTo(nb.x, nb.y)
+        } else {
+          ctx.lineTo(nb.x, na.y)
+          ctx.lineTo(nb.x, nb.y)
+        }
+        ctx.stroke()
+      }
+
+      /* Draw nodes */
+      for (const n of nodes) {
+        const mouseDist = Math.sqrt((mx - n.x) ** 2 + (my - n.y) ** 2)
+        const glow = Math.max(0, 1 - mouseDist / 150)
+
+        const baseAlpha = dark ? 0.15 : 0.2
+        const alpha = baseAlpha + glow * 0.6
+        const r = n.radius + glow * 3
+
+        if (glow > 0.1) {
+          ctx.shadowColor = `rgba(${glowColor},${glow * 0.5})`
+          ctx.shadowBlur = 12
+        } else {
+          ctx.shadowColor = "transparent"
+          ctx.shadowBlur = 0
+        }
+
+        ctx.fillStyle = `rgba(${nodeColor},${alpha})`
+        ctx.beginPath()
+        ctx.arc(n.x, n.y, r, 0, Math.PI * 2)
+        ctx.fill()
+      }
+
+      ctx.shadowColor = "transparent"
+      ctx.shadowBlur = 0
+
+      raf = requestAnimationFrame(draw)
+    }
+
+    draw()
+    const parent = containerRef.current
+    parent?.addEventListener("mousemove", handleMouseMove)
+
+    const resize = () => {
+      if (!canvas) return
+      const rect = containerRef.current?.getBoundingClientRect()
+      if (rect) {
+        canvas.width = rect.width * (window.devicePixelRatio || 1)
+        canvas.height = rect.height * (window.devicePixelRatio || 1)
+        canvas.style.width = `${rect.width}px`
+        canvas.style.height = `${rect.height}px`
+        ctx.scale(window.devicePixelRatio || 1, window.devicePixelRatio || 1)
+      }
+    }
+    resize()
+    window.addEventListener("resize", resize)
+
+    return () => {
+      cancelAnimationFrame(raf)
+      parent?.removeEventListener("mousemove", handleMouseMove)
+      window.removeEventListener("resize", resize)
+    }
+  }, [canvasRef, containerRef, dark, handleMouseMove])
+}
+
+/* ------------------------------------------------------------------ */
+/*  Step Card                                                          */
+/* ------------------------------------------------------------------ */
 function StepCard({
   step,
   index,
+  progress,
 }: {
   step: (typeof STEPS)[0]
   index: number
+  progress: number
 }) {
-  const ref = useRef<HTMLDivElement>(null)
-  const isInView = useInView(ref, { once: true, margin: "-80px" })
+  const Icon = step.icon
   const isLeft = index % 2 === 0
 
+  /* Determine reveal state */
+  const stepReached = progress >= step.progress
+  const stepPassed = progress >= step.progress + 0.1
+
+  /* 3D reveal interpolation */
+  const revealProgress = Math.min(1, Math.max(0, (progress - step.progress) / 0.08))
+
+  const rotateX = -20 + revealProgress * 20
+  const opacity = revealProgress
+  const scale = 0.9 + revealProgress * 0.1
+
   return (
-    <motion.div
-      ref={ref}
-      className={`flex items-start gap-6 md:gap-12 ${
-        isLeft ? "md:flex-row" : "md:flex-row-reverse"
-      } flex-row`}
-      initial={{ opacity: 0, x: isLeft ? -40 : 40 }}
-      animate={isInView ? { opacity: 1, x: 0 } : {}}
-      transition={{
-        duration: 0.7,
-        ease: [0.32, 0.72, 0, 1],
+    <div
+      className={`flex items-start gap-4 md:gap-12 ${isLeft ? "md:flex-row" : "md:flex-row-reverse"} flex-row`}
+      style={{
+        perspective: "800px",
+        opacity,
+        transform: `rotateX(${rotateX}deg) scale(${scale})`,
+        transition: "opacity 0.05s, transform 0.05s",
       }}
     >
-      {/* Content */}
+      {/* Content side */}
       <div className={`flex-1 ${isLeft ? "md:text-right" : "md:text-left"} text-left`}>
-        <div className={`flex items-center gap-3 mb-3 ${isLeft ? "md:justify-end" : "md:justify-start"} justify-start`}>
+        <div
+          className={`flex items-center gap-3 mb-2 ${isLeft ? "md:justify-end" : "md:justify-start"} justify-start`}
+        >
           <span
             className="text-xs font-mono font-bold text-white/40 tracking-widest"
             style={{ fontFamily: "var(--font-mono), monospace" }}
           >
             0{step.number}
           </span>
-          <h3 className="text-xl md:text-2xl font-semibold text-white tracking-tight">
+          <h3 className="text-lg md:text-2xl font-semibold text-white tracking-tight">
             {step.title}
           </h3>
+          {stepPassed && (
+            <motion.span
+              initial={{ scale: 0, opacity: 0 }}
+              suppressHydrationWarning
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ type: "spring", stiffness: 300, damping: 20 }}
+              className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-emerald-500/20 border border-emerald-500/50"
+            >
+              <Check className="w-3 h-3 text-emerald-400" />
+            </motion.span>
+          )}
         </div>
-        <p className="text-sm text-gray-400 leading-relaxed max-w-md">
+        <p className="text-sm text-gray-400 leading-relaxed max-w-xs md:max-w-md">
           {step.description}
         </p>
       </div>
 
-      {/* Center Icon */}
-      <div className="relative flex items-center justify-center w-12 h-12 shrink-0">
-        <div className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center z-10">
-          <step.icon className="w-5 h-5 text-white/70" />
+      {/* Center icon node */}
+      <div className="relative flex items-center justify-center w-10 h-10 md:w-12 md:h-12 shrink-0 z-10">
+        <div
+          className={`w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center border transition-colors duration-300 ${
+            stepReached
+              ? "bg-white/10 border-white/30"
+              : "bg-white/[0.02] border-white/10"
+          }`}
+        >
+          <Icon className={`w-4 h-4 md:w-5 md:h-5 transition-colors duration-300 ${stepReached ? "text-white" : "text-white/40"}`} />
         </div>
       </div>
 
-      {/* Spacer for alignment */}
+      {/* Spacer for zigzag alignment */}
       <div className="flex-1 hidden md:block" />
-    </motion.div>
+    </div>
   )
 }
 
+/* ------------------------------------------------------------------ */
+/*  Main Component                                                     */
+/* ------------------------------------------------------------------ */
 export default function HowItWorksSection() {
-  const sectionRef = useRef<HTMLElement>(null)
-  const titleRef = useRef<HTMLDivElement>(null)
-  const titleInView = useInView(titleRef, { once: true, margin: "-100px" })
+  const outerRef = useRef<HTMLDivElement>(null)
+  const stickyRef = useRef<HTMLDivElement>(null)
+  const canvasRef = useRef<HTMLCanvasElement>(null)
+  const containerRef = useRef<HTMLDivElement>(null)
+
   const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start end", "end start"],
+    target: outerRef,
+    offset: ["start start", "end start"],
   })
-  const lineHeight = useTransform(scrollYProgress, [0.1, 0.8], ["0%", "100%"])
+
+  const rawProgress = useTransform(scrollYProgress, [0, 0.65], [0, 1])
+
+  const [progress, setProgress] = useState(0)
+
+  useMotionValueEvent(rawProgress, "change", (v) => {
+    setProgress(Math.max(0, Math.min(1, v)))
+  })
+
+  /* Canvas background */
+  useCircuitBackground(canvasRef, containerRef, true)
 
   return (
-    <section
-      ref={sectionRef}
-      className="relative w-full bg-[#0A0A0A] py-24 md:py-32 overflow-hidden"
-    >
-      {/* Dot pattern background */}
-      <div className="absolute inset-0 pointer-events-none opacity-[0.03]">
-        <svg width="100%" height="100%">
-          <defs>
-            <pattern id="hiwDots" width="24" height="24" patternUnits="userSpaceOnUse">
-              <circle cx="12" cy="12" r="0.5" fill="white" />
-            </pattern>
-          </defs>
-          <rect width="100%" height="100%" fill="url(#hiwDots)" />
-        </svg>
-      </div>
-
-      <div className="relative z-10 max-w-5xl mx-auto px-4 md:px-8">
-        {/* Section Header */}
-        <div ref={titleRef} className="text-center mb-20 md:mb-28">
-          <motion.span
-            className="inline-block px-4 py-1.5 bg-white/5 text-white/60 text-xs font-medium tracking-wider uppercase rounded-full mb-6 border border-white/10"
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={titleInView ? { opacity: 1, scale: 1 } : {}}
-            transition={{ duration: 0.5, delay: 0.2 }}
-          >
-            Our Process
-          </motion.span>
-          <motion.h2
-            className="text-3xl md:text-5xl font-semibold text-white tracking-tight mb-4"
-            initial={{ opacity: 0, y: 30 }}
-            animate={titleInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.7, delay: 0.1, ease: [0.32, 0.72, 0, 1] }}
-          >
-            How Your Automation
-            <br />
-            <span className="text-white/40">Gets Built</span>
-          </motion.h2>
+    <div ref={outerRef} className="relative min-h-[300vh]">
+      <div
+        ref={stickyRef}
+        className="h-screen sticky top-0 w-full bg-[#0A0A0A]"
+      >
+        {/* Animated Canvas Background */}
+        <div ref={containerRef} className="absolute inset-0" style={{ zIndex: 0, transform: "translateZ(0)" }}>
+          <canvas ref={canvasRef} className="absolute inset-0 w-full h-full opacity-60" />
         </div>
 
-        {/* Timeline */}
-        <div className="relative">
-          {/* Animated center line */}
-          <div className="absolute left-6 md:left-1/2 top-0 bottom-0 w-px -translate-x-1/2 bg-white/10">
-            <motion.div
-              className="absolute top-0 left-0 w-full bg-white/40 origin-top"
-              style={{ height: lineHeight }}
-            />
+        {/* Content Layer */}
+        <div className="relative z-10 h-full flex flex-col items-center justify-center px-4 md:px-8">
+          {/* Section Header */}
+          <div className="text-center mt-6 md:mt-10 mb-4 md:mb-6 shrink-0">
+            <span className="inline-block px-4 py-1.5 bg-white/5 text-white/60 text-xs font-medium tracking-wider uppercase rounded-full mb-4 border border-white/10">
+              Our Process
+            </span>
+            <h2 className="text-2xl md:text-4xl lg:text-5xl font-semibold text-white tracking-tight">
+              How Your Automation
+              <br />
+              <span className="text-white/40">Gets Built</span>
+            </h2>
           </div>
 
-          {/* Steps */}
-          <div className="flex flex-col gap-16 md:gap-20">
-            {STEPS.map((step, i) => (
-              <StepCard key={step.number} step={step} index={i} />
-            ))}
+          {/* Steps Area */}
+          <div className="relative flex-1 w-full max-w-4xl flex flex-col md:flex-row items-stretch min-h-0">
+            {/* Steps column */}
+            <div className="flex-1 relative">
+              {/* Steps */}
+              <div className="relative flex flex-col justify-center pt-1 pb-2 md:pt-2 md:pb-4 pl-10 md:pl-0 gap-4 md:gap-5">
+                {STEPS.map((step, i) => (
+                  <StepCard
+                    key={step.number}
+                    step={step}
+                    index={i}
+                    progress={progress}
+                  />
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </section>
+    </div>
   )
 }

@@ -1,125 +1,176 @@
 "use client"
 
-import { useRef } from "react"
-import { motion, useScroll, useTransform, useInView } from "framer-motion"
+import { useRef, useState, useEffect, useCallback } from "react"
+import { useScroll, useTransform, useMotionValueEvent } from "motion/react"
+import CircuitryBackground from "@/components/CircuitryBackground"
 
+/* ------------------------------------------------------------------ */
+/*  Data                                                               */
+/* ------------------------------------------------------------------ */
 const PROBLEMS = [
-  { text: "Manual data entry eating 20+ hours every week" },
-  { text: "Leads going cold because no one followed up fast enough" },
-  { text: "Friday afternoons spent compiling reports" },
-  { text: "Costly human errors in invoicing and scheduling" },
+  { text: "Manual data entry 20+ hrs/week" },
+  { text: "Leads going cold" },
+  { text: "Friday reports" },
+  { text: "Human errors" },
 ]
 
 const SOLUTIONS = [
-  { text: "Automated workflows that run around the clock" },
-  { text: "Every lead captured, qualified, and routed in under five minutes" },
-  { text: "Real-time dashboards that update themselves" },
-  { text: "Zero-error systems built to catch what humans miss" },
+  { text: "Automated workflows 24/7" },
+  { text: "Leads captured in 5 min" },
+  { text: "Real-time dashboards" },
+  { text: "Zero-error systems" },
 ]
 
+/* ------------------------------------------------------------------ */
+/*  Main Component                                                     */
+/* ------------------------------------------------------------------ */
 export default function ProblemSolutionSection() {
-  const sectionRef = useRef<HTMLElement>(null)
-  const titleRef = useRef<HTMLDivElement>(null)
-  const titleInView = useInView(titleRef, { once: true, margin: "-100px" })
+  const outerRef = useRef<HTMLDivElement>(null)
+  const stickyRef = useRef<HTMLDivElement>(null)
+
+  const [mousePos, setMousePos] = useState({ x: 0.5, y: 0.5 })
+  const mousePosRef = useRef({ x: 0.5, y: 0.5 })
+
+  const handleMouseMove = useCallback((e: MouseEvent) => {
+    const el = stickyRef.current
+    if (!el) return
+    const rect = el.getBoundingClientRect()
+    const nx = (e.clientX - rect.left) / rect.width
+    const ny = (e.clientY - rect.top) / rect.height
+    const clamped = { x: Math.max(0, Math.min(1, nx)), y: Math.max(0, Math.min(1, ny)) }
+    mousePosRef.current = clamped
+    setMousePos(clamped)
+  }, [])
+
+  useEffect(() => {
+    const el = stickyRef.current
+    if (!el) return
+    el.addEventListener("mousemove", handleMouseMove)
+    return () => el.removeEventListener("mousemove", handleMouseMove)
+  }, [handleMouseMove])
 
   const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start end", "end start"],
+    target: outerRef,
+    offset: ["start start", "end start"],
   })
 
-  const overlayWidth = useTransform(scrollYProgress, [0.2, 0.5], ["0%", "100%"])
-  const solutionOpacity = useTransform(scrollYProgress, [0.3, 0.5], [0, 1])
+  /* 0→1 over the scroll range, clamped at 85% so ODL Way is fully visible before release */
+  const rawProgress = useTransform(scrollYProgress, [0, 0.85], [0, 1])
+
+  const [progress, setProgress] = useState(0)
+
+  useMotionValueEvent(rawProgress, "change", (v) => {
+    setProgress(Math.max(0, Math.min(1, v)))
+  })
+
+  /* Phase calculations */
+  // 0–0.4: Old Way visible
+  // 0.4–0.6: Crossfade
+  // 0.6–1.0: ODL Way visible (must be fully shown before scroll releases)
+  const oldWayOpacity = progress < 0.4 ? 1 : progress < 0.6 ? 1 - (progress - 0.4) / 0.2 : 0
+  const odlWayOpacity = progress < 0.4 ? 0 : progress < 0.6 ? (progress - 0.4) / 0.2 : 1
+  const oldWayY = progress < 0.4 ? 0 : progress < 0.6 ? (progress - 0.4) / 0.2 * -20 : -20
+  const odlWayY = progress < 0.4 ? 20 : progress < 0.6 ? 20 - (progress - 0.4) / 0.2 * 20 : 0
+
+  /* Staggered item reveals for Old Way */
+  const oldItemOpacities = PROBLEMS.map((_, i) => {
+    if (progress >= 0.4) return oldWayOpacity
+    const threshold = 0.02 + i * 0.05
+    return Math.min(1, Math.max(0, (progress - threshold) / 0.08))
+  })
+
+  /* Staggered item reveals for ODL Way */
+  const odlItemOpacities = SOLUTIONS.map((_, i) => {
+    if (progress < 0.55) return 0
+    const threshold = 0.58 + i * 0.05
+    return Math.min(1, Math.max(0, (progress - threshold) / 0.08))
+  })
 
   return (
-    <section
-      ref={sectionRef}
-      className="relative w-full bg-white min-h-screen py-24 md:py-32 overflow-hidden"
-    >
-      <div className="max-w-4xl mx-auto px-4 md:px-8">
-        {/* Section Header */}
-        <div ref={titleRef} className="text-center mb-16">
-          <motion.span
-            className="inline-block px-4 py-1.5 bg-gray-50 text-gray-600 text-xs font-medium tracking-wider uppercase rounded-full mb-6 border border-gray-100"
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={titleInView ? { opacity: 1, scale: 1 } : {}}
-            transition={{ duration: 0.5, delay: 0.2 }}
-          >
-            The Difference
-          </motion.span>
-          <motion.h2
-            className="text-3xl md:text-5xl font-semibold text-gray-900 tracking-tight"
-            initial={{ opacity: 0, y: 30 }}
-            animate={titleInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.7, ease: [0.32, 0.72, 0, 1] }}
-          >
-            Before & After ODL
-          </motion.h2>
-        </div>
+    <div ref={outerRef} id="problem-solution" className="relative min-h-[300vh]">
+      <div
+        ref={stickyRef}
+        className="h-screen sticky top-0 w-full overflow-hidden bg-white"
+      >
+        {/* Hero-style Circuitry Background — reactive to mouse hover */}
+        <CircuitryBackground mousePosition={mousePos} mode="dark" opacity={0.5} />
 
-        {/* Comparison Container */}
-        <div className="relative rounded-3xl border border-gray-100 overflow-hidden min-h-[500px]">
-          {/* Problem Layer (base) */}
-          <div className="relative p-8 md:p-12">
-            <div className="mb-8">
+        {/* Content Layer */}
+        <div className="relative z-10 h-full flex flex-col items-center justify-center px-4 md:px-8">
+          {/* Card Container — relative panel gives height, absolute panel overlays */}
+          <div className="relative w-full max-w-2xl rounded-3xl border border-gray-100 bg-white/80 backdrop-blur-sm shadow-sm overflow-hidden">
+            {/* THE OLD WAY — relative (defines card height) */}
+            <div
+              className="relative p-8 md:p-12"
+              style={{
+                opacity: oldWayOpacity,
+                transform: `translateY(${oldWayY}px)`,
+                transition: "opacity 0.15s ease, transform 0.15s ease",
+              }}
+            >
               <h3
-                className="text-xs font-mono font-bold text-gray-400 tracking-widest uppercase mb-6"
+                className="text-xs font-mono font-bold text-gray-400 tracking-widest uppercase mb-8"
                 style={{ fontFamily: "var(--font-mono), monospace" }}
               >
                 The Old Way
               </h3>
-              <div className="space-y-4">
+              <div className="space-y-5">
                 {PROBLEMS.map((item, i) => (
-                  <motion.div
+                  <div
                     key={i}
                     className="flex items-start gap-3"
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: i * 0.1, duration: 0.5 }}
+                    style={{
+                      opacity: oldItemOpacities[i],
+                      transform: `translateX(${(1 - oldItemOpacities[i]) * -15}px)`,
+                      transition: "opacity 0.2s ease, transform 0.2s ease",
+                    }}
                   >
-                    <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-gray-300 shrink-0" />
+                    <span className="mt-2 w-2 h-2 rounded-full bg-gray-300 shrink-0" />
                     <p className="text-gray-500 text-sm md:text-base leading-relaxed">
                       {item.text}
                     </p>
-                  </motion.div>
+                  </div>
                 ))}
               </div>
             </div>
-          </div>
 
-          {/* Solution Layer (overlay) */}
-          <motion.div
-            className="absolute inset-0 bg-white z-10 p-8 md:p-12 flex flex-col justify-center"
-            style={{ width: overlayWidth }}
-          >
-            <motion.div style={{ opacity: solutionOpacity }}>
+            {/* THE ODL WAY — absolute overlay with solid bg to cover Old Way */}
+            <div
+              className="absolute inset-0 p-8 md:p-12 flex flex-col justify-center bg-white/95"
+              style={{
+                opacity: odlWayOpacity,
+                transform: `translateY(${odlWayY}px)`,
+                transition: "opacity 0.15s ease, transform 0.15s ease",
+              }}
+            >
               <h3
-                className="text-xs font-mono font-bold text-gray-900 tracking-widest uppercase mb-6"
+                className="text-xs font-mono font-bold text-gray-900 tracking-widest uppercase mb-8"
                 style={{ fontFamily: "var(--font-mono), monospace" }}
               >
                 The ODL Way
               </h3>
-              <div className="space-y-4">
+              <div className="space-y-5">
                 {SOLUTIONS.map((item, i) => (
-                  <motion.div
+                  <div
                     key={i}
                     className="flex items-start gap-3"
-                    initial={{ opacity: 0, x: 20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: i * 0.1, duration: 0.5 }}
+                    style={{
+                      opacity: odlItemOpacities[i],
+                      transform: `translateX(${(1 - odlItemOpacities[i]) * 15}px)`,
+                      transition: "opacity 0.2s ease, transform 0.2s ease",
+                    }}
                   >
-                    <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-gray-900 shrink-0" />
+                    <span className="mt-2 w-2 h-2 rounded-full bg-gray-900 shrink-0" />
                     <p className="text-gray-900 text-sm md:text-base leading-relaxed font-medium">
                       {item.text}
                     </p>
-                  </motion.div>
+                  </div>
                 ))}
               </div>
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
         </div>
       </div>
-    </section>
+    </div>
   )
 }

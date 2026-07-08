@@ -1,0 +1,715 @@
+     1→     1→"use client"
+     2→     2→
+     3→     3→import React, { useState, useEffect, useRef } from "react"
+     4→     4→import {
+     5→     5→  motion,
+     6→     6→  MotionValue,
+     7→     7→  useScroll,
+     8→     8→  useTransform,
+     9→     9→  useMotionTemplate,
+    10→    10→  useMotionValueEvent,
+    11→    11→} from "motion/react"
+    12→    12→import { cn } from "@/lib/utils"
+    13→    13→import { Star, ChevronDown } from "lucide-react"
+    14→    14→
+    15→    15→/* ────────────────────────────────────────────
+    16→    16→   Review Stars
+    17→    17→   ──────────────────────────────────────────── */
+    18→    18→function ReviewStars({
+    19→    19→  rating,
+    20→    20→  maxRating = 5,
+    21→    21→  className,
+    22→    22→}: {
+    23→    23→  rating: number
+    24→    24→  maxRating?: number
+    25→    25→  className?: string
+    26→    26→}) {
+    27→    27→  const filledStars = Math.floor(rating)
+    28→    28→  const fractionalPart = rating - filledStars
+    29→    29→  const emptyStars =
+    30→    30→    maxRating - filledStars - (fractionalPart > 0 ? 1 : 0)
+    31→    31→
+    32→    32→  return (
+    33→    33→    <div className={cn("flex items-center gap-1", className)}>
+    34→    34→      <div className="flex items-center">
+    35→    35→        {[...Array(filledStars)].map((_, i) => (
+    36→    36→          <Star
+    37→    37→            key={`f-${i}`}
+    38→    38→            className="size-3.5 fill-gray-900 text-gray-900"
+    39→    39→          />
+    40→    40→        ))}
+    41→    41→        {fractionalPart > 0 && (
+    42→    42→          <div className="relative size-3.5">
+    43→    43→            <Star className="absolute size-3.5 text-gray-300" />
+    44→    44→            <div
+    45→    45→              className="absolute overflow-hidden"
+    46→    46→              style={{ width: `${fractionalPart * 100}%` }}
+    47→    47→            >
+    48→    48→              <Star className="size-3.5 fill-gray-900 text-gray-900" />
+    49→    49→            </div>
+    50→    50→          </div>
+    51→    51→        )}
+    52→    52→        {[...Array(emptyStars)].map((_, i) => (
+    53→    53→          <Star key={`e-${i}`} className="size-3.5 text-gray-300" />
+    54→    54→        ))}
+    55→    55→      </div>
+    56→    56→      <span className="text-xs text-gray-500 ml-1">{rating.toFixed(1)}</span>
+    57→    57→    </div>
+    58→    58→  )
+    59→    59→}
+    60→    60→
+    61→    61→/* ────────────────────────────────────────────
+    62→    62→   Animated Card (peels away on scroll)
+    63→    63→   ──────────────────────────────────────────── */
+    64→    64→function AnimatedCard({
+    65→    65→  testimonial,
+    66→    66→  index,
+    67→    67→  totalCount,
+    68→    68→  scrollYProgress,
+    69→    69→}: {
+    70→    70→  testimonial: {
+    71→    71→    id: number
+    72→    72→    name: string
+    73→    73→    role: string
+    74→    74→    company: string
+    75→    75→    rating: number
+    76→    76→    quote: string
+    77→    77→  }
+    78→    78→  index: number
+    79→    79→  totalCount: number
+    80→    80→  scrollYProgress: MotionValue<number>
+    81→    81→}) {
+    82→    82→  const cardRef = useRef<HTMLDivElement>(null)
+    83→    83→
+    84→    84→  // Each card peels during a 10% slice of total scroll progress
+    85→    85→  // Card 0: 0.06–0.16, Card 1: 0.16–0.26, … Card 7: 0.76–0.86
+    86→    86→  const cardStart = 0.06 + index * 0.10
+    87→    87→  const cardEnd = cardStart + 0.10
+    88→    88→
+    89→    89→  // Eased 6-point ranges: clamp → ease-in peel → clamp
+    90→    90→  const y = useTransform(
+    91→    91→    scrollYProgress,
+    92→    92→    [0, cardStart, cardStart + 0.03, cardStart + 0.07, cardEnd, 1],
+    93→    93→    [0, 0, -40, -220, -300, -300],
+    94→    94→  )
+    95→    95→  const rotate = useTransform(
+    96→    96→    scrollYProgress,
+    97→    97→    [0, cardStart, cardStart + 0.03, cardStart + 0.07, cardEnd, 1],
+    98→    98→    [0, 0, -4, -20, -28, -28],
+    99→    99→  )
+   100→   100→  const scale = useTransform(
+   101→   101→    scrollYProgress,
+   102→   102→    [0, cardStart, cardStart + 0.04, cardEnd, 1],
+   103→   103→    [1, 1, 0.98, 0.88, 0.88],
+   104→   104→  )
+   105→   105→
+   106→   106→  // Shadow grows as card peels
+   107→   107→  const shadowBlur = useTransform(
+   108→   108→    scrollYProgress,
+   109→   109→    [0, cardStart, cardEnd, 1],
+   110→   110→    [4, 4, 32, 32],
+   111→   111→  )
+   112→   112→  const shadowY = useTransform(
+   113→   113→    scrollYProgress,
+   114→   114→    [0, cardStart, cardEnd, 1],
+   115→   115→    [2, 2, 20, 20],
+   116→   116→  )
+   117→   117→  const boxShadow = useMotionTemplate`0 ${shadowY}px ${shadowBlur}px -4px rgba(0,0,0,0.1), 0 ${shadowY}px ${shadowBlur}px -2px rgba(0,0,0,0.06)`
+   118→   118→
+   119→   119→  // Opacity — MUST use useMotionValueEvent (motion v12 bug:
+   120→   120→  // useTransform for opacity in style prop doesn't update DOM
+   121→   121→  // when driven by useScroll)
+   122→   122→  useMotionValueEvent(scrollYProgress, "change", (latest) => {
+   123→   123→    if (!cardRef.current) return
+   124→   124→    if (latest < cardStart) {
+   125→   125→      cardRef.current.style.opacity = "1"
+   126→   126→    } else if (latest < cardEnd) {
+   127→   127→      const t = (latest - cardStart) / (cardEnd - cardStart)
+   128→   128→      cardRef.current.style.opacity = String(1 - t * t) // quadratic ease-out
+   129→   129→    } else {
+   130→   130→      cardRef.current.style.opacity = "0"
+   131→   131→    }
+   132→   132→  })
+   133→   133→
+   134→   134→  const transform = useMotionTemplate`translateY(${y}px) rotate(${rotate}deg) scale(${scale})`
+   135→   135→
+   136→   136→  return (
+   137→   137→    <motion.div
+   138→   138→      ref={cardRef}
+   139→   139→      style={{
+   140→   140→        transform,
+   141→   141→        boxShadow,
+   142→   142→        zIndex: totalCount - index,
+   143→   143→      }}
+   144→   144→      className="absolute inset-0 flex flex-col justify-between gap-4 rounded-2xl border border-gray-200/60 bg-white p-5 md:p-7 backface-hidden will-change-transform"
+   145→   145→    >
+   146→   146→      {/* Quote */}
+   147→   147→      <div className="flex-1 flex items-center">
+   148→   148→        <p className="text-sm md:text-[15px] text-gray-700 leading-relaxed">
+   149→   149→          &ldquo;{testimonial.quote}&rdquo;
+   150→   150→        </p>
+   151→   151→      </div>
+   152→   152→
+   153→   153→      {/* Author */}
+   154→   154→      <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+   155→   155→        <div className="min-w-0">
+   156→   156→          <p className="text-sm font-semibold text-gray-900">
+   157→   157→            {testimonial.name}
+   158→   158→          </p>
+   159→   159→          <p className="text-xs text-gray-500 mt-0.5">
+   160→   160→            {testimonial.role}, {testimonial.company}
+   161→   161→          </p>
+   162→   162→        </div>
+   163→   163→        <ReviewStars rating={testimonial.rating} />
+   164→   164→      </div>
+   165→   165→    </motion.div>
+   166→   166→  )
+   167→   167→}
+   168→   168→
+   169→   169→/* ────────────────────────────────────────────
+   170→   170→   Testimonial Data
+   171→   171→   ──────────────────────────────────────────── */
+   172→   172→const TESTIMONIALS = [
+   173→   173→  {
+   174→   174→    id: 1,
+   175→   175→    name: "Marcus Chen",
+   176→   176→    role: "Warehouse Manager",
+   177→   177→    company: "Phoenix Distribution Co",
+   178→   178→    rating: 5.0,
+   179→   179→    quote:
+   180→   180→      "We were manually entering 200+ orders a day into three different systems. ODL connected everything. Orders now flow straight from our WMS to shipping labels to customer notifications. We cut processing time from 4 hours to 20 minutes.",
+   181→   181→  },
+   182→   182→  {
+   183→   183→    id: 2,
+   184→   184→    name: "Sarah Mitchell",
+   185→   185→    role: "Office Manager",
+   186→   186→    company: "Bright Horizon Family Practice",
+   187→   187→    rating: 4.8,
+   188→   188→    quote:
+   189→   189→      "Patient no-shows were costing us $8,000 a month. ODL built an automated reminder system that texts patients 48 hours and 2 hours before their appointment. No-shows dropped 67% in the first quarter.",
+   190→   190→  },
+   191→   191→  {
+   192→   192→    id: 3,
+   193→   193→    name: "David Rodriguez",
+   194→   194→    role: "Managing Broker",
+   195→   195→    company: "Riverstone Properties",
+   196→   196→    rating: 4.9,
+   197→   197→    quote:
+   198→   198→      "Our agents were spending more time on paperwork than showing houses. ODL automated our entire client intake, document collection, and follow-up process. Each agent now handles 30% more clients without burning out.",
+   199→   199→  },
+   200→   200→  {
+   201→   201→    id: 4,
+   202→   202→    name: "Jessica Thompson",
+   203→   203→    role: "Owner",
+   204→   204→    company: "Bloom & Grow Nursery",
+   205→   205→    rating: 4.7,
+   206→   206→    quote:
+   207→   207→      "I was tracking inventory across four locations using spreadsheets and hoping for the best. ODL built a real-time dashboard that shows stock levels, alerts me when supplies run low, and auto-generates purchase orders. Haven't lost a sale to stockout in six months.",
+   208→   208→  },
+   209→   209→  {
+   210→   210→    id: 5,
+   211→   211→    name: "Michael Okafor",
+   212→   212→    role: "COO",
+   213→   213→    company: "Atlas Freight Solutions",
+   214→   214→    rating: 5.0,
+   215→   215→    quote:
+   216→   216→      "We had three people whose full-time job was tracking shipments and calling carriers for updates. ODL automated the entire tracking pipeline. Those three people now handle account management.",
+   217→   217→  },
+   218→   218→  {
+   219→   219→    id: 6,
+   220→   220→    name: "Rachel Kim",
+   221→   221→    role: "Practice Manager",
+   222→   222→    company: "Skinlux Dermatology",
+   223→   223→    rating: 4.8,
+   224→   224→    quote:
+   225→   225→      "Our front desk was buried in intake forms, insurance verification, and appointment scheduling. ODL built a patient portal that handles all of it before they walk in the door. We see 15 more patients a day now with the same staff.",
+   226→   226→  },
+   227→   227→  {
+   228→   228→    id: 7,
+   229→   229→    name: "James Whitfield",
+   230→   230→    role: "Partner",
+   231→   231→    company: "Whitfield & Associates Law",
+   232→   232→    rating: 4.9,
+   233→   233→    quote:
+   234→   234→      "We were losing client documents in email threads and spending hours each week playing phone tag. ODL set up a client portal with automated intake, document requests, and status updates. Client satisfaction scores went from 3.6 to 4.7.",
+   235→   235→  },
+   236→   236→  {
+   237→   237→    id: 8,
+   238→   238→    name: "Amanda Foster",
+   239→   239→    role: "Founder",
+   240→   240→    company: "Peak Performance Fitness",
+   241→   241→    rating: 4.8,
+   242→   242→    quote:
+   243→   243→      "Managing class schedules, membership billing, and instructor payroll across three locations was a full-time job in itself. ODL automated all of it. I stopped being an admin and went back to being a fitness coach.",
+   244→   244→  },
+   245→   245→  {
+   246→   246→    id: 9,
+   247→   247→    name: "Carlos Mendoza",
+   248→   248→    role: "Owner",
+   249→   249→    company: "Mendoza Construction Group",
+   250→   250→    rating: 4.7,
+   251→   251→    quote:
+   252→   252→      "Our project managers were tracking everything in their heads and text messages. ODL built a project management system that handles scheduling, material orders, crew assignments, and client updates. We haven't missed a deadline in four months.",
+   253→   253→  },
+   254→   254→  {
+   255→   255→    id: 10,
+   256→   256→    name: "Lauren Chen",
+   257→   257→    role: "Office Manager",
+   258→   258→    company: "Paws & Claws Veterinary",
+   259→   259→    rating: 4.9,
+   260→   260→    quote:
+   261→   261→      "We were manually calling every client for vaccine reminders and appointment follow-ups. ODL automated the entire communication pipeline. Client retention jumped 40%.",
+   262→   262→  },
+   263→   263→  {
+   264→   264→    id: 11,
+   265→   265→    name: "Brian Callahan",
+   266→   266→    role: "CEO",
+   267→   267→    company: "Callahan Marketing Group",
+   268→   268→    rating: 4.8,
+   269→   269→    quote:
+   270→   270→      "Our team was copying data between our CRM, project management tool, and invoicing system multiple times a day. ODL connected them all. We reclaimed about 12 hours a week across the team.",
+   271→   271→  },
+   272→   272→  {
+   273→   273→    id: 12,
+   274→   274→    name: "Priya Patel",
+   275→   275→    role: "Owner",
+   276→   276→    company: "Sweet Leaf Bakery",
+   277→   277→    rating: 5.0,
+   278→   278→    quote:
+   279→   279→      "I was waking up at 4 AM to manually enter wholesale orders from three different platforms into my production schedule. ODL automated the entire flow. Orders sync overnight, production lists are ready when I walk in. I finally sleep past 4.",
+   280→   280→  },
+   281→   281→  {
+   282→   282→    id: 13,
+   283→   283→    name: "Tyler Brooks",
+   284→   284→    role: "Director of Operations",
+   285→   285→    company: "Brooks Property Management",
+   286→   286→    rating: 4.9,
+   287→   287→    quote:
+   288→   288→      "Managing 340 rental units meant 340 sets of lease renewals, maintenance requests, and payment reminders. ODL automated tenant communications, maintenance routing, and payment tracking. Our response time went from 3 days to 4 hours.",
+   289→   289→  },
+   290→   290→  {
+   291→   291→    id: 14,
+   292→   292→    name: "Stephanie Nguyen",
+   293→   293→    role: "CTO",
+   294→   294→    company: "Lumina Tech Solutions",
+   295→   295→    rating: 4.8,
+   296→   296→    quote:
+   297→   297→      "We built our own internal tools but they were held together with duct tape and tribal knowledge. ODL rebuilt our entire operations stack. Everything talks to everything now.",
+   298→   298→  },
+   299→   299→  {
+   300→   300→    id: 15,
+   301→   301→    name: "Robert Harris",
+   302→   302→    role: "Plant Manager",
+   303→   303→    company: "Harris Manufacturing",
+   304→   304→    rating: 4.7,
+   305→   305→    quote:
+   306→   306→      "We were tracking production metrics on whiteboards and spending two hours every morning compiling reports for management. ODL built dashboards that update in real time. Morning meetings went from 45 minutes to 10.",
+   307→   307→  },
+   308→   308→  {
+   309→   309→    id: 16,
+   310→   310→    name: "Emily Watson",
+   311→   311→    role: "Head of School",
+   312→   312→    company: "Crestwood Academy",
+   313→   313→    rating: 4.9,
+   314→   314→    quote:
+   315→   315→      "Enrollment, scheduling, parent communications, billing — our admin team was drowning. ODL automated the entire school operations workflow. Parents get updates automatically, billing runs itself, and our admin team actually leaves at 5 now.",
+   316→   316→  },
+   317→   317→  {
+   318→   318→    id: 17,
+   319→   319→    name: "Marcus Johnson",
+   320→   320→    role: "Operations Director",
+   321→   321→    company: "Urban Plate Restaurant Group",
+   322→   322→    rating: 4.8,
+   323→   323→    quote:
+   324→   324→      "We were manually updating menus across five delivery platforms every time a price changed. ODL built a system that syncs inventory, pricing, and menus across all platforms in real time. We stopped losing sales to outdated listings.",
+   325→   325→  },
+   326→   326→  {
+   327→   327→    id: 18,
+   328→   328→    name: "Dana Sullivan",
+   329→   329→    role: "Owner",
+   330→   330→    company: "Sullivan Insurance Agency",
+   331→   331→    rating: 4.7,
+   332→   332→    quote:
+   333→   333→      "Following up on claims, processing paperwork, and managing renewals was eating my team alive. ODL automated our entire claims tracking and renewal reminder system. We're handling 40% more policies with the same three people.",
+   334→   334→  },
+   335→   335→  {
+   336→   336→    id: 19,
+   337→   337→    name: "Alex Rivera",
+   338→   338→    role: "Founder",
+   339→   339→    company: "Rivera Creative Studio",
+   340→   340→    rating: 5.0,
+   341→   341→    quote:
+   342→   342→      "I was spending my weekends doing invoicing, contract follow-ups, and project status updates. ODL automated the entire client lifecycle — from proposal to payment. I got my weekends back.",
+   343→   343→  },
+   344→   344→  {
+   345→   345→    id: 20,
+   346→   346→    name: "Megan O'Brien",
+   347→   347→    role: "Owner",
+   348→   348→    company: "Green Valley Landscaping",
+   349→   349→    rating: 4.8,
+   350→   350→    quote:
+   351→   351→      "Scheduling 12 crews across 60+ weekly routes was a nightmare. One sick call and the whole day fell apart. ODL built a routing and scheduling system that auto-adjusts when things change. We run 20% more jobs with fewer headaches.",
+   352→   352→  },
+   353→   353→  {
+   354→   354→    id: 21,
+   355→   355→    name: "Kevin Tran",
+   356→   356→    role: "Owner",
+   357→   357→    company: "Tran Pharmacy Group",
+   358→   358→    rating: 4.9,
+   359→   359→    quote:
+   360→   360→      "We were manually processing refill reminders, insurance verifications, and patient notifications across two locations. ODL automated everything. Refill compliance went up 35% and we stopped losing patients to pharmacies that remembered to call.",
+   361→   361→  },
+   362→   362→  {
+   363→   363→    id: 22,
+   364→   364→    name: "Lisa Campbell",
+   365→   365→    role: "Founder",
+   366→   366→    company: "Campbell Consulting",
+   367→   367→    rating: 4.8,
+   368→   368→    quote:
+   369→   369→      "As a solo consultant, I was the sales team, the project manager, and the admin. ODL built me an automated client onboarding system. It's like having a full-time assistant for a fraction of the cost.",
+   370→   370→  },
+   371→   371→  {
+   372→   372→    id: 23,
+   373→   373→    name: "Thomas Reed",
+   374→   374→    role: "Operations Manager",
+   375→   375→    company: "Reed & Sons Logistics",
+   376→   376→    rating: 4.9,
+   377→   377→    quote:
+   378→   378→      "Our dispatch team was spending 3 hours every morning assigning routes manually. ODL built an intelligent routing system that optimizes in real-time based on traffic, driver availability, and delivery windows. We now handle 25% more deliveries with the same fleet.",
+   379→   379→  },
+   380→   380→  {
+   381→   381→    id: 24,
+   382→   382→    name: "Nicole Adams",
+   383→   383→    role: "Practice Administrator",
+   384→   384→    company: "Adams Medical Group",
+   385→   385→    rating: 4.7,
+   386→   386→    quote:
+   387→   387→      "Insurance verification was eating 20 hours of staff time every week. ODL automated the entire process — eligibility checks, pre-authorizations, benefits verification. Our billing team now focuses on revenue cycle instead of paperwork.",
+   388→   388→  },
+   389→   389→  {
+   390→   390→    id: 25,
+   391→   391→    name: "Victor Morales",
+   392→   392→    role: "General Manager",
+   393→   393→    company: "Coastal Hotels & Resorts",
+   394→   394→    rating: 5.0,
+   395→   395→    quote:
+   396→   396→      "Guest requests were falling through the cracks during peak season. ODL implemented a centralized system that routes requests to the right department, tracks resolution time, and follows up automatically. Guest satisfaction scores jumped from 4.1 to 4.8.",
+   397→   397→  },
+   398→   398→  {
+   399→   399→    id: 26,
+   400→   400→    name: "Angela Park",
+   401→   401→    role: "Head of People",
+   402→   402→    company: "NovaTech Solutions",
+   403→   403→    rating: 4.8,
+   404→   404→    quote:
+   405→   405→      "Onboarding new hires used to take 2 weeks of HR time per person. ODL automated document collection, training scheduling, equipment provisioning, and compliance tracking. New hires are productive in 3 days now.",
+   406→   406→  },
+   407→   407→  {
+   408→   408→    id: 27,
+   409→   409→    name: "Derek Washington",
+   410→   410→    role: "Fleet Manager",
+   411→   411→    company: "Washington Transportation",
+   412→   412→    rating: 4.9,
+   413→   413→    quote:
+   414→   414→      "We were losing $15K a month to unauthorized vehicle usage and maintenance oversights. ODL built a fleet management system that tracks usage, schedules preventive maintenance, and flags anomalies. Costs dropped 30% in two months.",
+   415→   415→  },
+   416→   416→  {
+   417→   417→    id: 28,
+   418→   418→    name: "Samantha Brooks",
+   419→   419→    role: "Director of Marketing",
+   420→   420→    company: "Elevate Digital Agency",
+   421→   421→    rating: 4.8,
+   422→   422→    quote:
+   423→   423→      "Our team was manually pulling reports from 8 different platforms for every client meeting. ODL integrated all our data sources into one dashboard. We went from 4 hours of report prep to 10 minutes.",
+   424→   424→  },
+   425→   425→  {
+   426→   426→    id: 29,
+   427→   427→    name: "Ryan Chen",
+   428→   428→    role: "VP of Operations",
+   429→   429→    company: "Pacific Rim Imports",
+   430→   430→    rating: 4.7,
+   431→   431→    quote:
+   432→   432→      "Customs documentation and compliance tracking was our biggest bottleneck. ODL automated document generation, deadline tracking, and regulatory submissions. Our clearance time dropped from 5 days to 18 hours.",
+   433→   433→  },
+   434→   434→  {
+   435→   435→    id: 30,
+   436→   436→    name: "Diana Foster",
+   437→   437→    role: "Owner",
+   438→   438→    company: "Foster Family Dentistry",
+   439→   439→    rating: 5.0,
+   440→   440→    quote:
+   441→   441→      "We were manually calling patients for recalls and following up on treatment plans. ODL automated our entire patient communication system. Recall compliance went from 60% to 92% in three months.",
+   442→   442→  },
+   443→   443→  {
+   444→   444→    id: 31,
+   445→   445→    name: "Marcus Williams",
+   446→   446→    role: "COO",
+   447→   447→    company: "Summit Construction Group",
+   448→   448→    rating: 4.9,
+   449→   449→    quote:
+   450→   450→      "Project managers were spending more time updating spreadsheets than managing projects. ODL built a real-time project dashboard that pulls data from our tools automatically. We now have visibility across all 12 active projects without a single status meeting.",
+   451→   451→  },
+   452→   452→  {
+   453→   453→    id: 32,
+   454→   454→    name: "Olivia Martinez",
+   455→   455→    role: "Practice Manager",
+   456→   456→    company: "Sunshine Pediatric Care",
+   457→   457→    rating: 4.8,
+   458→   458→    quote:
+   459→   459→      "Parent communication was inconsistent and time-consuming. ODL automated appointment reminders, vaccination schedules, school form requests, and billing notifications. Parents love the consistency, and our phone calls dropped 60%.",
+   460→   460→  },
+   461→   461→  {
+   462→   462→    id: 33,
+   463→   463→    name: "Nathan Brooks",
+   464→   464→    role: "Director of IT",
+   465→   465→    company: "Meridian Financial Services",
+   466→   466→    rating: 4.7,
+   467→   467→    quote:
+   468→   468→      "Our compliance reporting was a nightmare of manual data gathering. ODL automated the entire compliance workflow — data collection, report generation, audit trail creation. What used to take 3 weeks now takes 2 days.",
+   469→   469→  },
+   470→   470→  {
+   471→   471→    id: 34,
+   472→   472→    name: "Isabella Nguyen",
+   473→   473→    role: "Founder",
+   474→   474→    company: "Bloom Beauty Co",
+   475→   475→    rating: 5.0,
+   476→   476→    quote:
+   477→   477→      "Managing influencer partnerships across 3 platforms was chaos. ODL built a system that tracks deliverables, monitors performance, processes payments, and schedules content. I went from hiring a full-time coordinator to handling it myself.",
+   478→   478→  },
+   479→   479→  {
+   480→   480→    id: 35,
+   481→   481→    name: "Christopher Lee",
+   482→   482→    role: "Operations Director",
+   483→   483→    company: "Pacific Northwest Brewing",
+   484→   484→    rating: 4.9,
+   485→   485→    quote:
+   486→   486→      "Our inventory management across taproom, distribution, and wholesale was disconnected. ODL unified everything into one system. We reduced overstock waste by 35% and never run out of popular SKUs anymore.",
+   487→   487→  },
+   488→   488→  {
+   489→   489→    id: 36,
+   490→   490→    name: "Patricia Adams",
+   491→   491→    role: "Office Manager",
+   492→   492→    company: "Adams & Partners Law Firm",
+   493→   493→    rating: 4.8,
+   494→   494→    quote:
+   495→   495→      "Client intake was a 45-minute process involving 3 different forms and manual data entry. ODL built a digital intake system that clients complete before their first visit. We reduced intake time to 5 minutes and eliminated data entry errors.",
+   496→   496→  },
+   497→   497→]
+   498→   498→
+   499→   499→/* ────────────────────────────────────────────
+   500→   500→   Main Section
+   501→   501→   ──────────────────────────────────────────── */
+   502→   502→const STACK_COUNT = 8
+   503→   503→
+   504→   504→export default function TestimonialsSection() {
+   505→   505→  const [gridCount, setGridCount] = useState(0)
+   506→   506→  const [showSkip, setShowSkip] = useState(false)
+   507→   507→  const sectionRef = useRef<HTMLDivElement>(null)
+   508→   508→  const loadMoreRef = useRef<HTMLDivElement>(null)
+   509→   509→
+   510→   510→  const { scrollYProgress } = useScroll({
+   511→   511→    target: sectionRef,
+   512→   512→    offset: ["start start", "end end"],
+   513→   513→  })
+   514→   514→
+   515→   515→  // Skip button visibility
+   516→   516→  useEffect(() => {
+   517→   517→    const unsub = scrollYProgress.on("change", (v) => {
+   518→   518→      setShowSkip(v > 0.12 && v < 0.82)
+   519→   519→    })
+   520→   520→    return unsub
+   521→   521→  }, [scrollYProgress])
+   522→   522→
+   523→   523→  // Load More overlay: fade in after last card peels (0.86-0.92), stay visible
+   524→   524→  // (motion v12 opacity workaround)
+   525→   525→  useMotionValueEvent(scrollYProgress, "change", (latest) => {
+   526→   526→    if (!loadMoreRef.current) return
+   527→   527→    if (latest < 0.86) {
+   528→   528→      loadMoreRef.current.style.opacity = "0"
+   529→   529→      loadMoreRef.current.style.pointerEvents = "none"
+   530→   530→    } else if (latest < 0.92) {
+   531→   531→      const t = (latest - 0.86) / (0.92 - 0.86)
+   532→   532→      loadMoreRef.current.style.opacity = String(t)
+   533→   533→      loadMoreRef.current.style.pointerEvents = t > 0.5 ? "auto" : "none"
+   534→   534→    } else {
+   535→   535→      loadMoreRef.current.style.opacity = "1"
+   536→   536→      loadMoreRef.current.style.pointerEvents = "auto"
+   537→   537→    }
+   538→   538→  })
+   539→   539→
+   540→   540→  const handleSkip = () => {
+   541→   541→    sectionRef.current?.scrollIntoView({ behavior: "smooth", block: "end" })
+   542→   542→  }
+   543→   543→
+   544→   544→  const handleLoadMore = () => {
+   545→   545→    setGridCount((prev) =>
+   546→   546→      Math.min(prev + 8, TESTIMONIALS.length - STACK_COUNT),
+   547→   547→    )
+   548→   548→    // Scroll to grid after state updates
+   549→   549→    setTimeout(() => {
+   550→   550→      document
+   551→   551→        .getElementById("testimonial-grid")
+   552→   552→        ?.scrollIntoView({ behavior: "smooth" })
+   553→   553→    }, 150)
+   554→   554→  }
+   555→   555→
+   556→   556→  const stackTestimonials = TESTIMONIALS.slice(0, STACK_COUNT)
+   557→   557→  const gridTestimonials = TESTIMONIALS.slice(
+   558→   558→    STACK_COUNT,
+   559→   559→    STACK_COUNT + gridCount,
+   560→   560→  )
+   561→   561→  const hasMore = STACK_COUNT + gridCount < TESTIMONIALS.length
+   562→   562→
+   563→   563→  return (
+   564→   564→    <section className="relative w-full bg-[#FAFAF8]">
+   565→   565→      {/* Subtle dot grid background */}
+   566→   566→      <div className="absolute inset-0 pointer-events-none opacity-[0.015]">
+   567→   567→        <svg width="100%" height="100%">
+   568→   568→          <defs>
+   569→   569→            <pattern
+   570→   570→              id="tGrid"
+   571→   571→              width="40"
+   572→   572→              height="40"
+   573→   573→              patternUnits="userSpaceOnUse"
+   574→   574→            >
+   575→   575→              <circle cx="20" cy="20" r="0.5" fill="currentColor" />
+   576→   576→            </pattern>
+   577→   577→          </defs>
+   578→   578→          <rect width="100%" height="100%" fill="url(#tGrid)" />
+   579→   579→        </svg>
+   580→   580→      </div>
+   581→   581→
+   582→   582→      {/* Skip button (fixed) */}
+   583→   583→      <motion.button
+   584→   584→        onClick={handleSkip}
+   585→   585→        className="fixed bottom-6 right-6 z-50 flex items-center gap-2 px-5 py-2.5 bg-gray-900 text-white text-sm font-medium rounded-full shadow-lg hover:bg-gray-800 transition-colors"
+   586→   586→        animate={{ opacity: showSkip ? 1 : 0, y: showSkip ? 0 : 20 }}
+   587→   587→        transition={{ duration: 0.3 }}
+   588→   588→        style={{ pointerEvents: showSkip ? "auto" : "none" }}
+   589→   589→      >
+   590→   590→        Skip
+   591→   591→        <ChevronDown className="w-4 h-4" />
+   592→   592→      </motion.button>
+   593→   593→
+   594→   594→      {/* ── Tidal Lock Wrapper ── */}
+   595→   595→      {/* 700vh = 600vh pinned scroll distance.
+   596→   596→          6% intro + 80% cards (8×10%) + 14% Load More reveal = 100%. */}
+   597→   597→      <div
+   598→   598→        ref={sectionRef}
+   599→   599→        className="relative"
+   600→   600→        style={{ minHeight: "700vh" }}
+   601→   601→      >
+   602→   602→        {/* ── Sticky Container (pins to viewport) ── */}
+   603→   603→        <div
+   604→   604→          className="sticky top-0 h-screen flex flex-col items-center justify-center px-4 overflow-hidden"
+   605→   605→        >
+   606→   606→          {/* Section Header */}
+   607→   607→          <div className="text-center mb-6 md:mb-8 max-w-lg">
+   608→   608→            <span className="inline-block px-4 py-1.5 bg-gray-100 text-gray-600 text-xs font-medium tracking-wider uppercase rounded-full mb-4 border border-gray-200">
+   609→   609→              Client Stories
+   610→   610→            </span>
+   611→   611→            <h2 className="text-3xl md:text-5xl font-semibold text-gray-900 tracking-tight mb-3">
+   612→   612→              Businesses That Run on
+   613→   613→              <br />
+   614→   614→              <span className="text-gray-400">ODL Systems</span>
+   615→   615→            </h2>
+   616→   616→            <p className="text-sm md:text-base text-gray-500 max-w-md mx-auto">
+   617→   617→              Every testimonial here is a business that stopped doing things
+   618→   618→              manually and started running smarter.
+   619→   619→            </p>
+   620→   620→          </div>
+   621→   621→
+   622→   622→          {/* Aggregate Rating */}
+   623→   623→          <div className="flex items-center gap-2.5 mb-6 md:mb-8">
+   624→   624→            <div className="flex">
+   625→   625→              {[...Array(5)].map((_, i) => (
+   626→   626→                <Star
+   627→   627→                  key={i}
+   628→   628→                  className="w-4 h-4 fill-gray-900 text-gray-900"
+   629→   629→                />
+   630→   630→              ))}
+   631→   631→            </div>
+   632→   632→            <span className="text-base font-semibold text-gray-900">4.8</span>
+   633→   633→            <span className="text-sm text-gray-400">/ 5.0</span>
+   634→   634→          </div>
+   635→   635→
+   636→   636→          {/* Card Stack + Load More overlay */}
+   637→   637→          <div
+   638→   638→            className="relative w-full max-w-md"
+   639→   639→            style={{ height: "clamp(260px, 38vh, 400px)" }}
+   640→   640→          >
+   641→   641→            {stackTestimonials.map((testimonial, index) => (
+   642→   642→              <AnimatedCard
+   643→   643→                key={testimonial.id}
+   644→   644→                testimonial={testimonial}
+   645→   645→                index={index}
+   646→   646→                totalCount={STACK_COUNT}
+   647→   647→                scrollYProgress={scrollYProgress}
+   648→   648→              />
+   649→   649→            ))}
+   650→   650→
+   651→   651→            {/* Load More — fades in after all cards peel (progress 0.86+) */}
+   652→   652→            <div
+   653→   653→              ref={loadMoreRef}
+   654→   654→              className="absolute inset-0 flex flex-col items-center justify-center gap-3"
+   655→   655→              style={{ opacity: 0, pointerEvents: "none" }}
+   656→   656→            >
+   657→   657→              <p className="text-sm text-gray-500">
+   658→   658→                {TESTIMONIALS.length - STACK_COUNT} more stories
+   659→   659→              </p>
+   660→   660→              <button
+   661→   661→                onClick={handleLoadMore}
+   662→   662→                className="px-7 py-3 bg-gray-900 text-white text-sm font-medium rounded-full hover:bg-gray-800 transition-colors shadow-sm cursor-pointer"
+   663→   663→              >
+   664→   664→                Load More Stories
+   665→   665→              </button>
+   666→   666→            </div>
+   667→   667→          </div>
+   668→   668→        </div>
+   669→   669→      </div>
+   670→   670→
+   671→   671→      {/* ── Grid of additional testimonials (appears after clicking Load More) ── */}
+   672→   672→      {gridCount > 0 && (
+   673→   673→        <div
+   674→   674→          id="testimonial-grid"
+   675→   675→          className="relative z-10 max-w-5xl mx-auto px-4 pt-8 pb-16"
+   676→   676→        >
+   677→   677→          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+   678→   678→            {gridTestimonials.map((t) => (
+   679→   679→              <div
+   680→   680→                key={t.id}
+   681→   681→                className="flex flex-col justify-between gap-4 rounded-2xl border border-gray-200/60 bg-white p-6 shadow-sm"
+   682→   682→              >
+   683→   683→                <p className="text-sm text-gray-700 leading-relaxed italic">
+   684→   684→                  &ldquo;{t.quote}&rdquo;
+   685→   685→                </p>
+   686→   686→                <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+   687→   687→                  <div className="min-w-0">
+   688→   688→                    <p className="text-sm font-semibold text-gray-900">
+   689→   689→                      {t.name}
+   690→   690→                    </p>
+   691→   691→                    <p className="text-xs text-gray-500">
+   692→   692→                      {t.role}, {t.company}
+   693→   693→                    </p>
+   694→   694→                  </div>
+   695→   695→                  <ReviewStars rating={t.rating} />
+   696→   696→                </div>
+   697→   697→              </div>
+   698→   698→            ))}
+   699→   699→          </div>
+   700→   700→
+   701→   701→          {hasMore && (
+   702→   702→            <div className="flex justify-center mt-8">
+   703→   703→              <button
+   704→   704→                onClick={handleLoadMore}
+   705→   705→                className="px-7 py-3 bg-white text-gray-900 text-sm font-medium rounded-full border border-gray-200 hover:bg-gray-50 transition-colors cursor-pointer"
+   706→   706→              >
+   707→   707→                Load More
+   708→   708→              </button>
+   709→   709→            </div>
+   710→   710→          )}
+   711→   711→        </div>
+   712→   712→      )}
+   713→   713→    </section>
+   714→   714→  )
+   715→   715→}

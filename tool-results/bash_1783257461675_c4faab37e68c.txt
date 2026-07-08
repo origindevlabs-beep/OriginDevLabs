@@ -1,0 +1,1547 @@
+[info] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[log] [HMR] connected
+[info] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[log] [HMR] connected
+[log] [Fast Refresh] rebuilding
+[log] [Fast Refresh] done in 181ms
+[info] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[log] [HMR] connected
+[log] [Fast Refresh] rebuilding
+[log] [Fast Refresh] done in 254ms
+[info] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[log] [HMR] connected
+[info] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[log] [HMR] connected
+[info] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[log] [HMR] connected
+[log] [Fast Refresh] rebuilding
+[log] [Fast Refresh] done in 301ms
+[info] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[log] [HMR] connected
+[log] [HMR] connected
+[log] [HMR] connected
+[log] [Fast Refresh] rebuilding
+[log] [Fast Refresh] done in 297ms
+[log] [HMR] connected
+[log] [Fast Refresh] rebuilding
+[log] [Fast Refresh] done in 269ms
+[log] [Fast Refresh] rebuilding
+[log] [Fast Refresh] done in 264ms
+[log] [Fast Refresh] rebuilding
+[log] [Fast Refresh] done in 217ms
+[log] [Fast Refresh] rebuilding
+[log] [Fast Refresh] done in 205ms
+[log] [Fast Refresh] rebuilding
+[log] [Fast Refresh] done in 213ms
+[log] [Fast Refresh] rebuilding
+[error] ./src/app/layout.tsx:33:14
+Ecmascript file had an error
+  31 | })
+  32 |
+> 33 | export const metadata: Metadata = {
+     |              ^^^^^^^^
+  34 |   title: "Origin Dev Labs | Automation Systems That Work While You Sleep | Orlando, FL",
+  35 |   description:
+  36 |     "Origin Dev Labs builds automation systems, smart agents, and custom solutions that save businesses time and money. Based in Orlando, FL. Free consultation.",
+
+You are attempting to export "metadata" from a component marked with "use client", which is disallowed. Either remove the export, or the "use client" directive. Read more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+Import traces:
+  Client Component Browser:
+    ./src/app/layout.tsx [Client Component Browser]
+    ./src/app/layout.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/layout.tsx [Client Component SSR]
+    ./src/app/layout.tsx [Server Component]
+[log] [Fast Refresh] rebuilding
+[error] ./src/app/layout.tsx:33:14
+Ecmascript file had an error
+  31 | })
+  32 |
+> 33 | export const metadata: Metadata = {
+     |              ^^^^^^^^
+  34 |   title: "Origin Dev Labs | Automation Systems That Work While You Sleep | Orlando, FL",
+  35 |   description:
+  36 |     "Origin Dev Labs builds automation systems, smart agents, and custom solutions that save businesses time and money. Based in Orlando, FL. Free consultation.",
+
+You are attempting to export "metadata" from a component marked with "use client", which is disallowed. Either remove the export, or the "use client" directive. Read more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+Import traces:
+  Client Component Browser:
+    ./src/app/layout.tsx [Client Component Browser]
+    ./src/app/layout.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/layout.tsx [Client Component SSR]
+    ./src/app/layout.tsx [Server Component]
+[log] [Fast Refresh] rebuilding
+[error] ./src/app/layout.tsx:33:14
+Ecmascript file had an error
+  31 | })
+  32 |
+> 33 | export const metadata: Metadata = {
+     |              ^^^^^^^^
+  34 |   title: "Origin Dev Labs | Automation Systems That Work While You Sleep | Orlando, FL",
+  35 |   description:
+  36 |     "Origin Dev Labs builds automation systems, smart agents, and custom solutions that save businesses time and money. Based in Orlando, FL. Free consultation.",
+
+You are attempting to export "metadata" from a component marked with "use client", which is disallowed. Either remove the export, or the "use client" directive. Read more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+Import traces:
+  Client Component Browser:
+    ./src/app/layout.tsx [Client Component Browser]
+    ./src/app/layout.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/layout.tsx [Client Component SSR]
+    ./src/app/layout.tsx [Server Component]
+[log] [Fast Refresh] rebuilding
+[error] ./src/app/layout.tsx:33:14
+Ecmascript file had an error
+  31 | })
+  32 |
+> 33 | export const metadata: Metadata = {
+     |              ^^^^^^^^
+  34 |   title: "Origin Dev Labs | Automation Systems That Work While You Sleep | Orlando, FL",
+  35 |   description:
+  36 |     "Origin Dev Labs builds automation systems, smart agents, and custom solutions that save businesses time and money. Based in Orlando, FL. Free consultation.",
+
+You are attempting to export "metadata" from a component marked with "use client", which is disallowed. Either remove the export, or the "use client" directive. Read more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+Import traces:
+  Client Component Browser:
+    ./src/app/layout.tsx [Client Component Browser]
+    ./src/app/layout.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/layout.tsx [Client Component SSR]
+    ./src/app/layout.tsx [Server Component]
+[log] [Fast Refresh] rebuilding
+[error] ./src/app/layout.tsx:33:14
+Ecmascript file had an error
+  31 | })
+  32 |
+> 33 | export const metadata: Metadata = {
+     |              ^^^^^^^^
+  34 |   title: "Origin Dev Labs | Automation Systems That Work While You Sleep | Orlando, FL",
+  35 |   description:
+  36 |     "Origin Dev Labs builds automation systems, smart agents, and custom solutions that save businesses time and money. Based in Orlando, FL. Free consultation.",
+
+You are attempting to export "metadata" from a component marked with "use client", which is disallowed. Either remove the export, or the "use client" directive. Read more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+Import traces:
+  Client Component Browser:
+    ./src/app/layout.tsx [Client Component Browser]
+    ./src/app/layout.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/layout.tsx [Client Component SSR]
+    ./src/app/layout.tsx [Server Component]
+[error] ./src/components/sections/TestimonialsSection.tsx:173:7
+Ecmascript file had an error
+  171 |    Testimonial Data
+  172 |    ──────────────────────────────────────────── */
+> 173 | const TESTIMONIALS = [
+      |       ^^^^^^^^^^^^
+  174 |   {
+  175 |     id: 1,
+  176 |     name: "Marcus Chen",
+
+the name `TESTIMONIALS` is defined multiple times
+
+Import traces:
+  Client Component Browser:
+    ./src/components/sections/TestimonialsSection.tsx [Client Component Browser]
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/components/sections/TestimonialsSection.tsx [Client Component SSR]
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+[log] [Fast Refresh] rebuilding
+[error] ./src/app/layout.tsx:33:14
+Ecmascript file had an error
+  31 | })
+  32 |
+> 33 | export const metadata: Metadata = {
+     |              ^^^^^^^^
+  34 |   title: "Origin Dev Labs | Automation Systems That Work While You Sleep | Orlando, FL",
+  35 |   description:
+  36 |     "Origin Dev Labs builds automation systems, smart agents, and custom solutions that save businesses time and money. Based in Orlando, FL. Free consultation.",
+
+You are attempting to export "metadata" from a component marked with "use client", which is disallowed. Either remove the export, or the "use client" directive. Read more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+Import traces:
+  Client Component Browser:
+    ./src/app/layout.tsx [Client Component Browser]
+    ./src/app/layout.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/layout.tsx [Client Component SSR]
+    ./src/app/layout.tsx [Server Component]
+[log] [Fast Refresh] rebuilding
+[error] ./src/app/layout.tsx:33:14
+Ecmascript file had an error
+  31 | })
+  32 |
+> 33 | export const metadata: Metadata = {
+     |              ^^^^^^^^
+  34 |   title: "Origin Dev Labs | Automation Systems That Work While You Sleep | Orlando, FL",
+  35 |   description:
+  36 |     "Origin Dev Labs builds automation systems, smart agents, and custom solutions that save businesses time and money. Based in Orlando, FL. Free consultation.",
+
+You are attempting to export "metadata" from a component marked with "use client", which is disallowed. Either remove the export, or the "use client" directive. Read more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+Import traces:
+  Client Component Browser:
+    ./src/app/layout.tsx [Client Component Browser]
+    ./src/app/layout.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/layout.tsx [Client Component SSR]
+    ./src/app/layout.tsx [Server Component]
+[log] [Fast Refresh] rebuilding
+[error] ./src/app/layout.tsx:33:14
+Ecmascript file had an error
+  31 | })
+  32 |
+> 33 | export const metadata: Metadata = {
+     |              ^^^^^^^^
+  34 |   title: "Origin Dev Labs | Automation Systems That Work While You Sleep | Orlando, FL",
+  35 |   description:
+  36 |     "Origin Dev Labs builds automation systems, smart agents, and custom solutions that save businesses time and money. Based in Orlando, FL. Free consultation.",
+
+You are attempting to export "metadata" from a component marked with "use client", which is disallowed. Either remove the export, or the "use client" directive. Read more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+Import traces:
+  Client Component Browser:
+    ./src/app/layout.tsx [Client Component Browser]
+    ./src/app/layout.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/layout.tsx [Client Component SSR]
+    ./src/app/layout.tsx [Server Component]
+[log] [Fast Refresh] rebuilding
+[error] ./src/app/layout.tsx:33:14
+Ecmascript file had an error
+  31 | })
+  32 |
+> 33 | export const metadata: Metadata = {
+     |              ^^^^^^^^
+  34 |   title: "Origin Dev Labs | Automation Systems That Work While You Sleep | Orlando, FL",
+  35 |   description:
+  36 |     "Origin Dev Labs builds automation systems, smart agents, and custom solutions that save businesses time and money. Based in Orlando, FL. Free consultation.",
+
+You are attempting to export "metadata" from a component marked with "use client", which is disallowed. Either remove the export, or the "use client" directive. Read more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+Import traces:
+  Client Component Browser:
+    ./src/app/layout.tsx [Client Component Browser]
+    ./src/app/layout.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/layout.tsx [Client Component SSR]
+    ./src/app/layout.tsx [Server Component]
+[log] [Fast Refresh] rebuilding
+[error] ./src/app/layout.tsx:33:14
+Ecmascript file had an error
+  31 | })
+  32 |
+> 33 | export const metadata: Metadata = {
+     |              ^^^^^^^^
+  34 |   title: "Origin Dev Labs | Automation Systems That Work While You Sleep | Orlando, FL",
+  35 |   description:
+  36 |     "Origin Dev Labs builds automation systems, smart agents, and custom solutions that save businesses time and money. Based in Orlando, FL. Free consultation.",
+
+You are attempting to export "metadata" from a component marked with "use client", which is disallowed. Either remove the export, or the "use client" directive. Read more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+Import traces:
+  Client Component Browser:
+    ./src/app/layout.tsx [Client Component Browser]
+    ./src/app/layout.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/layout.tsx [Client Component SSR]
+    ./src/app/layout.tsx [Server Component]
+[log] [Fast Refresh] rebuilding
+[error] ./src/app/layout.tsx:33:14
+Ecmascript file had an error
+  31 | })
+  32 |
+> 33 | export const metadata: Metadata = {
+     |              ^^^^^^^^
+  34 |   title: "Origin Dev Labs | Automation Systems That Work While You Sleep | Orlando, FL",
+  35 |   description:
+  36 |     "Origin Dev Labs builds automation systems, smart agents, and custom solutions that save businesses time and money. Based in Orlando, FL. Free consultation.",
+
+You are attempting to export "metadata" from a component marked with "use client", which is disallowed. Either remove the export, or the "use client" directive. Read more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+Import traces:
+  Client Component Browser:
+    ./src/app/layout.tsx [Client Component Browser]
+    ./src/app/layout.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/layout.tsx [Client Component SSR]
+    ./src/app/layout.tsx [Server Component]
+[error] ./src/app/layout.tsx:33:14
+Ecmascript file had an error
+  31 | })
+  32 |
+> 33 | export const metadata: Metadata = {
+     |              ^^^^^^^^
+  34 |   title: "Origin Dev Labs | Automation Systems That Work While You Sleep | Orlando, FL",
+  35 |   description:
+  36 |     "Origin Dev Labs builds automation systems, smart agents, and custom solutions that save businesses time and money. Based in Orlando, FL. Free consultation.",
+
+You are attempting to export "metadata" from a component marked with "use client", which is disallowed. Either remove the export, or the "use client" directive. Read more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+Import traces:
+  Client Component Browser:
+    ./src/app/layout.tsx [Client Component Browser]
+    ./src/app/layout.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/layout.tsx [Client Component SSR]
+    ./src/app/layout.tsx [Server Component]
+[error] ./src/app/layout.tsx:33:14
+Ecmascript file had an error
+  31 | })
+  32 |
+> 33 | export const metadata: Metadata = {
+     |              ^^^^^^^^
+  34 |   title: "Origin Dev Labs | Automation Systems That Work While You Sleep | Orlando, FL",
+  35 |   description:
+  36 |     "Origin Dev Labs builds automation systems, smart agents, and custom solutions that save businesses time and money. Based in Orlando, FL. Free consultation.",
+
+You are attempting to export "metadata" from a component marked with "use client", which is disallowed. Either remove the export, or the "use client" directive. Read more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+Import traces:
+  Client Component Browser:
+    ./src/app/layout.tsx [Client Component Browser]
+    ./src/app/layout.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/layout.tsx [Client Component SSR]
+    ./src/app/layout.tsx [Server Component]
+[log] [HMR] connected
+[error] ./src/app/layout.tsx:33:14
+Ecmascript file had an error
+  31 | })
+  32 |
+> 33 | export const metadata: Metadata = {
+     |              ^^^^^^^^
+  34 |   title: "Origin Dev Labs | Automation Systems That Work While You Sleep | Orlando, FL",
+  35 |   description:
+  36 |     "Origin Dev Labs builds automation systems, smart agents, and custom solutions that save businesses time and money. Based in Orlando, FL. Free consultation.",
+
+You are attempting to export "metadata" from a component marked with "use client", which is disallowed. Either remove the export, or the "use client" directive. Read more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+Import traces:
+  Client Component Browser:
+    ./src/app/layout.tsx [Client Component Browser]
+    ./src/app/layout.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/layout.tsx [Client Component SSR]
+    ./src/app/layout.tsx [Server Component]
+[clear] console.clear
+[error] ./src/app/layout.tsx:33:14
+Ecmascript file had an error
+  31 | })
+  32 |
+> 33 | export const metadata: Metadata = {
+     |              ^^^^^^^^
+  34 |   title: "Origin Dev Labs | Automation Systems That Work While You Sleep | Orlando, FL",
+  35 |   description:
+  36 |     "Origin Dev Labs builds automation systems, smart agents, and custom solutions that save businesses time and money. Based in Orlando, FL. Free consultation.",
+
+You are attempting to export "metadata" from a component marked with "use client", which is disallowed. Either remove the export, or the "use client" directive. Read more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+Import traces:
+  Client Component Browser:
+    ./src/app/layout.tsx [Client Component Browser]
+    ./src/app/layout.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/layout.tsx [Client Component SSR]
+    ./src/app/layout.tsx [Server Component]
+[log] [Fast Refresh] rebuilding
+[clear] console.clear
+[error] ./src/app/layout.tsx:33:14
+Ecmascript file had an error
+  31 | })
+  32 |
+> 33 | export const metadata: Metadata = {
+     |              ^^^^^^^^
+  34 |   title: "Origin Dev Labs | Automation Systems That Work While You Sleep | Orlando, FL",
+  35 |   description:
+  36 |     "Origin Dev Labs builds automation systems, smart agents, and custom solutions that save businesses time and money. Based in Orlando, FL. Free consultation.",
+
+You are attempting to export "metadata" from a component marked with "use client", which is disallowed. Either remove the export, or the "use client" directive. Read more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+Import traces:
+  Client Component Browser:
+    ./src/app/layout.tsx [Client Component Browser]
+    ./src/app/layout.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/layout.tsx [Client Component SSR]
+    ./src/app/layout.tsx [Server Component]
+[log] [Fast Refresh] rebuilding
+[clear] console.clear
+[error] ./src/app/layout.tsx:33:14
+Ecmascript file had an error
+  31 | })
+  32 |
+> 33 | export const metadata: Metadata = {
+     |              ^^^^^^^^
+  34 |   title: "Origin Dev Labs | Automation Systems That Work While You Sleep | Orlando, FL",
+  35 |   description:
+  36 |     "Origin Dev Labs builds automation systems, smart agents, and custom solutions that save businesses time and money. Based in Orlando, FL. Free consultation.",
+
+You are attempting to export "metadata" from a component marked with "use client", which is disallowed. Either remove the export, or the "use client" directive. Read more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+Import traces:
+  Client Component Browser:
+    ./src/app/layout.tsx [Client Component Browser]
+    ./src/app/layout.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/layout.tsx [Client Component SSR]
+    ./src/app/layout.tsx [Server Component]
+[log] [Fast Refresh] rebuilding
+[clear] console.clear
+[error] ./src/app/layout.tsx:33:14
+Ecmascript file had an error
+  31 | })
+  32 |
+> 33 | export const metadata: Metadata = {
+     |              ^^^^^^^^
+  34 |   title: "Origin Dev Labs | Automation Systems That Work While You Sleep | Orlando, FL",
+  35 |   description:
+  36 |     "Origin Dev Labs builds automation systems, smart agents, and custom solutions that save businesses time and money. Based in Orlando, FL. Free consultation.",
+
+You are attempting to export "metadata" from a component marked with "use client", which is disallowed. Either remove the export, or the "use client" directive. Read more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+Import traces:
+  Client Component Browser:
+    ./src/app/layout.tsx [Client Component Browser]
+    ./src/app/layout.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/layout.tsx [Client Component SSR]
+    ./src/app/layout.tsx [Server Component]
+[log] [Fast Refresh] rebuilding
+[clear] console.clear
+[error] ./src/app/layout.tsx:33:14
+Ecmascript file had an error
+  31 | })
+  32 |
+> 33 | export const metadata: Metadata = {
+     |              ^^^^^^^^
+  34 |   title: "Origin Dev Labs | Automation Systems That Work While You Sleep | Orlando, FL",
+  35 |   description:
+  36 |     "Origin Dev Labs builds automation systems, smart agents, and custom solutions that save businesses time and money. Based in Orlando, FL. Free consultation.",
+
+You are attempting to export "metadata" from a component marked with "use client", which is disallowed. Either remove the export, or the "use client" directive. Read more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+Import traces:
+  Client Component Browser:
+    ./src/app/layout.tsx [Client Component Browser]
+    ./src/app/layout.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/layout.tsx [Client Component SSR]
+    ./src/app/layout.tsx [Server Component]
+[log] [Fast Refresh] rebuilding
+[clear] console.clear
+[error] ./src/app/layout.tsx:33:14
+Ecmascript file had an error
+  31 | })
+  32 |
+> 33 | export const metadata: Metadata = {
+     |              ^^^^^^^^
+  34 |   title: "Origin Dev Labs | Automation Systems That Work While You Sleep | Orlando, FL",
+  35 |   description:
+  36 |     "Origin Dev Labs builds automation systems, smart agents, and custom solutions that save businesses time and money. Based in Orlando, FL. Free consultation.",
+
+You are attempting to export "metadata" from a component marked with "use client", which is disallowed. Either remove the export, or the "use client" directive. Read more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+Import traces:
+  Client Component Browser:
+    ./src/app/layout.tsx [Client Component Browser]
+    ./src/app/layout.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/layout.tsx [Client Component SSR]
+    ./src/app/layout.tsx [Server Component]
+[clear] console.clear
+[error] ./src/app/layout.tsx:33:14
+Ecmascript file had an error
+  31 | })
+  32 |
+> 33 | export const metadata: Metadata = {
+     |              ^^^^^^^^
+  34 |   title: "Origin Dev Labs | Automation Systems That Work While You Sleep | Orlando, FL",
+  35 |   description:
+  36 |     "Origin Dev Labs builds automation systems, smart agents, and custom solutions that save businesses time and money. Based in Orlando, FL. Free consultation.",
+
+You are attempting to export "metadata" from a component marked with "use client", which is disallowed. Either remove the export, or the "use client" directive. Read more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+Import traces:
+  Client Component Browser:
+    ./src/app/layout.tsx [Client Component Browser]
+    ./src/app/layout.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/layout.tsx [Client Component SSR]
+    ./src/app/layout.tsx [Server Component]
+[log] [Fast Refresh] rebuilding
+[log] [Fast Refresh] rebuilding
+[clear] console.clear
+[error] ./src/app/layout.tsx:33:14
+Ecmascript file had an error
+  31 | })
+  32 |
+> 33 | export const metadata: Metadata = {
+     |              ^^^^^^^^
+  34 |   title: "Origin Dev Labs | Automation Systems That Work While You Sleep | Orlando, FL",
+  35 |   description:
+  36 |     "Origin Dev Labs builds automation systems, smart agents, and custom solutions that save businesses time and money. Based in Orlando, FL. Free consultation.",
+
+You are attempting to export "metadata" from a component marked with "use client", which is disallowed. Either remove the export, or the "use client" directive. Read more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+Import traces:
+  Client Component Browser:
+    ./src/app/layout.tsx [Client Component Browser]
+    ./src/app/layout.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/layout.tsx [Client Component SSR]
+    ./src/app/layout.tsx [Server Component]
+[log] [Fast Refresh] rebuilding
+[clear] console.clear
+[error] ./src/app/layout.tsx:33:14
+Ecmascript file had an error
+  31 | })
+  32 |
+> 33 | export const metadata: Metadata = {
+     |              ^^^^^^^^
+  34 |   title: "Origin Dev Labs | Automation Systems That Work While You Sleep | Orlando, FL",
+  35 |   description:
+  36 |     "Origin Dev Labs builds automation systems, smart agents, and custom solutions that save businesses time and money. Based in Orlando, FL. Free consultation.",
+
+You are attempting to export "metadata" from a component marked with "use client", which is disallowed. Either remove the export, or the "use client" directive. Read more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+Import traces:
+  Client Component Browser:
+    ./src/app/layout.tsx [Client Component Browser]
+    ./src/app/layout.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/layout.tsx [Client Component SSR]
+    ./src/app/layout.tsx [Server Component]
+[log] [HMR] connected
+[error] ./src/app/layout.tsx:33:14
+Ecmascript file had an error
+  31 | })
+  32 |
+> 33 | export const metadata: Metadata = {
+     |              ^^^^^^^^
+  34 |   title: "Origin Dev Labs | Automation Systems That Work While You Sleep | Orlando, FL",
+  35 |   description:
+  36 |     "Origin Dev Labs builds automation systems, smart agents, and custom solutions that save businesses time and money. Based in Orlando, FL. Free consultation.",
+
+You are attempting to export "metadata" from a component marked with "use client", which is disallowed. Either remove the export, or the "use client" directive. Read more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+Import traces:
+  Client Component Browser:
+    ./src/app/layout.tsx [Client Component Browser]
+    ./src/app/layout.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/layout.tsx [Client Component SSR]
+    ./src/app/layout.tsx [Server Component]
+[clear] console.clear
+[error] ./src/app/layout.tsx:33:14
+Ecmascript file had an error
+  31 | })
+  32 |
+> 33 | export const metadata: Metadata = {
+     |              ^^^^^^^^
+  34 |   title: "Origin Dev Labs | Automation Systems That Work While You Sleep | Orlando, FL",
+  35 |   description:
+  36 |     "Origin Dev Labs builds automation systems, smart agents, and custom solutions that save businesses time and money. Based in Orlando, FL. Free consultation.",
+
+You are attempting to export "metadata" from a component marked with "use client", which is disallowed. Either remove the export, or the "use client" directive. Read more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+Import traces:
+  Client Component Browser:
+    ./src/app/layout.tsx [Client Component Browser]
+    ./src/app/layout.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/layout.tsx [Client Component SSR]
+    ./src/app/layout.tsx [Server Component]
+[log] [Fast Refresh] rebuilding
+[clear] console.clear
+[error] ./src/app/layout.tsx:33:14
+Ecmascript file had an error
+  31 | })
+  32 |
+> 33 | export const metadata: Metadata = {
+     |              ^^^^^^^^
+  34 |   title: "Origin Dev Labs | Automation Systems That Work While You Sleep | Orlando, FL",
+  35 |   description:
+  36 |     "Origin Dev Labs builds automation systems, smart agents, and custom solutions that save businesses time and money. Based in Orlando, FL. Free consultation.",
+
+You are attempting to export "metadata" from a component marked with "use client", which is disallowed. Either remove the export, or the "use client" directive. Read more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+Import traces:
+  Client Component Browser:
+    ./src/app/layout.tsx [Client Component Browser]
+    ./src/app/layout.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/layout.tsx [Client Component SSR]
+    ./src/app/layout.tsx [Server Component]
+[log] [Fast Refresh] rebuilding
+[clear] console.clear
+[error] ./src/app/layout.tsx:33:14
+Ecmascript file had an error
+  31 | })
+  32 |
+> 33 | export const metadata: Metadata = {
+     |              ^^^^^^^^
+  34 |   title: "Origin Dev Labs | Automation Systems That Work While You Sleep | Orlando, FL",
+  35 |   description:
+  36 |     "Origin Dev Labs builds automation systems, smart agents, and custom solutions that save businesses time and money. Based in Orlando, FL. Free consultation.",
+
+You are attempting to export "metadata" from a component marked with "use client", which is disallowed. Either remove the export, or the "use client" directive. Read more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+Import traces:
+  Client Component Browser:
+    ./src/app/layout.tsx [Client Component Browser]
+    ./src/app/layout.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/layout.tsx [Client Component SSR]
+    ./src/app/layout.tsx [Server Component]
+[log] [Fast Refresh] rebuilding
+[clear] console.clear
+[error] ./src/app/layout.tsx:33:14
+Ecmascript file had an error
+  31 | })
+  32 |
+> 33 | export const metadata: Metadata = {
+     |              ^^^^^^^^
+  34 |   title: "Origin Dev Labs | Automation Systems That Work While You Sleep | Orlando, FL",
+  35 |   description:
+  36 |     "Origin Dev Labs builds automation systems, smart agents, and custom solutions that save businesses time and money. Based in Orlando, FL. Free consultation.",
+
+You are attempting to export "metadata" from a component marked with "use client", which is disallowed. Either remove the export, or the "use client" directive. Read more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+Import traces:
+  Client Component Browser:
+    ./src/app/layout.tsx [Client Component Browser]
+    ./src/app/layout.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/layout.tsx [Client Component SSR]
+    ./src/app/layout.tsx [Server Component]
+[log] [Fast Refresh] rebuilding
+[clear] console.clear
+[error] ./src/app/layout.tsx:33:14
+Ecmascript file had an error
+  31 | })
+  32 |
+> 33 | export const metadata: Metadata = {
+     |              ^^^^^^^^
+  34 |   title: "Origin Dev Labs | Automation Systems That Work While You Sleep | Orlando, FL",
+  35 |   description:
+  36 |     "Origin Dev Labs builds automation systems, smart agents, and custom solutions that save businesses time and money. Based in Orlando, FL. Free consultation.",
+
+You are attempting to export "metadata" from a component marked with "use client", which is disallowed. Either remove the export, or the "use client" directive. Read more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+Import traces:
+  Client Component Browser:
+    ./src/app/layout.tsx [Client Component Browser]
+    ./src/app/layout.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/layout.tsx [Client Component SSR]
+    ./src/app/layout.tsx [Server Component]
+[log] [Fast Refresh] rebuilding
+[clear] console.clear
+[error] ./src/app/layout.tsx:33:14
+Ecmascript file had an error
+  31 | })
+  32 |
+> 33 | export const metadata: Metadata = {
+     |              ^^^^^^^^
+  34 |   title: "Origin Dev Labs | Automation Systems That Work While You Sleep | Orlando, FL",
+  35 |   description:
+  36 |     "Origin Dev Labs builds automation systems, smart agents, and custom solutions that save businesses time and money. Based in Orlando, FL. Free consultation.",
+
+You are attempting to export "metadata" from a component marked with "use client", which is disallowed. Either remove the export, or the "use client" directive. Read more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+Import traces:
+  Client Component Browser:
+    ./src/app/layout.tsx [Client Component Browser]
+    ./src/app/layout.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/layout.tsx [Client Component SSR]
+    ./src/app/layout.tsx [Server Component]
+[log] [Fast Refresh] rebuilding
+[log] [Fast Refresh] rebuilding
+[clear] console.clear
+[error] ./src/app/layout.tsx:33:14
+Ecmascript file had an error
+  31 | })
+  32 |
+> 33 | export const metadata: Metadata = {
+     |              ^^^^^^^^
+  34 |   title: "Origin Dev Labs | Automation Systems That Work While You Sleep | Orlando, FL",
+  35 |   description:
+  36 |     "Origin Dev Labs builds automation systems, smart agents, and custom solutions that save businesses time and money. Based in Orlando, FL. Free consultation.",
+
+You are attempting to export "metadata" from a component marked with "use client", which is disallowed. Either remove the export, or the "use client" directive. Read more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+Import traces:
+  Client Component Browser:
+    ./src/app/layout.tsx [Client Component Browser]
+    ./src/app/layout.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/layout.tsx [Client Component SSR]
+    ./src/app/layout.tsx [Server Component]
+[log] [Fast Refresh] rebuilding
+[clear] console.clear
+[error] ./src/app/layout.tsx:33:14
+Ecmascript file had an error
+  31 | })
+  32 |
+> 33 | export const metadata: Metadata = {
+     |              ^^^^^^^^
+  34 |   title: "Origin Dev Labs | Automation Systems That Work While You Sleep | Orlando, FL",
+  35 |   description:
+  36 |     "Origin Dev Labs builds automation systems, smart agents, and custom solutions that save businesses time and money. Based in Orlando, FL. Free consultation.",
+
+You are attempting to export "metadata" from a component marked with "use client", which is disallowed. Either remove the export, or the "use client" directive. Read more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+Import traces:
+  Client Component Browser:
+    ./src/app/layout.tsx [Client Component Browser]
+    ./src/app/layout.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/layout.tsx [Client Component SSR]
+    ./src/app/layout.tsx [Server Component]
+[log] [HMR] connected
+[error] ./src/app/layout.tsx:33:14
+Ecmascript file had an error
+  31 | })
+  32 |
+> 33 | export const metadata: Metadata = {
+     |              ^^^^^^^^
+  34 |   title: "Origin Dev Labs | Automation Systems That Work While You Sleep | Orlando, FL",
+  35 |   description:
+  36 |     "Origin Dev Labs builds automation systems, smart agents, and custom solutions that save businesses time and money. Based in Orlando, FL. Free consultation.",
+
+You are attempting to export "metadata" from a component marked with "use client", which is disallowed. Either remove the export, or the "use client" directive. Read more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+Import traces:
+  Client Component Browser:
+    ./src/app/layout.tsx [Client Component Browser]
+    ./src/app/layout.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/layout.tsx [Client Component SSR]
+    ./src/app/layout.tsx [Server Component]
+[clear] console.clear
+[error] ./src/app/layout.tsx:33:14
+Ecmascript file had an error
+  31 | })
+  32 |
+> 33 | export const metadata: Metadata = {
+     |              ^^^^^^^^
+  34 |   title: "Origin Dev Labs | Automation Systems That Work While You Sleep | Orlando, FL",
+  35 |   description:
+  36 |     "Origin Dev Labs builds automation systems, smart agents, and custom solutions that save businesses time and money. Based in Orlando, FL. Free consultation.",
+
+You are attempting to export "metadata" from a component marked with "use client", which is disallowed. Either remove the export, or the "use client" directive. Read more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+Import traces:
+  Client Component Browser:
+    ./src/app/layout.tsx [Client Component Browser]
+    ./src/app/layout.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/layout.tsx [Client Component SSR]
+    ./src/app/layout.tsx [Server Component]
+[log] [Fast Refresh] rebuilding
+[clear] console.clear
+[error] ./src/app/layout.tsx:33:14
+Ecmascript file had an error
+  31 | })
+  32 |
+> 33 | export const metadata: Metadata = {
+     |              ^^^^^^^^
+  34 |   title: "Origin Dev Labs | Automation Systems That Work While You Sleep | Orlando, FL",
+  35 |   description:
+  36 |     "Origin Dev Labs builds automation systems, smart agents, and custom solutions that save businesses time and money. Based in Orlando, FL. Free consultation.",
+
+You are attempting to export "metadata" from a component marked with "use client", which is disallowed. Either remove the export, or the "use client" directive. Read more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+Import traces:
+  Client Component Browser:
+    ./src/app/layout.tsx [Client Component Browser]
+    ./src/app/layout.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/layout.tsx [Client Component SSR]
+    ./src/app/layout.tsx [Server Component]
+[clear] console.clear
+[error] ./src/app/layout.tsx:33:14
+Ecmascript file had an error
+  31 | })
+  32 |
+> 33 | export const metadata: Metadata = {
+     |              ^^^^^^^^
+  34 |   title: "Origin Dev Labs | Automation Systems That Work While You Sleep | Orlando, FL",
+  35 |   description:
+  36 |     "Origin Dev Labs builds automation systems, smart agents, and custom solutions that save businesses time and money. Based in Orlando, FL. Free consultation.",
+
+You are attempting to export "metadata" from a component marked with "use client", which is disallowed. Either remove the export, or the "use client" directive. Read more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+Import traces:
+  Client Component Browser:
+    ./src/app/layout.tsx [Client Component Browser]
+    ./src/app/layout.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/layout.tsx [Client Component SSR]
+    ./src/app/layout.tsx [Server Component]
+[log] [Fast Refresh] rebuilding
+[clear] console.clear
+[error] ./src/app/layout.tsx:33:14
+Ecmascript file had an error
+  31 | })
+  32 |
+> 33 | export const metadata: Metadata = {
+     |              ^^^^^^^^
+  34 |   title: "Origin Dev Labs | Automation Systems That Work While You Sleep | Orlando, FL",
+  35 |   description:
+  36 |     "Origin Dev Labs builds automation systems, smart agents, and custom solutions that save businesses time and money. Based in Orlando, FL. Free consultation.",
+
+You are attempting to export "metadata" from a component marked with "use client", which is disallowed. Either remove the export, or the "use client" directive. Read more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+Import traces:
+  Client Component Browser:
+    ./src/app/layout.tsx [Client Component Browser]
+    ./src/app/layout.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/layout.tsx [Client Component SSR]
+    ./src/app/layout.tsx [Server Component]
+[log] [Fast Refresh] rebuilding
+[clear] console.clear
+[error] ./src/app/layout.tsx:33:14
+Ecmascript file had an error
+  31 | })
+  32 |
+> 33 | export const metadata: Metadata = {
+     |              ^^^^^^^^
+  34 |   title: "Origin Dev Labs | Automation Systems That Work While You Sleep | Orlando, FL",
+  35 |   description:
+  36 |     "Origin Dev Labs builds automation systems, smart agents, and custom solutions that save businesses time and money. Based in Orlando, FL. Free consultation.",
+
+You are attempting to export "metadata" from a component marked with "use client", which is disallowed. Either remove the export, or the "use client" directive. Read more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+Import traces:
+  Client Component Browser:
+    ./src/app/layout.tsx [Client Component Browser]
+    ./src/app/layout.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/layout.tsx [Client Component SSR]
+    ./src/app/layout.tsx [Server Component]
+[log] [Fast Refresh] rebuilding
+[log] [Fast Refresh] rebuilding
+[clear] console.clear
+[error] ./src/app/layout.tsx:33:14
+Ecmascript file had an error
+  31 | })
+  32 |
+> 33 | export const metadata: Metadata = {
+     |              ^^^^^^^^
+  34 |   title: "Origin Dev Labs | Automation Systems That Work While You Sleep | Orlando, FL",
+  35 |   description:
+  36 |     "Origin Dev Labs builds automation systems, smart agents, and custom solutions that save businesses time and money. Based in Orlando, FL. Free consultation.",
+
+You are attempting to export "metadata" from a component marked with "use client", which is disallowed. Either remove the export, or the "use client" directive. Read more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+Import traces:
+  Client Component Browser:
+    ./src/app/layout.tsx [Client Component Browser]
+    ./src/app/layout.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/layout.tsx [Client Component SSR]
+    ./src/app/layout.tsx [Server Component]
+[log] [Fast Refresh] rebuilding
+[clear] console.clear
+[error] ./src/app/layout.tsx:33:14
+Ecmascript file had an error
+  31 | })
+  32 |
+> 33 | export const metadata: Metadata = {
+     |              ^^^^^^^^
+  34 |   title: "Origin Dev Labs | Automation Systems That Work While You Sleep | Orlando, FL",
+  35 |   description:
+  36 |     "Origin Dev Labs builds automation systems, smart agents, and custom solutions that save businesses time and money. Based in Orlando, FL. Free consultation.",
+
+You are attempting to export "metadata" from a component marked with "use client", which is disallowed. Either remove the export, or the "use client" directive. Read more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+Import traces:
+  Client Component Browser:
+    ./src/app/layout.tsx [Client Component Browser]
+    ./src/app/layout.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/layout.tsx [Client Component SSR]
+    ./src/app/layout.tsx [Server Component]
+[log] [HMR] connected
+[error] ./src/app/layout.tsx:33:14
+Ecmascript file had an error
+  31 | })
+  32 |
+> 33 | export const metadata: Metadata = {
+     |              ^^^^^^^^
+  34 |   title: "Origin Dev Labs | Automation Systems That Work While You Sleep | Orlando, FL",
+  35 |   description:
+  36 |     "Origin Dev Labs builds automation systems, smart agents, and custom solutions that save businesses time and money. Based in Orlando, FL. Free consultation.",
+
+You are attempting to export "metadata" from a component marked with "use client", which is disallowed. Either remove the export, or the "use client" directive. Read more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+Import traces:
+  Client Component Browser:
+    ./src/app/layout.tsx [Client Component Browser]
+    ./src/app/layout.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/layout.tsx [Client Component SSR]
+    ./src/app/layout.tsx [Server Component]
+[clear] console.clear
+[error] ./src/app/layout.tsx:33:14
+Ecmascript file had an error
+  31 | })
+  32 |
+> 33 | export const metadata: Metadata = {
+     |              ^^^^^^^^
+  34 |   title: "Origin Dev Labs | Automation Systems That Work While You Sleep | Orlando, FL",
+  35 |   description:
+  36 |     "Origin Dev Labs builds automation systems, smart agents, and custom solutions that save businesses time and money. Based in Orlando, FL. Free consultation.",
+
+You are attempting to export "metadata" from a component marked with "use client", which is disallowed. Either remove the export, or the "use client" directive. Read more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+Import traces:
+  Client Component Browser:
+    ./src/app/layout.tsx [Client Component Browser]
+    ./src/app/layout.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/layout.tsx [Client Component SSR]
+    ./src/app/layout.tsx [Server Component]
+[log] [Fast Refresh] rebuilding
+[clear] console.clear
+[error] ./src/app/layout.tsx:33:14
+Ecmascript file had an error
+  31 | })
+  32 |
+> 33 | export const metadata: Metadata = {
+     |              ^^^^^^^^
+  34 |   title: "Origin Dev Labs | Automation Systems That Work While You Sleep | Orlando, FL",
+  35 |   description:
+  36 |     "Origin Dev Labs builds automation systems, smart agents, and custom solutions that save businesses time and money. Based in Orlando, FL. Free consultation.",
+
+You are attempting to export "metadata" from a component marked with "use client", which is disallowed. Either remove the export, or the "use client" directive. Read more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+Import traces:
+  Client Component Browser:
+    ./src/app/layout.tsx [Client Component Browser]
+    ./src/app/layout.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/layout.tsx [Client Component SSR]
+    ./src/app/layout.tsx [Server Component]
+[clear] console.clear
+[error] ./src/app/layout.tsx:33:14
+Ecmascript file had an error
+  31 | })
+  32 |
+> 33 | export const metadata: Metadata = {
+     |              ^^^^^^^^
+  34 |   title: "Origin Dev Labs | Automation Systems That Work While You Sleep | Orlando, FL",
+  35 |   description:
+  36 |     "Origin Dev Labs builds automation systems, smart agents, and custom solutions that save businesses time and money. Based in Orlando, FL. Free consultation.",
+
+You are attempting to export "metadata" from a component marked with "use client", which is disallowed. Either remove the export, or the "use client" directive. Read more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+Import traces:
+  Client Component Browser:
+    ./src/app/layout.tsx [Client Component Browser]
+    ./src/app/layout.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/layout.tsx [Client Component SSR]
+    ./src/app/layout.tsx [Server Component]
+[log] [Fast Refresh] rebuilding
+[clear] console.clear
+[error] ./src/app/layout.tsx:33:14
+Ecmascript file had an error
+  31 | })
+  32 |
+> 33 | export const metadata: Metadata = {
+     |              ^^^^^^^^
+  34 |   title: "Origin Dev Labs | Automation Systems That Work While You Sleep | Orlando, FL",
+  35 |   description:
+  36 |     "Origin Dev Labs builds automation systems, smart agents, and custom solutions that save businesses time and money. Based in Orlando, FL. Free consultation.",
+
+You are attempting to export "metadata" from a component marked with "use client", which is disallowed. Either remove the export, or the "use client" directive. Read more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+Import traces:
+  Client Component Browser:
+    ./src/app/layout.tsx [Client Component Browser]
+    ./src/app/layout.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/layout.tsx [Client Component SSR]
+    ./src/app/layout.tsx [Server Component]
+[log] [Fast Refresh] rebuilding
+[clear] console.clear
+[error] ./src/app/layout.tsx:33:14
+Ecmascript file had an error
+  31 | })
+  32 |
+> 33 | export const metadata: Metadata = {
+     |              ^^^^^^^^
+  34 |   title: "Origin Dev Labs | Automation Systems That Work While You Sleep | Orlando, FL",
+  35 |   description:
+  36 |     "Origin Dev Labs builds automation systems, smart agents, and custom solutions that save businesses time and money. Based in Orlando, FL. Free consultation.",
+
+You are attempting to export "metadata" from a component marked with "use client", which is disallowed. Either remove the export, or the "use client" directive. Read more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+Import traces:
+  Client Component Browser:
+    ./src/app/layout.tsx [Client Component Browser]
+    ./src/app/layout.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/layout.tsx [Client Component SSR]
+    ./src/app/layout.tsx [Server Component]
+[log] [Fast Refresh] rebuilding
+[clear] console.clear
+[error] ./src/app/layout.tsx:33:14
+Ecmascript file had an error
+  31 | })
+  32 |
+> 33 | export const metadata: Metadata = {
+     |              ^^^^^^^^
+  34 |   title: "Origin Dev Labs | Automation Systems That Work While You Sleep | Orlando, FL",
+  35 |   description:
+  36 |     "Origin Dev Labs builds automation systems, smart agents, and custom solutions that save businesses time and money. Based in Orlando, FL. Free consultation.",
+
+You are attempting to export "metadata" from a component marked with "use client", which is disallowed. Either remove the export, or the "use client" directive. Read more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+Import traces:
+  Client Component Browser:
+    ./src/app/layout.tsx [Client Component Browser]
+    ./src/app/layout.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/layout.tsx [Client Component SSR]
+    ./src/app/layout.tsx [Server Component]
+[log] [Fast Refresh] rebuilding
+[clear] console.clear
+[error] ./src/app/layout.tsx:33:14
+Ecmascript file had an error
+  31 | })
+  32 |
+> 33 | export const metadata: Metadata = {
+     |              ^^^^^^^^
+  34 |   title: "Origin Dev Labs | Automation Systems That Work While You Sleep | Orlando, FL",
+  35 |   description:
+  36 |     "Origin Dev Labs builds automation systems, smart agents, and custom solutions that save businesses time and money. Based in Orlando, FL. Free consultation.",
+
+You are attempting to export "metadata" from a component marked with "use client", which is disallowed. Either remove the export, or the "use client" directive. Read more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+Import traces:
+  Client Component Browser:
+    ./src/app/layout.tsx [Client Component Browser]
+    ./src/app/layout.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/layout.tsx [Client Component SSR]
+    ./src/app/layout.tsx [Server Component]
+[log] [Fast Refresh] rebuilding
+[log] [Fast Refresh] rebuilding
+[clear] console.clear
+[log] [Fast Refresh] done in 906ms
+[clear] console.clear
+[log] [Fast Refresh] done in 906ms
+[warning] [Fast Refresh] performing full reload because your application had an unrecoverable error
+[log] [HMR] connected
+[log] [Fast Refresh] rebuilding
+[log] [Fast Refresh] done in 1608ms
+[log] [Fast Refresh] rebuilding
+[log] [Fast Refresh] done in 173ms
+[log] [Fast Refresh] rebuilding
+[log] [Fast Refresh] done in 1374ms
+[log] [Fast Refresh] rebuilding
+[log] [Fast Refresh] done in 1118ms
+[log] [Fast Refresh] rebuilding
+[log] [Fast Refresh] done in 195ms
+[log] [Fast Refresh] rebuilding
+[log] [Fast Refresh] done in 1209ms
+[log] [Fast Refresh] rebuilding
+[log] [Fast Refresh] done in 210ms
+[log] [Fast Refresh] rebuilding
+[log] [Fast Refresh] done in 304ms
+[log] [HMR] connected
+[log] [Fast Refresh] rebuilding
+[log] [Fast Refresh] done in 158ms
+[log] [Fast Refresh] rebuilding
+[log] [Fast Refresh] done in 111ms
+[log] [Fast Refresh] rebuilding
+[log] [Fast Refresh] done in 118ms
+[log] [HMR] connected
+[log] [HMR] connected
+[log] [Fast Refresh] rebuilding
+[log] [Fast Refresh] done in 311ms
+[log] [Fast Refresh] rebuilding
+[log] [Fast Refresh] done in 1747ms
+[log] [Fast Refresh] rebuilding
+[log] [Fast Refresh] done in 107ms
+[log] [Fast Refresh] rebuilding
+[log] [Fast Refresh] done in 255ms
+[log] [Fast Refresh] rebuilding
+[log] [Fast Refresh] done in 240ms
+[log] [Fast Refresh] rebuilding
+[log] [Fast Refresh] done in 188ms
+[log] [Fast Refresh] rebuilding
+[error] ./src/components/sections/CTASection.tsx:50:11
+Parsing ecmascript source code failed
+  48 |           suppressHydrationWarning
+  49 |           animate={isInView ? { opacity: 1, scale: 1 } : {}
+> 50 |           transition={{ duration: 0.8, ease: [0.32, 0.72, 0, 1] }}
+     |           ^^^^^^^^^^
+  51 |         >
+  52 |           Done Losing Hours to Busywork?
+  53 |         </motion.h2>
+
+Expected '</', got 'transition'
+
+Import traces:
+  Client Component Browser:
+    ./src/components/sections/CTASection.tsx [Client Component Browser]
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/components/sections/CTASection.tsx [Client Component SSR]
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+[log] [Fast Refresh] rebuilding
+[error] ./src/components/sections/CTASection.tsx:50:11
+Parsing ecmascript source code failed
+  48 |           suppressHydrationWarning
+  49 |           animate={isInView ? { opacity: 1, scale: 1 } : {}
+> 50 |           transition={{ duration: 0.8, ease: [0.32, 0.72, 0, 1] }}
+     |           ^^^^^^^^^^
+  51 |         >
+  52 |           Done Losing Hours to Busywork?
+  53 |         </motion.h2>
+
+Expected '</', got 'transition'
+
+Import traces:
+  Client Component Browser:
+    ./src/components/sections/CTASection.tsx [Client Component Browser]
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/components/sections/CTASection.tsx [Client Component SSR]
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+[log] [Fast Refresh] rebuilding
+[error] ./src/components/sections/CTASection.tsx:50:11
+Parsing ecmascript source code failed
+  48 |           suppressHydrationWarning
+  49 |           animate={isInView ? { opacity: 1, scale: 1 } : {}
+> 50 |           transition={{ duration: 0.8, ease: [0.32, 0.72, 0, 1] }}
+     |           ^^^^^^^^^^
+  51 |         >
+  52 |           Done Losing Hours to Busywork?
+  53 |         </motion.h2>
+
+Expected '</', got 'transition'
+
+Import traces:
+  Client Component Browser:
+    ./src/components/sections/CTASection.tsx [Client Component Browser]
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/components/sections/CTASection.tsx [Client Component SSR]
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+[error] ./src/components/sections/ServicesSection.tsx:397:11
+Parsing ecmascript source code failed
+  395 |           suppressHydrationWarning
+  396 |           animate={titleInView ? { opacity: 1, y: 0 } : {}
+> 397 |           transition={{ duration: 0.8, ease: [0.23, 1, 0.32, 1] }}
+      |           ^^^^^^^^^^
+  398 |         >
+  399 |           <motion.span
+  400 |             className="inline-block px-4 py-1.5 bg-gray-50 text-gray-600 text-xs font-medium tracking-wider uppercase rounded-full mb-6 border border-gray-100"
+
+Expected '</', got 'transition'
+
+Import traces:
+  Client Component Browser:
+    ./src/components/sections/ServicesSection.tsx [Client Component Browser]
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/components/sections/ServicesSection.tsx [Client Component SSR]
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+[log] [Fast Refresh] rebuilding
+[error] ./src/components/sections/CTASection.tsx:50:11
+Parsing ecmascript source code failed
+  48 |           suppressHydrationWarning
+  49 |           animate={isInView ? { opacity: 1, scale: 1 } : {}
+> 50 |           transition={{ duration: 0.8, ease: [0.32, 0.72, 0, 1] }}
+     |           ^^^^^^^^^^
+  51 |         >
+  52 |           Done Losing Hours to Busywork?
+  53 |         </motion.h2>
+
+Expected '</', got 'transition'
+
+Import traces:
+  Client Component Browser:
+    ./src/components/sections/CTASection.tsx [Client Component Browser]
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/components/sections/CTASection.tsx [Client Component SSR]
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+[error] ./src/components/sections/ServicesSection.tsx:397:11
+Parsing ecmascript source code failed
+  395 |           suppressHydrationWarning
+  396 |           animate={titleInView ? { opacity: 1, y: 0 } : {}
+> 397 |           transition={{ duration: 0.8, ease: [0.23, 1, 0.32, 1] }}
+      |           ^^^^^^^^^^
+  398 |         >
+  399 |           <motion.span
+  400 |             className="inline-block px-4 py-1.5 bg-gray-50 text-gray-600 text-xs font-medium tracking-wider uppercase rounded-full mb-6 border border-gray-100"
+
+Expected '</', got 'transition'
+
+Import traces:
+  Client Component Browser:
+    ./src/components/sections/ServicesSection.tsx [Client Component Browser]
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/components/sections/ServicesSection.tsx [Client Component SSR]
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+[error] ./src/components/sections/TrustBar.tsx:89:11
+Parsing ecmascript source code failed
+  87 |           suppressHydrationWarning
+  88 |           animate={isInView ? { opacity: 1, y: 0 } : {}
+> 89 |           transition={{ duration: 0.8, ease: [0.32, 0.72, 0, 1] }}
+     |           ^^^^^^^^^^
+  90 |         >
+  91 |           <div className="grid grid-cols-2 md:grid-cols-4 gap-0">
+  92 |             {METRICS.map((metric, i) => (
+
+Expected '</', got 'transition'
+
+Import traces:
+  Client Component Browser:
+    ./src/components/sections/TrustBar.tsx [Client Component Browser]
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/components/sections/TrustBar.tsx [Client Component SSR]
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+[log] [Fast Refresh] rebuilding
+[error] ./src/components/sections/CTASection.tsx:50:11
+Parsing ecmascript source code failed
+  48 |           suppressHydrationWarning
+  49 |           animate={isInView ? { opacity: 1, scale: 1 } : {}
+> 50 |           transition={{ duration: 0.8, ease: [0.32, 0.72, 0, 1] }}
+     |           ^^^^^^^^^^
+  51 |         >
+  52 |           Done Losing Hours to Busywork?
+  53 |         </motion.h2>
+
+Expected '</', got 'transition'
+
+Import traces:
+  Client Component Browser:
+    ./src/components/sections/CTASection.tsx [Client Component Browser]
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/components/sections/CTASection.tsx [Client Component SSR]
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+[error] ./src/components/sections/ServicesSection.tsx:397:11
+Parsing ecmascript source code failed
+  395 |           suppressHydrationWarning
+  396 |           animate={titleInView ? { opacity: 1, y: 0 } : {}
+> 397 |           transition={{ duration: 0.8, ease: [0.23, 1, 0.32, 1] }}
+      |           ^^^^^^^^^^
+  398 |         >
+  399 |           <motion.span
+  400 |             className="inline-block px-4 py-1.5 bg-gray-50 text-gray-600 text-xs font-medium tracking-wider uppercase rounded-full mb-6 border border-gray-100"
+
+Expected '</', got 'transition'
+
+Import traces:
+  Client Component Browser:
+    ./src/components/sections/ServicesSection.tsx [Client Component Browser]
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/components/sections/ServicesSection.tsx [Client Component SSR]
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+[error] ./src/components/sections/TrustBar.tsx:89:11
+Parsing ecmascript source code failed
+  87 |           suppressHydrationWarning
+  88 |           animate={isInView ? { opacity: 1, y: 0 } : {}
+> 89 |           transition={{ duration: 0.8, ease: [0.32, 0.72, 0, 1] }}
+     |           ^^^^^^^^^^
+  90 |         >
+  91 |           <div className="grid grid-cols-2 md:grid-cols-4 gap-0">
+  92 |             {METRICS.map((metric, i) => (
+
+Expected '</', got 'transition'
+
+Import traces:
+  Client Component Browser:
+    ./src/components/sections/TrustBar.tsx [Client Component Browser]
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/components/sections/TrustBar.tsx [Client Component SSR]
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+[log] [Fast Refresh] rebuilding
+[error] ./src/components/sections/CTASection.tsx:50:11
+Parsing ecmascript source code failed
+  48 |           suppressHydrationWarning
+  49 |           animate={isInView ? { opacity: 1, scale: 1 } : {}
+> 50 |           transition={{ duration: 0.8, ease: [0.32, 0.72, 0, 1] }}
+     |           ^^^^^^^^^^
+  51 |         >
+  52 |           Done Losing Hours to Busywork?
+  53 |         </motion.h2>
+
+Expected '</', got 'transition'
+
+Import traces:
+  Client Component Browser:
+    ./src/components/sections/CTASection.tsx [Client Component Browser]
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/components/sections/CTASection.tsx [Client Component SSR]
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+[error] ./src/components/sections/ServicesSection.tsx:397:11
+Parsing ecmascript source code failed
+  395 |           suppressHydrationWarning
+  396 |           animate={titleInView ? { opacity: 1, y: 0 } : {}
+> 397 |           transition={{ duration: 0.8, ease: [0.23, 1, 0.32, 1] }}
+      |           ^^^^^^^^^^
+  398 |         >
+  399 |           <motion.span
+  400 |             className="inline-block px-4 py-1.5 bg-gray-50 text-gray-600 text-xs font-medium tracking-wider uppercase rounded-full mb-6 border border-gray-100"
+
+Expected '</', got 'transition'
+
+Import traces:
+  Client Component Browser:
+    ./src/components/sections/ServicesSection.tsx [Client Component Browser]
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/components/sections/ServicesSection.tsx [Client Component SSR]
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+[error] ./src/components/sections/TrustBar.tsx:89:11
+Parsing ecmascript source code failed
+  87 |           suppressHydrationWarning
+  88 |           animate={isInView ? { opacity: 1, y: 0 } : {}
+> 89 |           transition={{ duration: 0.8, ease: [0.32, 0.72, 0, 1] }}
+     |           ^^^^^^^^^^
+  90 |         >
+  91 |           <div className="grid grid-cols-2 md:grid-cols-4 gap-0">
+  92 |             {METRICS.map((metric, i) => (
+
+Expected '</', got 'transition'
+
+Import traces:
+  Client Component Browser:
+    ./src/components/sections/TrustBar.tsx [Client Component Browser]
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/components/sections/TrustBar.tsx [Client Component SSR]
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+[log] [Fast Refresh] rebuilding
+[error] ./src/components/sections/CTASection.tsx:50:11
+Parsing ecmascript source code failed
+  48 |           suppressHydrationWarning
+  49 |           animate={isInView ? { opacity: 1, scale: 1 } : {}
+> 50 |           transition={{ duration: 0.8, ease: [0.32, 0.72, 0, 1] }}
+     |           ^^^^^^^^^^
+  51 |         >
+  52 |           Done Losing Hours to Busywork?
+  53 |         </motion.h2>
+
+Expected '</', got 'transition'
+
+Import traces:
+  Client Component Browser:
+    ./src/components/sections/CTASection.tsx [Client Component Browser]
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/components/sections/CTASection.tsx [Client Component SSR]
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+[error] ./src/components/sections/TrustBar.tsx:89:11
+Parsing ecmascript source code failed
+  87 |           suppressHydrationWarning
+  88 |           animate={isInView ? { opacity: 1, y: 0 } : {}
+> 89 |           transition={{ duration: 0.8, ease: [0.32, 0.72, 0, 1] }}
+     |           ^^^^^^^^^^
+  90 |         >
+  91 |           <div className="grid grid-cols-2 md:grid-cols-4 gap-0">
+  92 |             {METRICS.map((metric, i) => (
+
+Expected '</', got 'transition'
+
+Import traces:
+  Client Component Browser:
+    ./src/components/sections/TrustBar.tsx [Client Component Browser]
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/components/sections/TrustBar.tsx [Client Component SSR]
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+[log] [Fast Refresh] rebuilding
+[error] ./src/components/sections/CTASection.tsx:61:11
+Parsing ecmascript source code failed
+  59 |           suppressHydrationWarning
+  60 |           animate={isInView ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}
+> 61 |           transition={{
+     |           ^^^^^^^^^^
+  62 |             duration: 0.7,
+  63 |             delay: 0.15,
+  64 |             ease: [0.32, 0.72, 0, 1],
+
+Expected '</', got 'transition'
+
+Import traces:
+  Client Component Browser:
+    ./src/components/sections/CTASection.tsx [Client Component Browser]
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/components/sections/CTASection.tsx [Client Component SSR]
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+[error] ./src/components/sections/TrustBar.tsx:89:11
+Parsing ecmascript source code failed
+  87 |           suppressHydrationWarning
+  88 |           animate={isInView ? { opacity: 1, y: 0 } : {}
+> 89 |           transition={{ duration: 0.8, ease: [0.32, 0.72, 0, 1] }}
+     |           ^^^^^^^^^^
+  90 |         >
+  91 |           <div className="grid grid-cols-2 md:grid-cols-4 gap-0">
+  92 |             {METRICS.map((metric, i) => (
+
+Expected '</', got 'transition'
+
+Import traces:
+  Client Component Browser:
+    ./src/components/sections/TrustBar.tsx [Client Component Browser]
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/components/sections/TrustBar.tsx [Client Component SSR]
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+[log] [Fast Refresh] rebuilding
+[error] ./src/components/sections/TrustBar.tsx:89:11
+Parsing ecmascript source code failed
+  87 |           suppressHydrationWarning
+  88 |           animate={isInView ? { opacity: 1, y: 0 } : {}
+> 89 |           transition={{ duration: 0.8, ease: [0.32, 0.72, 0, 1] }}
+     |           ^^^^^^^^^^
+  90 |         >
+  91 |           <div className="grid grid-cols-2 md:grid-cols-4 gap-0">
+  92 |             {METRICS.map((metric, i) => (
+
+Expected '</', got 'transition'
+
+Import traces:
+  Client Component Browser:
+    ./src/components/sections/TrustBar.tsx [Client Component Browser]
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/components/sections/TrustBar.tsx [Client Component SSR]
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+[log] [Fast Refresh] rebuilding
+[log] [Fast Refresh] done in 270ms
+[log] [Fast Refresh] rebuilding
+[log] [Fast Refresh] done in 228ms
+[log] [Fast Refresh] rebuilding
+[log] [Fast Refresh] done in 338ms
+[log] [HMR] connected

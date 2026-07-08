@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useState, useCallback, useMemo, useRef, useEffect } from "react";
-import { motion, useInView } from "framer-motion";
+import React, { useState, useCallback, useRef, useEffect } from "react";
+import { motion, useInView } from "motion/react";
+import Link from "next/link";
 import { cn } from "@/lib/utils";
 import {
   Workflow,
@@ -12,11 +13,17 @@ import {
   ArrowRight,
 } from "lucide-react";
 
-// --- Circuitry Background (Shared with Hero) ---
-function CircuitryBackground({ mousePosition }: { mousePosition: { x: number; y: number } }) {
+// --- Circuitry Background ---
+function CircuitryBackground({
+  mousePosition,
+}: {
+  mousePosition: { x: number; y: number };
+}) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationRef = useRef<number>(0);
-  const nodesRef = useRef<Array<{ x: number; y: number; connections: number[]; pulse: number }>>([]);
+  const nodesRef = useRef<
+    Array<{ x: number; y: number; connections: number[]; pulse: number }>
+  >([]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -31,7 +38,12 @@ function CircuitryBackground({ mousePosition }: { mousePosition: { x: number; y:
     };
 
     const generateNodes = () => {
-      const nodes: Array<{ x: number; y: number; connections: number[]; pulse: number }> = [];
+      const nodes: Array<{
+        x: number;
+        y: number;
+        connections: number[];
+        pulse: number;
+      }> = [];
       const spacing = 80;
       const cols = Math.ceil(canvas.width / spacing) + 1;
       const rows = Math.ceil(canvas.height / spacing) + 1;
@@ -40,7 +52,12 @@ function CircuitryBackground({ mousePosition }: { mousePosition: { x: number; y:
         for (let col = 0; col < cols; col++) {
           const x = col * spacing + (row % 2 === 0 ? 0 : spacing / 2);
           const y = row * spacing;
-          nodes.push({ x, y, connections: [], pulse: Math.random() * Math.PI * 2 });
+          nodes.push({
+            x,
+            y,
+            connections: [],
+            pulse: Math.random() * Math.PI * 2,
+          });
         }
       }
 
@@ -72,7 +89,7 @@ function CircuitryBackground({ mousePosition }: { mousePosition: { x: number; y:
 
       ctx.strokeStyle = "rgba(0, 0, 0, 0.03)";
       ctx.lineWidth = 1;
-      nodes.forEach((node, i) => {
+      nodes.forEach((node) => {
         node.connections.forEach((j) => {
           const other = nodes[j];
           const distToMouse = Math.hypot(node.x - mx, node.y - my);
@@ -92,7 +109,14 @@ function CircuitryBackground({ mousePosition }: { mousePosition: { x: number; y:
         const radius = baseRadius + glow * 2;
 
         if (glow > 0.1) {
-          const gradient = ctx.createRadialGradient(node.x, node.y, 0, node.x, node.y, radius * 4);
+          const gradient = ctx.createRadialGradient(
+            node.x,
+            node.y,
+            0,
+            node.x,
+            node.y,
+            radius * 4
+          );
           gradient.addColorStop(0, `rgba(0, 0, 0, ${glow * 0.15})`);
           gradient.addColorStop(1, "rgba(0, 0, 0, 0)");
           ctx.fillStyle = gradient;
@@ -144,188 +168,137 @@ interface ServiceCardProps {
   features: string[];
   icon: React.ReactNode;
   image: string;
+  link: string;
   index: number;
-}
-
-interface MousePos {
-  readonly x: number;
-  readonly y: number;
+  className?: string;
 }
 
 // --- Service Card Component ---
 const ServiceCard = React.forwardRef<HTMLDivElement, ServiceCardProps>(
-  ({ title, description, features, icon, image, index }, ref) => {
-    const [mousePos, setMousePos] = useState<MousePos>({ x: 0, y: 0 });
+  ({ title, description, features, icon, image, link, index, className }, ref) => {
     const [hovered, setHovered] = useState(false);
     const cardRef = useRef<HTMLDivElement>(null);
-    const isInView = useInView(cardRef, { once: true, margin: "-100px" });
-
-    const handleMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
-      const rect = e.currentTarget.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      setMousePos({
-        x: (x / rect.width - 0.5) * 15,
-        y: (y / rect.height - 0.5) * -15,
-      });
-    }, []);
+    const isInView = useInView(cardRef, { once: true, margin: "-80px" });
 
     const handleEnter = useCallback(() => setHovered(true), []);
-    const handleLeave = useCallback(() => {
-      setHovered(false);
-      setMousePos({ x: 0, y: 0 });
-    }, []);
+    const handleLeave = useCallback(() => setHovered(false), []);
 
     return (
       <motion.div
         ref={(node) => {
-          (cardRef as React.MutableRefObject<HTMLDivElement | null>).current = node;
+          (cardRef as React.MutableRefObject<HTMLDivElement | null>).current =
+            node;
           if (typeof ref === "function") ref(node);
           else if (ref) ref.current = node;
         }}
         className={cn(
-          "group relative w-full overflow-hidden rounded-2xl transform-gpu transition-all duration-500 ease-out",
+          "group relative w-full overflow-hidden rounded-2xl transition-shadow duration-500 ease-out",
+          className,
           "h-[420px] md:h-[480px]",
           "bg-white border border-gray-100",
-          "shadow-sm hover:shadow-xl hover:shadow-gray-200/50",
+          "shadow-md",
           "cursor-pointer"
         )}
-        onMouseMove={handleMove}
         onMouseEnter={handleEnter}
         onMouseLeave={handleLeave}
-        initial={{ opacity: 0, y: 60, rotateX: -10 }}
-        animate={isInView ? { opacity: 1, y: 0, rotateX: 0 } : {}}
+        // 3D flip entrance animation
+        initial={{ opacity: 0, rotateY: -15, scale: 0.9 }}
+        suppressHydrationWarning
+        animate={
+          isInView
+            ? { opacity: 1, rotateY: 0, scale: 1 }
+            : { opacity: 0, rotateY: -15, scale: 0.9 }
+        }
         transition={{
           duration: 0.7,
-          delay: index * 0.1,
+          delay: index * 0.12,
           ease: [0.23, 1, 0.32, 1],
         }}
+        // Pop/expand hover effect
+        whileHover={{
+          scale: 1.05,
+          boxShadow:
+            "0 25px 50px -12px rgba(209, 213, 219, 0.4)",
+          y: -4,
+          transition: {
+            type: "spring",
+            stiffness: 300,
+            damping: 25,
+          },
+        }}
         style={{
-          transformStyle: "preserve-3d",
           perspective: "1200px",
         }}
       >
-        {/* 3D Tilt Effect */}
-        <motion.div
-          className="absolute inset-0 rounded-2xl"
-          animate={{
-            rotateX: mousePos.y,
-            rotateY: mousePos.x,
-            z: hovered ? 20 : 0,
-          }}
-          transition={{ type: "spring", stiffness: 400, damping: 35 }}
-          style={{ transformStyle: "preserve-3d" }}
-        >
-          {/* Image Section */}
-          <div className="relative h-[55%] overflow-hidden">
-            <motion.div
-              className="absolute inset-0"
-              animate={{ scale: hovered ? 1.05 : 1 }}
-              transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
-            >
-              <img
-                src={image}
-                alt={title}
-                className="h-full w-full object-cover"
-                loading="lazy"
-              />
-              <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-white" />
-            </motion.div>
-
-            {/* Icon Badge */}
-            <motion.div
-              className="absolute top-4 left-4 p-3 bg-white rounded-xl shadow-lg"
-              animate={{
-                scale: hovered ? 1.1 : 1,
-                rotate: hovered ? 5 : 0,
-              }}
-              transition={{ type: "spring", stiffness: 300, damping: 20 }}
-              style={{ transform: "translateZ(20px)" }}
-            >
-              <div className="text-gray-900">{icon}</div>
-            </motion.div>
-
-            {/* Number Badge */}
-            <div
-              className="absolute top-4 right-4 px-3 py-1 bg-black text-white text-xs font-medium rounded-full"
-              style={{ transform: "translateZ(15px)" }}
-            >
-              0{index + 1}
-            </div>
-          </div>
-
-          {/* Content Section */}
-          <div className="relative p-6 flex flex-col h-[45%]" style={{ transform: "translateZ(10px)" }}>
-            <motion.h3
-              className="text-xl font-semibold text-gray-900 mb-2 tracking-tight"
-              animate={{ x: hovered ? 4 : 0 }}
-              transition={{ duration: 0.3 }}
-            >
-              {title}
-            </motion.h3>
-
-            <p className="text-sm text-gray-600 leading-relaxed mb-4 line-clamp-2">
-              {description}
-            </p>
-
-            {/* Features */}
-            <div className="flex flex-wrap gap-2 mb-4">
-              {features.slice(0, 3).map((feature, i) => (
-                <span
-                  key={i}
-                  className="px-2.5 py-1 bg-gray-50 text-gray-600 text-xs rounded-full border border-gray-100"
-                >
-                  {feature}
-                </span>
-              ))}
-            </div>
-
-            {/* CTA */}
-            <motion.div
-              className="mt-auto flex items-center gap-2 text-sm font-medium text-gray-900"
-              animate={{ x: hovered ? 8 : 0, opacity: hovered ? 1 : 0.7 }}
-              transition={{ duration: 0.3 }}
-            >
-              <span>Learn More</span>
-              <ArrowRight className="w-4 h-4" />
-            </motion.div>
-          </div>
-
-          {/* Frosted Glass Overlay on Hover */}
+        {/* Image Section */}
+        <div className="relative h-[55%] overflow-hidden">
           <motion.div
-            className="absolute inset-0 rounded-2xl pointer-events-none overflow-hidden"
-            style={{ transform: "translateZ(25px)" }}
+            className="absolute inset-0"
+            animate={{ scale: hovered ? 1.08 : 1 }}
+            transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
+          >
+            <img
+              src={image}
+              alt={title}
+              className="h-full w-full object-cover"
+              loading="lazy"
+            />
+            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-white" />
+          </motion.div>
+
+          {/* Icon Badge */}
+          <motion.div
+            className="absolute top-4 left-4 p-3 bg-white rounded-xl shadow-lg"
             animate={{
-              backdropFilter: hovered ? "blur(8px) saturate(120%)" : "blur(0px) saturate(100%)",
-              WebkitBackdropFilter: hovered ? "blur(8px) saturate(120%)" : "blur(0px) saturate(100%)",
+              scale: hovered ? 1.1 : 1,
+              rotate: hovered ? 5 : 0,
             }}
-            transition={{ duration: 0.4, ease: "easeOut" }}
+            transition={{ type: "spring", stiffness: 300, damping: 20 }}
           >
-            <motion.div
-              className="absolute inset-0"
-              animate={{
-                backgroundColor: hovered ? "rgba(255, 255, 255, 0.7)" : "rgba(255, 255, 255, 0)",
-              }}
-              transition={{ duration: 0.4 }}
-            />
+            <div className="text-gray-900">{icon}</div>
           </motion.div>
 
-          {/* Hover Shine Effect */}
-          <motion.div
-            className="absolute inset-0 rounded-2xl pointer-events-none overflow-hidden"
-            style={{ transform: "translateZ(26px)" }}
+          {/* Number Badge */}
+          <div className="absolute top-4 right-4 px-3 py-1 bg-black text-white text-xs font-medium rounded-full">
+            0{index + 1}
+          </div>
+        </div>
+
+        {/* Content Section */}
+        <div className="relative p-6 flex flex-col h-[45%]">
+          <motion.h3
+            className="text-xl font-semibold text-gray-900 mb-2 tracking-tight"
+            animate={{ x: hovered ? 4 : 0 }}
+            transition={{ duration: 0.3 }}
           >
-            <motion.div
-              className="absolute -inset-full"
-              animate={{
-                background: hovered
-                  ? `linear-gradient(${mousePos.x + 135}deg, rgba(255,255,255,0) 40%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0) 60%)`
-                  : "rgba(255,255,255,0)",
-              }}
-              transition={{ duration: 0.3 }}
-            />
+            {title}
+          </motion.h3>
+
+          <p className="text-sm text-gray-600 leading-relaxed mb-4 line-clamp-2">
+            {description}
+          </p>
+
+          {/* Features */}
+          <div className="flex flex-wrap gap-2 mb-4">
+            {features.slice(0, 3).map((feature, i) => (
+              <span
+                key={i}
+                className="px-2.5 py-1 bg-gray-50 text-gray-600 text-xs rounded-full border border-gray-100"
+              >
+                {feature}
+              </span>
+            ))}
+          </div>
+
+          {/* CTA */}
+          <motion.div
+            className="mt-auto flex items-center gap-2 text-sm font-medium text-gray-900"
+            animate={{ x: hovered ? 8 : 0, opacity: hovered ? 1 : 0.7 }}
+            transition={{ duration: 0.3 }}
+          >
+            <Link href={link} className="flex items-center gap-2">Learn More <ArrowRight className="w-4 h-4" /></Link>
           </motion.div>
-        </motion.div>
+        </div>
       </motion.div>
     );
   }
@@ -338,7 +311,9 @@ const SERVICES = [
   {
     id: "workflow-automation",
     title: "Workflow Automation",
-    description: "Multi-step workflows that handle repetitive tasks end-to-end. From invoice processing to employee onboarding, you set the rules once and the system runs them every time.",
+    link: "/services#automation",
+    description:
+      "Multi-step workflows that handle repetitive tasks end-to-end. From invoice processing to employee onboarding, you set the rules once and the system runs them every time.",
     features: ["Conditional Logic", "Cross-Platform", "Real-Time Monitoring"],
     icon: <Workflow className="w-6 h-6" />,
     image: "/images/services/workflow-automation.jpg",
@@ -346,7 +321,9 @@ const SERVICES = [
   {
     id: "intelligent-agents",
     title: "Intelligent Agents",
-    description: "Specialized agents for customer support, sales qualification, and operations that work 24/7. They understand context, make decisions, and integrate into your tools.",
+    link: "/services#agents",
+    description:
+      "Specialized agents for customer support, sales qualification, and operations that work 24/7. They understand context, make decisions, and integrate into your tools.",
     features: ["Natural Language", "Multi-Step Reasoning", "Tool Integration"],
     icon: <Bot className="w-6 h-6" />,
     image: "/images/services/intelligent-agents.jpg",
@@ -354,15 +331,23 @@ const SERVICES = [
   {
     id: "smart-assistants",
     title: "Smart Assistants",
-    description: "Personalized assistants that manage calendars, process documents, handle email triage, and keep your team organized without adding headcount.",
-    features: ["Context-Aware", "Calendar Management", "Document Processing"],
+    link: "/services#assistants",
+    description:
+      "Personalized assistants that manage calendars, process documents, handle email triage, and keep your team organized without adding headcount.",
+    features: [
+      "Context-Aware",
+      "Calendar Management",
+      "Document Processing",
+    ],
     icon: <Headphones className="w-6 h-6" />,
     image: "/images/services/smart-assistants.jpg",
   },
   {
     id: "business-intelligence",
     title: "Business Intelligence",
-    description: "Dashboards and reporting systems that update themselves, track the KPIs that matter, and surface insights before you have to ask for them.",
+    link: "/services#intelligence",
+    description:
+      "Dashboards and reporting systems that update themselves, track the KPIs that matter, and surface insights before you have to ask for them.",
     features: ["Custom Dashboards", "Automated Reports", "KPI Tracking"],
     icon: <BarChart3 className="w-6 h-6" />,
     image: "/images/services/business-intelligence.jpg",
@@ -370,7 +355,9 @@ const SERVICES = [
   {
     id: "custom-solutions",
     title: "Custom Solutions",
-    description: "When your business doesn't fit into someone else's software, we design and build from scratch. Internal tools, customer portals, AI-powered platforms.",
+    link: "/services#custom",
+    description:
+      "When your business doesn't fit into someone else's software, we design and build from scratch. Internal tools, customer portals, AI-powered platforms.",
     features: ["Full-Stack Dev", "API Design", "Deployment & Support"],
     icon: <Code2 className="w-6 h-6" />,
     image: "/images/services/custom-solutions.jpg",
@@ -405,12 +392,14 @@ export default function ServicesSection() {
         <motion.div
           className="text-center mb-16 md:mb-20"
           initial={{ opacity: 0, y: 40 }}
+          suppressHydrationWarning
           animate={titleInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, ease: [0.23, 1, 0.32, 1] }}
         >
           <motion.span
             className="inline-block px-4 py-1.5 bg-gray-50 text-gray-600 text-xs font-medium tracking-wider uppercase rounded-full mb-6 border border-gray-100"
             initial={{ opacity: 0, scale: 0.9 }}
+            suppressHydrationWarning
             animate={titleInView ? { opacity: 1, scale: 1 } : {}}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
@@ -424,13 +413,13 @@ export default function ServicesSection() {
           </h2>
 
           <p className="text-base md:text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
-            Every automation we build is designed to answer one question:
-            how much time and money can this save you?
+            Every automation we build is designed to answer one question: how
+            much time and money can this save you?
           </p>
         </motion.div>
 
-        {/* Services Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+        {/* Services Grid — centered */}
+        <div className="flex flex-wrap justify-center gap-6 md:gap-8">
           {SERVICES.map((service, index) => (
             <ServiceCard
               key={service.id}
@@ -439,7 +428,9 @@ export default function ServicesSection() {
               features={service.features}
               icon={service.icon}
               image={service.image}
+              link={service.link}
               index={index}
+              className="w-full md:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.375rem)]"
             />
           ))}
         </div>
@@ -448,6 +439,7 @@ export default function ServicesSection() {
         <motion.div
           className="text-center mt-16"
           initial={{ opacity: 0, y: 20 }}
+          suppressHydrationWarning
           animate={titleInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.8 }}
         >

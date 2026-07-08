@@ -1,0 +1,20 @@
+/* TEAM */
+Name: Origin Dev Labs
+Location: Orlando, FL, USA
+Website: https://origindevlabs.com
+
+/* SITE */
+Last update: 2025/01/15
+Language: English
+Standards: HTML5, CSS4, TypeScript
+Framework: Next.js 16
+Fonts: Space Grotesk, Plus Jakarta Sans, JetBrains Mono
+
+/* CONTACT */
+Email: hello@origindevlabs.com
+WhatsApp: +1 (407) 123-4567
+
+/* SOCIAL */
+TikTok: https://tiktok.com/@origindevlabs
+Instagram: https://instagram.com/origindevlabs
+Twitter/X: https://twitter.com/origindevlabs
