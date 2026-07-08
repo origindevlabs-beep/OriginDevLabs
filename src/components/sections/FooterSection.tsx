@@ -30,10 +30,10 @@ const TwitterXIcon = ({ className }: { className?: string }) => (
 )
 
 const socialLinks = [
-  { icon: TikTokIcon, href: "https://tiktok.com/@origindevlabs", label: "TikTok" },
-  { icon: InstagramIcon, href: "https://instagram.com/origindevlabs", label: "Instagram" },
+  { icon: TikTokIcon, href: "https://www.tiktok.com/@origindevlabs", label: "TikTok" },
+  { icon: InstagramIcon, href: "https://www.instagram.com/origindevlabs/", label: "Instagram" },
   { icon: WhatsAppIcon, href: "https://wa.me/1XXXXXXXXXX", label: "WhatsApp" },
-  { icon: TwitterXIcon, href: "https://twitter.com/origindevlabs", label: "Twitter/X" },
+  { icon: TwitterXIcon, href: "https://x.com/origindevlabs", label: "Twitter/X" },
 ]
 
 const companyLinks = [
