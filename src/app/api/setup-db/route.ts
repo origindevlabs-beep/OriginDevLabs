@@ -93,7 +93,7 @@ export async function POST() {
           "1. Go to your Supabase Dashboard → SQL Editor",
           "2. Copy and paste the SQL below and click 'Run'",
           "3. Alternatively, add DATABASE_URL to .env.local:",
-          "   DATABASE_URL=postgresql://postgres.owhsdxsdghuevutodkvp:[YOUR-DB-PASSWORD]@aws-0-us-east-1.pooler.supabase.com:6543/postgres",
+          "   DATABASE_URL=postgresql://postgres.owhsdxsdghuevutodkvp:[YOUR-DB-PASSWORD]@aws-0-ca-central-1.pooler.supabase.com:6543/postgres",
           "4. Then POST to /api/setup-db again",
         ],
         sql: schemaSql,

@@ -501,3 +501,26 @@ Stage Summary:
 - Security headers active on all routes
 - Rate limiting working on both API endpoints
 - Form submissions gracefully handle missing tables (503) with setup instructions
+
+---
+Task ID: final-setup
+Agent: Main Agent
+Task: Add DATABASE_URL, fix leads API bugs, full browser verification
+
+Work Log:
+- Added DATABASE_URL to .env.local with user's Supabase credentials (ca-central-1 region, pooler connection)
+- Percent-encoded special characters in password (|| → %7C%7C)
+- Updated .env.example and setup-db route fallback with correct region (ca-central-1)
+- Fixed 2 bugs in leads API route: `best_time` → `best_time: bestTime`, `additional_notes` → `additional_notes: additionalNotes`
+- Verified newsletter API writes to database successfully
+- Verified leads API writes to database successfully (got UUID back)
+- Verified setup-db endpoint confirms all 3 tables exist
+- Browser verification: Homepage (mobile + desktop), About page (team photo visible), Get Started questionnaire, Footer (social links, newsletter, copyright)
+- Lint check passed clean
+- No console errors in browser
+
+Stage Summary:
+- DATABASE_URL configured and working
+- All API endpoints functional (leads, newsletter, setup-db)
+- Full preview verified across mobile and desktop
+- No remaining blockers
