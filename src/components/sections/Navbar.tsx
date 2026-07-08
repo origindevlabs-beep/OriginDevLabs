@@ -179,7 +179,7 @@ export default function Navbar({ ctaVisible = false, heroSectionRef }: NavbarPro
             {/* Mobile Pulsating CTA Button */}
             <Link
               href="/get-started"
-              className="md:hidden inline-flex animate-cta-pulse px-2.5 py-1 bg-gray-900 text-white text-[11px] font-medium rounded-full"
+              className="md:hidden inline-flex animate-cta-pulse px-2 py-0.5 bg-gray-900 text-white text-[10px] font-medium rounded-full"
             >
               Get Started
             </Link>
