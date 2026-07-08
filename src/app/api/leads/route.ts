@@ -135,9 +135,9 @@ export async function POST(request: NextRequest) {
         project_details: projectDetails,
         project_custom_text: projectCustomText,
         contact_preferences: contactPreferences,
-        best_time,
+        best_time: bestTime,
         budget,
-        additional_notes,
+        additional_notes: additionalNotes,
         user_agent: request.headers.get("user-agent") || "",
         ip_address: ip,
         source: "website",
@@ -171,7 +171,8 @@ export async function POST(request: NextRequest) {
         headers: { "X-RateLimit-Remaining": String(remaining) },
       }
     )
-  } catch {
+  } catch (err: unknown) {
+    console.error("Leads API error:", err)
     return NextResponse.json({ error: "Invalid request" }, { status: 400 })
   }
 }
