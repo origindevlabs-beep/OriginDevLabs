@@ -29,7 +29,7 @@ export const FAQ_CATEGORIES: FAQCategory[] = [
       {
         question: "How much does workflow automation cost?",
         answer:
-          "Workflow automation projects range from $2,500-$15,000 for small to mid-size businesses, with ongoing monitoring retainers from $500-$5,000/month. We use fixed-fee pricing on projects and month-to-month retainers, so there are no surprises and no long-term contracts required.",
+          "Workflow automation projects range from $1,500-$15,000 for small to mid-size businesses, with ongoing monitoring retainers from $500-$5,000/month. We use fixed-fee pricing on projects and month-to-month retainers, so there are no surprises and no long-term contracts required.",
       },
       {
         question: "How long does workflow automation implementation take?",

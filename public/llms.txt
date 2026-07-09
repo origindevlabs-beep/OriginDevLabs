@@ -5,7 +5,7 @@
 Origin Dev Labs (ODL) is a technology company specializing in business automation. We build systems that handle repetitive work so teams can focus on what matters. Our approach is practical, results-driven, and systems-oriented — we don't build features, we build systems that work together.
 
 ## Services
-- **Workflow Automation**: Connect existing tools and build automated workflows that handle repetitive tasks 24/7. Uses n8n, Zapier, Make, and custom APIs. Projects from $2,500, typically 2-8 weeks.
+- **Workflow Automation**: Connect existing tools and build automated workflows that handle repetitive tasks 24/7. Uses n8n, Zapier, Make, and custom APIs. Projects from $1,500, typically 2-8 weeks.
 - **Intelligent Agents**: Autonomous agents that handle multi-step tasks, reason through problems, and integrate with existing tools. Built with LangChain, OpenAI, and custom LLM pipelines. From $2,500 (FAQ bot) to $150,000+ (agentic AI).
 - **Smart Assistants**: Context-aware assistants that manage schedules, process documents, and handle communications. Built with OpenAI Assistants, custom NLP, and RAG pipelines. From $1,500/month.
 - **Business Intelligence**: Custom dashboards and automated reports for real-time operational visibility. Uses Metabase, custom React dashboards, and PostgreSQL. Projects from $10,000.
@@ -46,7 +46,7 @@ Origin Dev Labs (ODL) is a technology company specializing in business automatio
 ## Common Questions
 
 ### Pricing
-- **How much does workflow automation cost?** $2,500-$15,000 for projects, $500-$5,000/month for retainers.
+- **How much does workflow automation cost?** $1,500-$15,000 for projects, $500-$5,000/month for retainers.
 - **How much does a custom website cost?** $5,000-$25,000 for business sites, $15,000-$75,000+ for e-commerce.
 - **How much does an AI chatbot cost?** $2,500-$10,000 for FAQ bots, $10,000-$50,000 for AI-powered, $50,000-$150,000+ for agentic AI.
 - **How much does custom software cost?** $20,000-$50,000 for modest projects, $50,000-$200,000 mid-range, $200,000-$1,000,000+ enterprise.
