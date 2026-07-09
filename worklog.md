@@ -524,3 +524,30 @@ Stage Summary:
 - All API endpoints functional (leads, newsletter, setup-db)
 - Full preview verified across mobile and desktop
 - No remaining blockers
+
+---
+Task ID: faq-seo-llmo-optimization
+Agent: Main Agent
+Task: Optimize FAQ section SEO, LLMO files, structured data, and sitemap/robots
+
+Work Log:
+- Reviewed existing FAQ implementation — already matches design spec (data, components, page all correct)
+- Deleted stale `public/sitemap.xml` (hardcoded 2025 date, missing /faq, had hash fragments)
+- Deleted stale `public/robots.txt` (merged rules into dynamic version)
+- Upgraded `src/app/robots.ts` with comprehensive rules: Googlebot, Bingbot, DuckDuckBot, social crawlers, AI/LLM crawlers (GPTBot, ClaudeBot, PerplexityBot, etc.), bad bot blocks (AhrefsBot, SemrushBot, etc.)
+- Updated `public/llms.txt` — added FAQ page, all 8 service categories with pricing, full Common Questions section with pricing/timelines/process/ownership FAQs
+- Updated `src/app/llms.txt` — added FAQ section with key pricing and timeline answers
+- Updated `src/app/llms-full.txt` — added comprehensive FAQ section covering all 8 service categories with full Q&A content
+- Added Organization JSON-LD schema to root layout (name, url, logo, description, email, address, sameAs social links, contactPoint)
+- Added WebSite JSON-LD schema to root layout (with SearchAction pointing to /faq)
+- Added canonical URL (`https://origindevlabs.com`) to root layout metadata
+- Verified all outputs: robots.txt (comprehensive), sitemap.xml (6 pages including /faq), llms.txt (updated), HTML source (3 JSON-LD schemas present)
+- Lint clean, no console errors
+
+Stage Summary:
+- All SEO files optimized for search engine + AI chatbot discoverability
+- 3 JSON-LD schemas: Organization, WebSite (with SearchAction), FAQPage
+- /faq page at priority 0.9 in sitemap
+- AI crawlers (GPTBot, ClaudeBot, PerplexityBot, Google-Extended, Applebot-Extended) explicitly allowed
+- Bad bots (AhrefsBot, SemrushBot, MJ12bot, DotBot) blocked
+- LLMO files include full FAQ content with pricing, timelines, and process details

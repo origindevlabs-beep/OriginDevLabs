@@ -10,6 +10,7 @@ import ServicesSection from "@/components/sections/ServicesSection"
 import HowItWorksSection from "@/components/sections/HowItWorksSection"
 import ProblemSolutionSection from "@/components/sections/ProblemSolutionSection"
 import TestimonialsSection from "@/components/sections/TestimonialsSection"
+import { FAQFeaturedSection } from "@/components/sections/FAQSection"
 import CTASection from "@/components/sections/CTASection"
 import FooterSection from "@/components/sections/FooterSection"
 
@@ -35,6 +36,7 @@ export default function Home() {
         <HowItWorksSection />
         <ProblemSolutionSection />
         <TestimonialsSection />
+        <FAQFeaturedSection />
         <CTASection onVisibilityChange={setCtaVisible} />
       </main>
       <FooterSection />

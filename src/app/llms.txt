@@ -1,0 +1,35 @@
+# Origin Dev Labs
+
+> Business automation, AI agents, and custom software. Fixed-fee pricing, you own the code. Based in Orlando, FL.
+
+## Services
+- Workflow Automation (from $2,500)
+- Intelligent Agents / AI Chatbots (from $2,500)
+- Smart Assistants (from $1,500/mo)
+- Business Intelligence Dashboards (from $10,000)
+- Web Development (from $5,000)
+- UI/UX Design (audits from $3,000)
+- Digital Products / SaaS / Apps (MVP from $50,000)
+- Custom Software (from $20,000)
+
+## FAQ
+- Workflow automation costs $2,500-$15,000 (projects) or $500-$5,000/month (retainers)
+- Custom websites cost $5,000-$25,000 (business) or $15,000-$75,000+ (e-commerce)
+- AI chatbots cost $2,500-$150,000+ depending on complexity (FAQ bot to agentic AI)
+- Custom software costs $20,000-$1,000,000+ depending on scope
+- Clients own 100% of source code and IP — no vendor lock-in
+- Websites built in 6-12 weeks, automation in 2-8 weeks
+- Smart assistants from $1,500/month (vs $40,000-$60,000/year for a full-time hire)
+
+## Contact
+- Email: hello@origindevlabs.com
+- Web: https://origindevlabs.com
+- FAQ: https://origindevlabs.com/faq
+- Location: Orlando, FL
+
+## Key Facts
+- Fixed-fee pricing, no long-term contracts
+- 100% source code and IP ownership
+- Agile sprints with weekly check-ins
+- SOC2-compliant security processes
+- Websites built in 6-12 weeks, automation in 2-8 weeks

@@ -1,0 +1,145 @@
+# Origin Dev Labs
+
+> Origin Dev Labs builds automation systems, intelligent agents, and custom software that save businesses time and money. Based in Orlando, FL, serving clients nationwide.
+
+## Quick Summary
+
+- **What we do:** Business automation, AI chatbots, smart assistants, BI dashboards, web development, UI/UX design, digital products, and custom software
+- **Who we serve:** Small to mid-size businesses looking to eliminate repetitive work and scale operations
+- **Pricing:** Fixed-fee projects with no long-term contracts. Workflow automation from $2,500, websites from $5,000, custom software from $20,000
+- **Location:** Orlando, FL (100 South Orange Avenue, Suite 1200, Orlando, FL 32801)
+- **Contact:** hello@origindevlabs.com
+- **Website:** https://origindevlabs.com
+
+## Services
+
+1. **Workflow Automation** — Automate CRM data entry, invoicing, onboarding, email follow-ups, and cross-platform syncing. Projects from $2,500, typically 2-8 weeks.
+2. **Intelligent Agents** — AI-powered chatbots with CRM integration, brand-trained responses, and 70%+ inquiry deflection. From $2,500 (FAQ bot) to $150,000+ (agentic AI).
+3. **Smart Assistants** — 24/7 AI-powered administrative assistants handling inbox, CRM, scheduling, and reporting. From $1,500/month.
+4. **Business Intelligence** — Custom dashboards connecting QuickBooks, HubSpot, Google Analytics, and more. Projects from $10,000.
+5. **Web Development** — Responsive, SEO-optimized websites built on Next.js or WordPress. Business sites from $5,000 (6-12 weeks), e-commerce from $15,000.
+6. **UI/UX Design** — Research-driven design with usability testing, prototyping, and developer handoff. UX audits from $3,000, full product design from $40,000.
+7. **Digital Products** — SaaS platforms, mobile apps (iOS/Android/cross-platform), and marketplaces. MVPs from $50,000 (3-6 months).
+8. **Custom Solutions** — Bespoke software with full IP ownership. Projects from $20,000, enterprise platforms to $1,000,000+.
+
+## Key Differentiators
+
+- **Fixed-fee pricing** with no surprises and no long-term contracts
+- **Clients own 100%** of source code and intellectual property
+- **Month-to-month retainers** for ongoing support
+- **Agile sprints** with weekly progress check-ins
+- **Enterprise-grade security** including SOC2-compliant processes
+
+## Process
+
+1. **Discovery** — Audit your current processes and identify automation opportunities
+2. **Proposal** — Fixed-price proposal with clear scope and timeline
+3. **Build** — Agile sprints with regular demos and feedback loops
+4. **Launch** — Thorough testing, deployment, and team training
+5. **Support** — Ongoing maintenance, monitoring, and optimization
+
+## Pages
+
+- [Home](https://origindevlabs.com) — Overview of services and value proposition
+- [About](https://origindevlabs.com/about) — Our story, mission, and team
+- [Services](https://origindevlabs.com/services) — Detailed service descriptions and pricing ranges
+- [Client Stories](https://origindevlabs.com/testimonials) — Case studies and testimonials
+- [FAQ](https://origindevlabs.com/faq) — Common questions about costs, timelines, and processes for all 8 service categories
+- [Get Started](https://origindevlabs.com/get-started) — Free consultation questionnaire
+
+## Frequently Asked Questions
+
+### Workflow Automation
+
+**What types of business processes can you automate?**
+CRM data entry, invoice processing, client onboarding, email follow-ups, project management updates, and cross-platform data syncing. Most businesses save 10-15+ hours per week.
+
+**How much does workflow automation cost?**
+$2,500-$15,000 for projects, $500-$5,000/month for ongoing retainers. Fixed-fee pricing, no long-term contracts.
+
+**How long does implementation take?**
+Simple automations: 2-4 weeks. Mid-complexity: 4-8 weeks. Full operations overhauls: 8-16 weeks.
+
+**Will automation replace jobs?**
+No. It eliminates repetitive tasks so teams focus on higher-value work. Most businesses redeploy saved hours toward revenue-generating activities.
+
+### Intelligent Agents
+
+**What's the difference between a basic FAQ chatbot and an AI-powered chatbot?**
+FAQ bots match keywords to scripted responses. AI chatbots use retrieval-augmented generation to understand context, cite sources, and handle follow-up questions naturally. AI chatbots deflect 70%+ of support inquiries.
+
+**Can a chatbot integrate with my existing CRM and business tools?**
+Yes — HubSpot, Salesforce, Pipedrive, project management tools, payment systems, and custom APIs. Chatbots can look up orders, update records, schedule appointments, and trigger workflows.
+
+**How much does an AI chatbot cost?**
+FAQ bots: $2,500-$10,000. AI-powered: $10,000-$50,000 + $500-$5,000/month. Agentic AI: $50,000-$150,000+.
+
+**Will the chatbot sound robotic?**
+No. Trained on your brand voice and terminology. Includes source citations and human escalation for complex situations.
+
+### Smart Assistants
+
+**What can a smart assistant do that a regular VA cannot?**
+Processes data instantly across multiple systems, works 24/7 without breaks, learns from interactions, and escalates complex tasks to your team.
+
+**How much does it cost compared to hiring?**
+Full-time admin hire: $40,000-$60,000/year + benefits. Smart assistant: $1,500-$5,000/month with 24/7 availability and instant scalability.
+
+**Is my data secure?**
+Yes — encrypted transmission, role-based access controls, SOC2-compliant processes, isolated environments, and full audit trails.
+
+### Business Intelligence
+
+**What is a BI dashboard?**
+Consolidates data from CRM, accounting, marketing, and operations into a single visual interface showing KPIs and trends at a glance.
+
+**How much does a custom dashboard cost?**
+$10,000-$50,000 for projects, $500-$3,000/month for maintenance. Fixed-price proposals after discovery.
+
+**Can you connect my existing tools?**
+Yes — HubSpot, Salesforce, QuickBooks, Xero, Google Ads, Meta, GA4, project management tools, and custom databases.
+
+### Web Development
+
+**How much does a custom website cost?**
+$5,000-$25,000 for business sites, $15,000-$75,000+ for e-commerce. Includes responsive design, on-page SEO, and security setup.
+
+**How long does it take?**
+6-12 weeks for business sites, 12-24 weeks for e-commerce/complex applications. Agile sprints with weekly progress updates.
+
+**Will it be SEO-optimized?**
+Yes — meta tags, header structure, image optimization, schema markup, mobile-first design, fast load speeds. Google Analytics and Search Console included.
+
+### UI/UX Design
+
+**What does a UI/UX agency do differently?**
+Researches users, maps journeys, tests prototypes, and validates with real data. Every design decision backed by user research and usability testing.
+
+**How much does UI/UX design cost?**
+UX audit: $3,000-$10,000. Single-flow redesign: $8,000-$30,000. Full product design: $40,000-$250,000. Retainers from $5,000/month.
+
+### Digital Products
+
+**How much does digital product development cost?**
+MVP: $50,000-$150,000 (3-6 months). Full-featured: $150,000-$500,000+ (6-18 months). Transparent pricing with milestones.
+
+**iOS, Android, or both?**
+We build native and cross-platform (Flutter/React Native). Cross-platform is 30-40% more cost-effective. Native for maximum performance.
+
+### Custom Solutions
+
+**When should I choose custom software over SaaS?**
+When existing tools don't fit your workflows, you're paying for unused features, you need data/security control, or SaaS costs exceed building your own.
+
+**Will I own the source code?**
+Yes — 100% ownership of all IP, source code, and documentation. No vendor lock-in.
+
+**How much does it cost?**
+Modest: $20,000-$50,000. Mid-range: $50,000-$200,000. Enterprise: $200,000-$1,000,000+.
+
+## Contact
+
+- **Email:** hello@origindevlabs.com
+- **Website:** https://origindevlabs.com
+- **Location:** Orlando, FL, USA
+- **Free consultation:** https://origindevlabs.com/get-started

@@ -40,6 +40,7 @@ const companyLinks = [
   { label: "About", href: "/about" },
   { label: "Services", href: "/services" },
   { label: "Client Stories", href: "/testimonials" },
+  { label: "FAQ", href: "/faq" },
   { label: "Get Started", href: "/get-started" },
 ]
 

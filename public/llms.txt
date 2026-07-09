@@ -1,18 +1,18 @@
 # Origin Dev Labs
-> Origin Dev Labs builds automation systems, intelligent agents, and custom software solutions that save businesses time and money. Based in Orlando, FL.
+> Origin Dev Labs builds automation systems, intelligent agents, and custom software solutions that save businesses time and money. Based in Orlando, FL. Fixed-fee pricing, you own the code.
 
 ## About
 Origin Dev Labs (ODL) is a technology company specializing in business automation. We build systems that handle repetitive work so teams can focus on what matters. Our approach is practical, results-driven, and systems-oriented — we don't build features, we build systems that work together.
 
 ## Services
-- **Workflow Automation**: Connect existing tools and build automated workflows that handle repetitive tasks 24/7. Uses n8n, Zapier, Make, and custom APIs.
-- **Intelligent Agents**: Autonomous agents that handle multi-step tasks, reason through problems, and integrate with existing tools. Built with LangChain, OpenAI, and custom LLM pipelines.
-- **Smart Assistants**: Context-aware assistants that manage schedules, process documents, and handle communications. Built with OpenAI Assistants, custom NLP, and RAG pipelines.
-- **Business Intelligence**: Custom dashboards and automated reports for real-time operational visibility. Uses Metabase, custom React dashboards, and PostgreSQL.
-- **Custom Solutions**: Full-stack development when off-the-shelf tools don't fit. Built with Next.js, TypeScript, PostgreSQL, AWS/Vercel.
-- **Web Development**: Custom websites and web applications with modern frameworks.
-- **UI/UX Design**: Interfaces that are intuitive, beautiful, and built for conversion.
-- **Digital Products**: From concept to launch — full software product development.
+- **Workflow Automation**: Connect existing tools and build automated workflows that handle repetitive tasks 24/7. Uses n8n, Zapier, Make, and custom APIs. Projects from $2,500, typically 2-8 weeks.
+- **Intelligent Agents**: Autonomous agents that handle multi-step tasks, reason through problems, and integrate with existing tools. Built with LangChain, OpenAI, and custom LLM pipelines. From $2,500 (FAQ bot) to $150,000+ (agentic AI).
+- **Smart Assistants**: Context-aware assistants that manage schedules, process documents, and handle communications. Built with OpenAI Assistants, custom NLP, and RAG pipelines. From $1,500/month.
+- **Business Intelligence**: Custom dashboards and automated reports for real-time operational visibility. Uses Metabase, custom React dashboards, and PostgreSQL. Projects from $10,000.
+- **Web Development**: Custom websites and web applications with modern frameworks. Business sites from $5,000 (6-12 weeks), e-commerce from $15,000.
+- **UI/UX Design**: Interfaces that are intuitive, beautiful, and built for conversion. UX audits from $3,000, full product design from $40,000.
+- **Digital Products**: From concept to launch — full software product development. SaaS platforms, mobile apps (iOS/Android/cross-platform), marketplaces. MVPs from $50,000 (3-6 months).
+- **Custom Solutions**: Full-stack development when off-the-shelf tools don't fit. Built with Next.js, TypeScript, PostgreSQL, AWS/Vercel. Projects from $20,000.
 
 ## Contact
 - Website: https://origindevlabs.com
@@ -23,10 +23,11 @@ Origin Dev Labs (ODL) is a technology company specializing in business automatio
 - Response within 24 hours
 
 ## Pages
-- Home: https://origindevlabs.com/
+- Home: https://origindevlabs.com
 - About: https://origindevlabs.com/about
 - Services: https://origindevlabs.com/services
 - Client Stories: https://origindevlabs.com/testimonials
+- FAQ: https://origindevlabs.com/faq
 - Get Started: https://origindevlabs.com/get-started
 
 ## Core Values
@@ -34,6 +35,36 @@ Origin Dev Labs (ODL) is a technology company specializing in business automatio
 - Results You Can Measure: Automation should pay for itself — in hours saved, errors avoided, or revenue gained.
 - Systems Thinking: We don't build features. We build systems that work together.
 - Honest Communication: We don't oversell. We tell you what's possible and deliver it.
+
+## Key Differentiators
+- Fixed-fee pricing with no surprises and no long-term contracts
+- Clients own 100% of source code and intellectual property
+- Month-to-month retainers for ongoing support
+- Agile sprints with weekly progress check-ins
+- Enterprise-grade security including SOC2-compliant processes
+
+## Common Questions
+
+### Pricing
+- **How much does workflow automation cost?** $2,500-$15,000 for projects, $500-$5,000/month for retainers.
+- **How much does a custom website cost?** $5,000-$25,000 for business sites, $15,000-$75,000+ for e-commerce.
+- **How much does an AI chatbot cost?** $2,500-$10,000 for FAQ bots, $10,000-$50,000 for AI-powered, $50,000-$150,000+ for agentic AI.
+- **How much does custom software cost?** $20,000-$50,000 for modest projects, $50,000-$200,000 mid-range, $200,000-$1,000,000+ enterprise.
+- **How much does UI/UX design cost?** $3,000-$10,000 for audits, $8,000-$30,000 for single-flow redesign, $40,000-$250,000 for full product design.
+- **How much does a smart assistant cost?** $1,500-$5,000/month (compared to $40,000-$60,000/year for a full-time hire).
+- **How much does a BI dashboard cost?** $10,000-$50,000 for projects, $500-$3,000/month for maintenance.
+
+### Timelines
+- **How long does a website take?** 6-12 weeks for business sites, 12-24 weeks for complex applications.
+- **How long does automation take?** 2-4 weeks for simple workflows, 4-8 weeks mid-complexity, 8-16 weeks for full overhauls.
+- **How long to build an MVP?** 3-6 months.
+- **How quickly can a smart assistant be set up?** 1-2 weeks basic, 3-4 weeks full integration.
+
+### Process & Ownership
+- **Do clients own the source code?** Yes — 100% ownership with no vendor lock-in or hidden licensing.
+- **What platforms do you build on?** Next.js, React, WordPress, Flutter, React Native — we recommend the best fit.
+- **Will my website be SEO-optimized?** Yes — every build includes on-page SEO, schema markup, responsive design, and fast load speeds.
+- **Will automation replace jobs?** No — it eliminates repetitive tasks so teams focus on higher-value work.
 
 ## Social Media
 - TikTok: https://tiktok.com/@origindevlabs
