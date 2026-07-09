@@ -127,6 +127,10 @@ export default function RootLayout({
       suppressHydrationWarning
       className={`${spaceGrotesk.variable} ${plusJakarta.variable} ${jetbrainsMono.variable}`}
     >
+      <head>
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://owhsdxsdghuevutodkvp.supabase.co" />
+      </head>
       <body className="antialiased bg-white text-gray-900">
         <script
           type="application/ld+json"

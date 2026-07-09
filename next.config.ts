@@ -39,10 +39,30 @@ const securityHeaders = [
 
 const nextConfig: NextConfig = {
   output: "standalone",
+  compress: true,
   typescript: {
     ignoreBuildErrors: true,
   },
   reactStrictMode: false,
+  experimental: {
+    optimizePackageImports: [
+      "lucide-react",
+      "@radix-ui/react-dialog",
+      "@radix-ui/react-dropdown-menu",
+      "@radix-ui/react-select",
+      "@radix-ui/react-tabs",
+      "@radix-ui/react-toast",
+      "@radix-ui/react-tooltip",
+      "@radix-ui/react-accordion",
+      "@radix-ui/react-checkbox",
+      "@radix-ui/react-slot",
+      "@radix-ui/react-label",
+      "@radix-ui/react-switch",
+      "@radix-ui/react-separator",
+      "@radix-ui/react-progress",
+      "@radix-ui/react-scroll-area",
+    ],
+  },
   async headers() {
     return [
       {

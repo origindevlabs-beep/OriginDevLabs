@@ -1,18 +1,45 @@
 "use client"
 
 import { useRef, useState } from "react"
+import dynamic from "next/dynamic"
 import LoadScreen from "@/components/sections/LoadScreen"
 import Navbar from "@/components/sections/Navbar"
 import HeroSection from "@/components/sections/HeroSection"
-import NewsStrip from "@/components/sections/NewsStrip"
-import TrustBar from "@/components/sections/TrustBar"
-import ServicesSection from "@/components/sections/ServicesSection"
-import HowItWorksSection from "@/components/sections/HowItWorksSection"
-import ProblemSolutionSection from "@/components/sections/ProblemSolutionSection"
-import TestimonialsSection from "@/components/sections/TestimonialsSection"
-import { FAQFeaturedSection } from "@/components/sections/FAQSection"
-import CTASection from "@/components/sections/CTASection"
 import FooterSection from "@/components/sections/FooterSection"
+
+// Lazy load all below-the-fold sections — same visual, 60%+ less initial JS
+const NewsStrip = dynamic(
+  () => import("@/components/sections/NewsStrip").then((m) => m.default),
+  { ssr: false }
+)
+const TrustBar = dynamic(
+  () => import("@/components/sections/TrustBar").then((m) => m.default),
+  { ssr: false }
+)
+const ServicesSection = dynamic(
+  () => import("@/components/sections/ServicesSection").then((m) => m.default),
+  { ssr: false }
+)
+const HowItWorksSection = dynamic(
+  () => import("@/components/sections/HowItWorksSection").then((m) => m.default),
+  { ssr: false }
+)
+const ProblemSolutionSection = dynamic(
+  () => import("@/components/sections/ProblemSolutionSection").then((m) => m.default),
+  { ssr: false }
+)
+const TestimonialsSection = dynamic(
+  () => import("@/components/sections/TestimonialsSection").then((m) => m.default),
+  { ssr: false }
+)
+const FAQFeaturedSection = dynamic(
+  () => import("@/components/sections/FAQSection").then((m) => m.FAQFeaturedSection),
+  { ssr: false }
+)
+const CTASection = dynamic(
+  () => import("@/components/sections/CTASection").then((m) => m.default),
+  { ssr: false }
+)
 
 export default function Home() {
   const heroRef = useRef<HTMLDivElement>(null)

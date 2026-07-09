@@ -1,9 +1,10 @@
 "use client";
 
-import React, { useState, useCallback, useRef, useEffect } from "react";
+import React, { useState, useCallback, useRef } from "react";
 import { motion, useInView } from "motion/react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import CircuitryBackground from "@/components/CircuitryBackground";
 import {
   Workflow,
   Bot,
@@ -12,154 +13,6 @@ import {
   Code2,
   ArrowRight,
 } from "lucide-react";
-
-// --- Circuitry Background ---
-function CircuitryBackground({
-  mousePosition,
-}: {
-  mousePosition: { x: number; y: number };
-}) {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const animationRef = useRef<number>(0);
-  const nodesRef = useRef<
-    Array<{ x: number; y: number; connections: number[]; pulse: number }>
-  >([]);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    const resize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = canvas.parentElement?.offsetHeight || window.innerHeight;
-      generateNodes();
-    };
-
-    const generateNodes = () => {
-      const nodes: Array<{
-        x: number;
-        y: number;
-        connections: number[];
-        pulse: number;
-      }> = [];
-      const spacing = 80;
-      const cols = Math.ceil(canvas.width / spacing) + 1;
-      const rows = Math.ceil(canvas.height / spacing) + 1;
-
-      for (let row = 0; row < rows; row++) {
-        for (let col = 0; col < cols; col++) {
-          const x = col * spacing + (row % 2 === 0 ? 0 : spacing / 2);
-          const y = row * spacing;
-          nodes.push({
-            x,
-            y,
-            connections: [],
-            pulse: Math.random() * Math.PI * 2,
-          });
-        }
-      }
-
-      nodes.forEach((node, i) => {
-        nodes.forEach((other, j) => {
-          if (i !== j) {
-            const dist = Math.hypot(node.x - other.x, node.y - other.y);
-            if (dist < spacing * 1.5 && Math.random() > 0.6) {
-              node.connections.push(j);
-            }
-          }
-        });
-      });
-
-      nodesRef.current = nodes;
-    };
-
-    resize();
-    window.addEventListener("resize", resize);
-
-    let time = 0;
-    const animate = () => {
-      time += 0.016;
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      const nodes = nodesRef.current;
-      const mx = mousePosition.x * canvas.width;
-      const my = mousePosition.y * canvas.height;
-
-      ctx.strokeStyle = "rgba(0, 0, 0, 0.03)";
-      ctx.lineWidth = 1;
-      nodes.forEach((node) => {
-        node.connections.forEach((j) => {
-          const other = nodes[j];
-          const distToMouse = Math.hypot(node.x - mx, node.y - my);
-          const opacity = Math.max(0.02, 0.08 - distToMouse / 2000);
-          ctx.strokeStyle = `rgba(0, 0, 0, ${opacity})`;
-          ctx.beginPath();
-          ctx.moveTo(node.x, node.y);
-          ctx.lineTo(other.x, other.y);
-          ctx.stroke();
-        });
-      });
-
-      nodes.forEach((node) => {
-        const distToMouse = Math.hypot(node.x - mx, node.y - my);
-        const glow = Math.max(0, 1 - distToMouse / 300);
-        const baseRadius = 1.5;
-        const radius = baseRadius + glow * 2;
-
-        if (glow > 0.1) {
-          const gradient = ctx.createRadialGradient(
-            node.x,
-            node.y,
-            0,
-            node.x,
-            node.y,
-            radius * 4
-          );
-          gradient.addColorStop(0, `rgba(0, 0, 0, ${glow * 0.15})`);
-          gradient.addColorStop(1, "rgba(0, 0, 0, 0)");
-          ctx.fillStyle = gradient;
-          ctx.beginPath();
-          ctx.arc(node.x, node.y, radius * 4, 0, Math.PI * 2);
-          ctx.fill();
-        }
-
-        ctx.fillStyle = `rgba(0, 0, 0, ${0.1 + glow * 0.3})`;
-        ctx.beginPath();
-        ctx.arc(node.x, node.y, radius, 0, Math.PI * 2);
-        ctx.fill();
-
-        node.pulse += 0.02;
-        const pulseRadius = radius + Math.sin(node.pulse) * 2 * glow;
-        if (glow > 0.2) {
-          ctx.strokeStyle = `rgba(0, 0, 0, ${glow * 0.1})`;
-          ctx.lineWidth = 0.5;
-          ctx.beginPath();
-          ctx.arc(node.x, node.y, pulseRadius + 4, 0, Math.PI * 2);
-          ctx.stroke();
-        }
-      });
-
-      animationRef.current = requestAnimationFrame(animate);
-    };
-
-    animate();
-
-    return () => {
-      window.removeEventListener("resize", resize);
-      cancelAnimationFrame(animationRef.current);
-    };
-  }, [mousePosition]);
-
-  return (
-    <canvas
-      ref={canvasRef}
-      className="absolute inset-0 pointer-events-none"
-      style={{ opacity: 0.4 }}
-    />
-  );
-}
 
 // --- Types ---
 interface ServiceCardProps {
@@ -385,7 +238,7 @@ export default function ServicesSection() {
       onMouseMove={handleMouseMove}
     >
       {/* Circuitry Background */}
-      <CircuitryBackground mousePosition={mousePosition} />
+      <CircuitryBackground mousePosition={mousePosition} opacity={0.4} />
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-8">
         {/* Section Header */}

@@ -107,6 +107,7 @@ function FlipCard({ src, index, target }: FlipCardProps) {
             src={src}
             alt=""
             className="h-full w-full object-cover opacity-80"
+            decoding="async"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
         </div>
