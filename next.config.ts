@@ -38,7 +38,6 @@ const securityHeaders = [
 ];
 
 const nextConfig: NextConfig = {
-  output: "standalone",
   compress: true,
   typescript: {
     ignoreBuildErrors: true,
