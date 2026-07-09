@@ -91,7 +91,7 @@ export const TESTIMONIALS: Testimonial[] = [
   },
   {
     id: 10,
-    name: "Lauren Chen",
+    name: "Lauren Hayes",
     role: "Office Manager",
     company: "Paws & Claws Veterinary",
     rating: 4.9,
@@ -154,7 +154,7 @@ export const TESTIMONIALS: Testimonial[] = [
   },
   {
     id: 17,
-    name: "Marcus Johnson",
+    name: "Daniel Grant",
     role: "Operations Director",
     company: "Urban Plate Restaurant Group",
     rating: 4.8,
@@ -253,7 +253,7 @@ export const TESTIMONIALS: Testimonial[] = [
   },
   {
     id: 28,
-    name: "Samantha Brooks",
+    name: "Samantha Cole",
     role: "Director of Marketing",
     company: "Elevate Digital Agency",
     rating: 4.8,
@@ -262,7 +262,7 @@ export const TESTIMONIALS: Testimonial[] = [
   },
   {
     id: 29,
-    name: "Ryan Chen",
+    name: "Ryan Kwon",
     role: "VP of Operations",
     company: "Pacific Rim Imports",
     rating: 4.7,
@@ -271,16 +271,16 @@ export const TESTIMONIALS: Testimonial[] = [
   },
   {
     id: 30,
-    name: "Diana Foster",
+    name: "Diana Mercer",
     role: "Owner",
-    company: "Foster Family Dentistry",
+    company: "Mercer Family Dentistry",
     rating: 5.0,
     quote:
       "We were manually calling patients for recalls and following up on treatment plans. ODL automated our entire patient communication system. Recall compliance went from 60% to 92% in three months.",
   },
   {
     id: 31,
-    name: "Marcus Williams",
+    name: "Jonathan West",
     role: "COO",
     company: "Summit Construction Group",
     rating: 4.9,
@@ -298,7 +298,7 @@ export const TESTIMONIALS: Testimonial[] = [
   },
   {
     id: 33,
-    name: "Nathan Brooks",
+    name: "Nathan Caldwell",
     role: "Director of IT",
     company: "Meridian Financial Services",
     rating: 4.7,
@@ -307,7 +307,7 @@ export const TESTIMONIALS: Testimonial[] = [
   },
   {
     id: 34,
-    name: "Isabella Nguyen",
+    name: "Isabella Vega",
     role: "Founder",
     company: "Bloom Beauty Co",
     rating: 5.0,
@@ -325,9 +325,9 @@ export const TESTIMONIALS: Testimonial[] = [
   },
   {
     id: 36,
-    name: "Patricia Adams",
+    name: "Patricia Sinclair",
     role: "Office Manager",
-    company: "Adams & Partners Law Firm",
+    company: "Sinclair & Partners Law Firm",
     rating: 4.8,
     quote:
       "Client intake was a 45-minute process involving 3 different forms and manual data entry. ODL built a digital intake system that clients complete before their first visit. We reduced intake time to 5 minutes and eliminated data entry errors.",
