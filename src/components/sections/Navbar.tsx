@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef, useCallback } from "react"
 import { motion, AnimatePresence } from "motion/react"
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 import { Menu, X } from "lucide-react"
 
 const NAV_LINKS = [
@@ -17,6 +18,8 @@ interface NavbarProps {
 }
 
 export default function Navbar({ ctaVisible = false, heroSectionRef }: NavbarProps) {
+  const pathname = usePathname()
+  const isGetStarted = pathname === "/get-started"
   const [isVisible, setIsVisible] = useState(true)
   const [isMobileOpen, setIsMobileOpen] = useState(false)
 
@@ -169,20 +172,24 @@ export default function Navbar({ ctaVisible = false, heroSectionRef }: NavbarPro
             </div>
 
             {/* Desktop Pulsating CTA Button */}
-            <Link
-              href="/get-started"
-              className="hidden md:inline-flex animate-cta-pulse px-5 py-2 bg-gray-900 text-white text-sm font-medium rounded-full"
-            >
-              Get Started
-            </Link>
+            {!isGetStarted && (
+              <Link
+                href="/get-started"
+                className="hidden md:inline-flex animate-cta-pulse px-5 py-2 bg-gray-900 text-white text-sm font-medium rounded-full"
+              >
+                Get Started
+              </Link>
+            )}
 
             {/* Mobile Pulsating CTA Button */}
-            <Link
-              href="/get-started"
-              className="md:hidden inline-flex animate-cta-pulse px-3 py-1.5 bg-gray-900 text-white text-[10px] font-medium rounded-full"
-            >
-              Get Started
-            </Link>
+            {!isGetStarted && (
+              <Link
+                href="/get-started"
+                className="md:hidden inline-flex animate-cta-pulse px-3 py-1.5 bg-gray-900 text-white text-[10px] font-medium rounded-full"
+              >
+                Get Started
+              </Link>
+            )}
 
             {/* Mobile Hamburger Button — liquid glass casing */}
             <button
@@ -247,24 +254,26 @@ export default function Navbar({ ctaVisible = false, heroSectionRef }: NavbarPro
               ))}
 
               {/* Mobile CTA Button */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                suppressHydrationWarning
-                animate={{ opacity: 1, y: 0 }}
-                transition={{
-                  delay: 0.35,
-                  duration: 0.4,
-                  ease: [0.32, 0.72, 0, 1],
-                }}
-              >
-                <Link
-                  href="/get-started"
-                  onClick={() => setIsMobileOpen(false)}
-                  className="mt-6 px-8 py-3.5 bg-white text-gray-900 text-base font-medium rounded-full hover:bg-gray-100 transition-colors"
+              {!isGetStarted && (
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  suppressHydrationWarning
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{
+                    delay: 0.35,
+                    duration: 0.4,
+                    ease: [0.32, 0.72, 0, 1],
+                  }}
                 >
-                  Get Started
-                </Link>
-              </motion.div>
+                  <Link
+                    href="/get-started"
+                    onClick={() => setIsMobileOpen(false)}
+                    className="mt-6 px-8 py-3.5 bg-white text-gray-900 text-base font-medium rounded-full hover:bg-gray-100 transition-colors"
+                  >
+                    Get Started
+                  </Link>
+                </motion.div>
+              )}
             </nav>
           </motion.div>
         )}

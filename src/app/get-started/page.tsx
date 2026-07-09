@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useRef, useMemo, useCallback } from "react"
+import { useState, useRef, useEffect, useMemo, useCallback } from "react"
 import Link from "next/link"
 import { motion, AnimatePresence } from "motion/react"
 import { useMousePosition } from "@/lib/use-mouse-position"
@@ -156,6 +156,13 @@ export default function GetStartedPage() {
   const [direction, setDirection] = useState(1)
   const [submitting, setSubmitting] = useState(false)
   const [submitError, setSubmitError] = useState("")
+
+  // Scroll to top when form is submitted (step 7 = success)
+  useEffect(() => {
+    if (state.step === 7) {
+      window.scrollTo({ top: 0, behavior: "smooth" })
+    }
+  }, [state.step])
 
   const update = useCallback(<K extends keyof QuestionnaireState>(key: K, value: QuestionnaireState[K]) => {
     setState((prev) => ({ ...prev, [key]: value }))
