@@ -1,6 +1,5 @@
 /* TEAM */
 Name: Origin Dev Labs
-Location: Orlando, FL, USA
 Website: https://origindevlabs.com
 
 /* SITE */

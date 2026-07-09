@@ -124,7 +124,7 @@ export default function FooterSection() {
             </a>
 
             <p className="text-sm leading-relaxed text-gray-400">
-              Automation systems that work while you sleep. Built in Orlando, serving businesses everywhere.
+              Automation systems that work while you sleep. Serving businesses everywhere.
             </p>
 
             {/* Newsletter form */}
@@ -223,9 +223,7 @@ export default function FooterSection() {
               Contact
             </h3>
             <address className="space-y-2 text-sm not-italic text-gray-400">
-              <p>100 South Orange Avenue, Suite 1200</p>
-              <p>Orlando, FL 32801</p>
-              <p className="pt-1">
+              <p>
                 <a
                   href="mailto:hello@origindevlabs.com"
                   className="transition-colors hover:text-white"

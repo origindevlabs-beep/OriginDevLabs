@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Get Started | Free Automation Consultation | Origin Dev Labs | Orlando, FL",
+  title: "Get Started | Free Automation Consultation | Origin Dev Labs",
   description: "Ready to automate your business? Tell us about your project and get a free consultation within 24 hours.",
 }
 

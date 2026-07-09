@@ -33,14 +33,6 @@ const organizationSchema = {
   description:
     "Origin Dev Labs builds automation systems, AI-powered chatbots, smart assistants, business intelligence dashboards, custom websites, and software that save businesses time and money.",
   email: "hello@origindevlabs.com",
-  address: {
-    "@type": "PostalAddress",
-    streetAddress: "100 South Orange Avenue, Suite 1200",
-    addressLocality: "Orlando",
-    addressRegion: "FL",
-    postalCode: "32801",
-    addressCountry: "US",
-  },
   sameAs: [
     "https://tiktok.com/@origindevlabs",
     "https://instagram.com/origindevlabs",
@@ -68,9 +60,9 @@ const webSiteSchema = {
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://origindevlabs.com"),
-  title: "Origin Dev Labs | Automation Systems That Work While You Sleep | Orlando, FL",
+  title: "Origin Dev Labs | Automation Systems That Work While You Sleep",
   description:
-    "Origin Dev Labs builds automation systems, AI-powered chatbots, smart assistants, business intelligence dashboards, custom websites, and software that save businesses time and money. Based in Orlando, FL. Free consultation.",
+    "Origin Dev Labs builds automation systems, AI-powered chatbots, smart assistants, business intelligence dashboards, custom websites, and software that save businesses time and money. Free consultation.",
   icons: {
     icon: "/favicon.ico",
     apple: "/apple-touch-icon.png",
@@ -89,8 +81,6 @@ export const metadata: Metadata = {
     "custom software development",
     "SaaS development",
     "MVP development",
-    "Orlando",
-    "Florida",
     "Origin Dev Labs",
     "custom solutions",
     "automation consulting",

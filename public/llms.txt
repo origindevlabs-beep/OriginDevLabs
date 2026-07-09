@@ -1,5 +1,5 @@
 # Origin Dev Labs
-> Origin Dev Labs builds automation systems, intelligent agents, and custom software solutions that save businesses time and money. Based in Orlando, FL. Fixed-fee pricing, you own the code.
+> Origin Dev Labs builds automation systems, intelligent agents, and custom software solutions that save businesses time and money. Fixed-fee pricing, you own the code.
 
 ## About
 Origin Dev Labs (ODL) is a technology company specializing in business automation. We build systems that handle repetitive work so teams can focus on what matters. Our approach is practical, results-driven, and systems-oriented — we don't build features, we build systems that work together.
@@ -18,7 +18,6 @@ Origin Dev Labs (ODL) is a technology company specializing in business automatio
 - Website: https://origindevlabs.com
 - Email: hello@origindevlabs.com
 - WhatsApp: +1 (407) 123-4567
-- Location: Orlando, FL, USA
 - Free consultation available
 - Response within 24 hours
 

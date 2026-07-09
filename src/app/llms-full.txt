@@ -1,13 +1,12 @@
 # Origin Dev Labs
 
-> Origin Dev Labs builds automation systems, intelligent agents, and custom software that save businesses time and money. Based in Orlando, FL, serving clients nationwide.
+> Origin Dev Labs builds automation systems, intelligent agents, and custom software that save businesses time and money. Serving clients nationwide.
 
 ## Quick Summary
 
 - **What we do:** Business automation, AI chatbots, smart assistants, BI dashboards, web development, UI/UX design, digital products, and custom software
 - **Who we serve:** Small to mid-size businesses looking to eliminate repetitive work and scale operations
 - **Pricing:** Fixed-fee projects with no long-term contracts. Workflow automation from $1,500, websites from $5,000, custom software from $20,000
-- **Location:** Orlando, FL (100 South Orange Avenue, Suite 1200, Orlando, FL 32801)
 - **Contact:** hello@origindevlabs.com
 - **Website:** https://origindevlabs.com
 
@@ -141,5 +140,4 @@ Modest: $20,000-$50,000. Mid-range: $50,000-$200,000. Enterprise: $200,000-$1,00
 
 - **Email:** hello@origindevlabs.com
 - **Website:** https://origindevlabs.com
-- **Location:** Orlando, FL, USA
 - **Free consultation:** https://origindevlabs.com/get-started

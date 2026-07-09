@@ -1,6 +1,6 @@
 # Origin Dev Labs
 
-> Business automation, AI agents, and custom software. Fixed-fee pricing, you own the code. Based in Orlando, FL.
+> Business automation, AI agents, and custom software. Fixed-fee pricing, you own the code.
 
 ## Services
 - Workflow Automation (from $1,500)
@@ -25,7 +25,6 @@
 - Email: hello@origindevlabs.com
 - Web: https://origindevlabs.com
 - FAQ: https://origindevlabs.com/faq
-- Location: Orlando, FL
 
 ## Key Facts
 - Fixed-fee pricing, no long-term contracts
