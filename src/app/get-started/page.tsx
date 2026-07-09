@@ -362,7 +362,7 @@ export default function GetStartedPage() {
 
       {/* ── Steps 1-6: Questionnaire Area ── */}
       {state.step <= 6 && (
-        <section className="relative z-10 pb-32 md:pb-20">
+        <section className="relative z-10 pb-4 md:pb-20">
           <div className="max-w-3xl mx-auto px-4">
             <AnimatePresence mode="wait" custom={direction}>
               <motion.div
@@ -451,9 +451,9 @@ export default function GetStartedPage() {
             </div>
           )}
 
-          {/* ── Mobile Navigation (fixed bottom bar) ── */}
+          {/* ── Mobile Navigation (inline) ── */}
           {state.step >= 1 && state.step <= 5 && (
-            <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md border-t border-gray-200 px-4 py-3 flex items-center justify-between">
+            <div className="md:hidden flex items-center justify-between px-4 pt-4 pb-6 mt-auto">
               <button
                 onClick={goBack}
                 className="text-gray-500 hover:text-gray-900 transition-colors text-sm py-2 px-4"
