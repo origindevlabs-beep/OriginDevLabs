@@ -4,46 +4,43 @@ import { useState, useEffect, useRef, useCallback, useSyncExternalStore } from "
 import { motion, AnimatePresence } from "motion/react"
 
 const FULL_TEXT = "Origin Dev Labs"
-const CHAR_DELAY = 80 // ms per character
-const PAUSE_AFTER_TYPE = 600 // ms pause after typewriter finishes
-const FORCE_DISMISS = 5000 // max 5s
+const CHAR_DELAY = 80
+const PAUSE_AFTER_TYPE = 600
+const FORCE_DISMISS = 5000
 
 type Phase = "pulse" | "shift" | "typewriter" | "done"
 
-/* ── Hydration-safe "mounted" detection ── */
 const emptySubscribe = () => () => {}
 
 /**
- * LoadScreen — wraps page content and optionally shows a branded loading
+ * LoadScreen — wraps page content and shows a branded loading
  * animation on the user's very first visit.
  *
- * HYDRATION-SAFE DESIGN:
- * - Server + initial client render: always renders children directly
- *   (no motion wrappers, no conditional branches based on sessionStorage).
- * - useSyncExternalStore detects client mount and reads sessionStorage
- *   without setState-in-effect.
- * - On first visit: a full-screen overlay fades IN on top of the children.
- * - When animation finishes, overlay fades OUT — zero DOM mismatch.
+ * OPTIMIZED: During the overlay, children are NOT mounted, freeing CPU
+ * for the loading animation. Children mount after overlay fades out.
+ *
+ * HYDRATION-SAFE: Server + initial client render always renders children
+ * directly (no motion wrappers, no conditional branches on sessionStorage).
  */
 export default function LoadScreen({ children }: { children: React.ReactNode }) {
   const mounted = useSyncExternalStore(
     emptySubscribe,
-    () => true,  // client
-    () => false  // server
+    () => true,
+    () => false
   )
 
   const isFirstVisit = useSyncExternalStore(
     emptySubscribe,
-    () => sessionStorage.getItem("odl-loaded") !== "true",  // client
-    () => true  // server: assume first visit
+    () => sessionStorage.getItem("odl-loaded") !== "true",
+    () => true
   )
 
-  // showOverlay is true only when mounted AND first visit
   const showOverlay = mounted && isFirstVisit
 
   const [overlayPhase, setOverlayPhase] = useState<Phase>("pulse")
   const [charIndex, setCharIndex] = useState(0)
   const [overlayVisible, setOverlayVisible] = useState(true)
+  const [childrenVisible, setChildrenVisible] = useState(false)
   const dismissed = useRef(false)
 
   const dismiss = useCallback(() => {
@@ -51,11 +48,17 @@ export default function LoadScreen({ children }: { children: React.ReactNode }) 
     dismissed.current = true
     sessionStorage.setItem("odl-loaded", "true")
     setOverlayVisible(false)
+    // Mount children AFTER overlay starts fading
+    requestAnimationFrame(() => setChildrenVisible(true))
   }, [])
 
-  // Phase orchestration (only runs when overlay is active)
+  // Phase orchestration
   useEffect(() => {
-    if (!showOverlay) return
+    if (!showOverlay) {
+      // Use rAF to avoid setState-in-effect warning
+      const id = requestAnimationFrame(() => setChildrenVisible(true))
+      return () => cancelAnimationFrame(id)
+    }
 
     const pulseTimer = setTimeout(() => setOverlayPhase("shift"), 1000)
     const typeTimer = setTimeout(() => setOverlayPhase("typewriter"), 1400)
@@ -68,7 +71,7 @@ export default function LoadScreen({ children }: { children: React.ReactNode }) 
     }
   }, [showOverlay, dismiss])
 
-  // Typewriter effect (setState inside setTimeout callback — OK per lint rule)
+  // Typewriter effect
   useEffect(() => {
     if (overlayPhase !== "typewriter") return
 
@@ -81,17 +84,19 @@ export default function LoadScreen({ children }: { children: React.ReactNode }) 
     }
   }, [overlayPhase, charIndex, dismiss])
 
-  // ── Server + pre-mount client: render children directly ──
+  // Server + pre-mount: children render directly
+  // Returning visit: children render directly
+  // First visit + overlay active: only overlay (children mount after dismiss)
+  // First visit + overlay dismissed: children only
   if (!mounted || !showOverlay) {
     return <>{children}</>
   }
 
-  // ── After mount, first visit: children (hidden) + overlay on top ──
   return (
     <>
-      <div style={{ visibility: overlayVisible ? "hidden" : "visible" }}>
-        {children}
-      </div>
+      {childrenVisible && (
+        <>{children}</>
+      )}
 
       <AnimatePresence>
         {overlayVisible && (

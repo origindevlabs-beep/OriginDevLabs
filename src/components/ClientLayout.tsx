@@ -16,9 +16,18 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
   const isHome = pathname === "/"
   const mounted = useSyncExternalStore(emptySubscribe, getClientSnapshot, getServerSnapshot)
 
+  // On homepage, skip AnimatePresence wrapper to avoid unnecessary motion overhead
+  if (isHome) {
+    return (
+      <LenisProvider>
+        {children}
+      </LenisProvider>
+    )
+  }
+
   return (
     <LenisProvider>
-      {!isHome && <Navbar />}
+      <Navbar />
       <AnimatePresence mode="wait">
         <motion.div
           key={pathname}
@@ -30,7 +39,7 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
           {children}
         </motion.div>
       </AnimatePresence>
-      {!isHome && <FooterSection />}
+      <FooterSection />
     </LenisProvider>
   )
 }

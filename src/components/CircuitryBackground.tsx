@@ -57,10 +57,12 @@ export default function CircuitryBackground({
 
     const isLight = mode === "light"
     const nodeRGB = isLight ? "255,255,255" : "0,0,0"
+    let isMobileFlag = false
 
     const resize = () => {
       canvas.width = canvas.parentElement?.offsetWidth || window.innerWidth
       canvas.height = canvas.parentElement?.offsetHeight || window.innerHeight
+      isMobileFlag = canvas.width < 768
       generateNodes()
     }
 
@@ -71,7 +73,8 @@ export default function CircuitryBackground({
         connections: number[]
         pulse: number
       }> = []
-      const spacing = 80
+      const isMobile = isMobileFlag
+      const spacing = isMobile ? 120 : 80
       const cols = Math.ceil(canvas.width / spacing) + 1
       const rows = Math.ceil(canvas.height / spacing) + 1
 
@@ -223,22 +226,24 @@ export default function CircuitryBackground({
         ctx.fill()
       }
 
-      // Traveling pulses (reduced frequency)
-      for (let i = 0; i < nodes.length; i++) {
-        const node = nodes[i]
-        if (Math.random() > 0.998 && node.connections.length > 0) {
-          const targetIdx = node.connections[
-            Math.floor(Math.random() * node.connections.length)
-          ]
-          const target = nodes[targetIdx]
-          if (target) {
-            const progress = (time * 0.5) % 1
-            const px = node.x + (target.x - node.x) * progress
-            const py = node.y + (target.y - node.y) * progress
-            ctx.fillStyle = `rgba(${nodeRGB}, 0.2)`
-            ctx.beginPath()
-            ctx.arc(px, py, 2, 0, Math.PI * 2)
-            ctx.fill()
+      // Traveling pulses (reduced frequency, skip on mobile)
+      if (!isMobileFlag) {
+        for (let i = 0; i < nodes.length; i++) {
+          const node = nodes[i]
+          if (Math.random() > 0.998 && node.connections.length > 0) {
+            const targetIdx = node.connections[
+              Math.floor(Math.random() * node.connections.length)
+            ]
+            const target = nodes[targetIdx]
+            if (target) {
+              const progress = (time * 0.5) % 1
+              const px = node.x + (target.x - node.x) * progress
+              const py = node.y + (target.y - node.y) * progress
+              ctx.fillStyle = `rgba(${nodeRGB}, 0.2)`
+              ctx.beginPath()
+              ctx.arc(px, py, 2, 0, Math.PI * 2)
+              ctx.fill()
+            }
           }
         }
       }

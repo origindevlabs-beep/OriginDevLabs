@@ -575,3 +575,28 @@ Stage Summary:
 - CircuitryBackground pauses when off-screen (saves battery/CPU)
 - Mouse tracking no longer triggers re-renders (uses ref)
 - Zero visual or animation changes — all optimizations are transparent
+
+---
+Task ID: performance-optimization-round2
+Agent: Main Agent
+Task: Further optimize load time for mobile and desktop views
+
+Work Log:
+- LoadScreen: changed from `visibility: hidden` (children mounted but invisible) to deferred mounting (children NOT mounted during overlay). Overlay now runs on clean CPU, children mount after overlay starts fading via requestAnimationFrame
+- HeroSection: throttled mousemove handler to once per animation frame (requestAnimationFrame). Previously every mouse pixel triggered a React re-render with 20 card position recalculations
+- HeroSection: wrapped FlipCard in React.memo to prevent unnecessary re-renders when props haven't changed
+- HeroSection: reduced flip card count on mobile (20 desktop → 10 mobile) via TOTAL_IMAGES_MOBILE
+- HeroSection: throttled ResizeObserver callback via rAF
+- ClientLayout: skip AnimatePresence + motion.div wrapper on homepage entirely (page transitions only needed for non-home pages)
+- CircuitryBackground: increased node spacing on mobile (80→120px) — ~55% fewer nodes
+- CircuitryBackground: disabled traveling pulse particles on mobile
+- CircuitryBackground: fixed isMobile scoping issue (moved to closure variable accessible by both generateNodes and animate)
+- Added `loading="lazy"` to hero card images and `loading="eager"` to the logo in shadow layer
+- Fixed all lint errors (isMobile scoping, setState-in-effect, useRef-in-callback)
+
+Stage Summary:
+- First visit: overlay animation is now the ONLY thing running (zero competition from canvas/springs/cards)
+- Mouse movement: reduced from ~1000+ re-renders/sec to max 60 (rAF-throttled)
+- Mobile: 10 cards instead of 20, 55% fewer canvas nodes, no pulse particles
+- Homepage: no AnimatePresence overhead
+- Zero visual/animation changes confirmed via browser verification

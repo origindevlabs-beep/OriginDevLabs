@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useMemo, useRef } from "react";
+import React, { useState, useEffect, useMemo, useRef, useCallback } from "react";
 import {
   motion,
   useTransform,
@@ -27,11 +27,11 @@ interface FlipCardProps {
   };
 }
 
-// --- FlipCard Component ---
+// --- FlipCard Component (memoized — only re-renders when target changes) ---
 const IMG_WIDTH = 60;
 const IMG_HEIGHT = 85;
 
-function FlipCard({ src, index, target }: FlipCardProps) {
+const FlipCard = React.memo(function FlipCard({ src, index, target }: FlipCardProps) {
   const isEven = index % 2 === 0;
 
   return (
@@ -78,6 +78,7 @@ function FlipCard({ src, index, target }: FlipCardProps) {
             src="/odl-logo.png"
             alt=""
             className="w-8 h-8 object-contain"
+            loading="eager"
           />
         )}
       </div>
@@ -108,6 +109,7 @@ function FlipCard({ src, index, target }: FlipCardProps) {
             alt=""
             className="h-full w-full object-cover opacity-80"
             decoding="async"
+            loading="lazy"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
         </div>
@@ -123,12 +125,13 @@ function FlipCard({ src, index, target }: FlipCardProps) {
       </motion.div>
     </motion.div>
   );
-}
+});
 
 // --- Main Hero Component ---
-const TOTAL_IMAGES = 20;
+const TOTAL_IMAGES_DESKTOP = 20;
+const TOTAL_IMAGES_MOBILE = 10;
 const MAX_SCROLL = 1200;
-const RELEASE_SCROLL = 1050; // Unlock shortly after Phase 2 is fully visible
+const RELEASE_SCROLL = 1050;
 
 const IMAGES = [
   { src: "/images/hero/workflow-nodes.jpg" },
@@ -161,16 +164,22 @@ export default function HeroSection() {
   const [containerSize, setContainerSize] = useState({ width: 0, height: 0 });
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // --- Container Size ---
+  // Use ref for isMobile to avoid re-renders on resize
+  const isMobileRef = useRef(false);
+
+  // --- Container Size (throttled via rAF) ---
   useEffect(() => {
     if (!containerRef.current) return;
+    let rafId = 0;
     const handleResize = (entries: ResizeObserverEntry[]) => {
-      for (const entry of entries) {
-        setContainerSize({
-          width: entry.contentRect.width,
-          height: entry.contentRect.height,
-        });
-      }
+      if (rafId) cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(() => {
+        for (const entry of entries) {
+          const w = entry.contentRect.width;
+          setContainerSize({ width: w, height: entry.contentRect.height });
+          isMobileRef.current = w < 768;
+        }
+      });
     };
     const observer = new ResizeObserver(handleResize);
     observer.observe(containerRef.current);
@@ -178,12 +187,15 @@ export default function HeroSection() {
       width: containerRef.current.offsetWidth,
       height: containerRef.current.offsetHeight,
     });
-    return () => observer.disconnect();
+    isMobileRef.current = (containerRef.current.offsetWidth) < 768;
+    return () => {
+      observer.disconnect();
+      if (rafId) cancelAnimationFrame(rafId);
+    };
   }, []);
 
-  // --- Lenis integration: prevent Lenis from handling hero wheel events ---
+  // --- Lenis integration ---
   const lenisRef = useLenisRef();
-
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
@@ -200,13 +212,10 @@ export default function HeroSection() {
     if (!container) return;
 
     const handleWheel = (e: WheelEvent) => {
-      // Tidal lock: release at RELEASE_SCROLL when scrolling down
       if (scrollRef.current >= RELEASE_SCROLL && e.deltaY > 0) {
-        // Remove lenis-prevent so Lenis takes over for page scroll
         container.removeAttribute("data-lenis-prevent");
         return;
       }
-
       e.preventDefault();
       const newScroll = Math.min(
         Math.max(scrollRef.current + e.deltaY, 0),
@@ -224,13 +233,10 @@ export default function HeroSection() {
       const touchY = e.touches[0].clientY;
       const deltaY = touchStartY - touchY;
       touchStartY = touchY;
-
-      // Tidal lock: release at RELEASE_SCROLL when swiping up (scrolling down)
       if (scrollRef.current >= RELEASE_SCROLL && deltaY > 0) {
         container.removeAttribute("data-lenis-prevent");
         return;
       }
-
       e.preventDefault();
       const newScroll = Math.min(
         Math.max(scrollRef.current + deltaY, 0),
@@ -241,9 +247,7 @@ export default function HeroSection() {
     };
 
     container.addEventListener("wheel", handleWheel, { passive: false });
-    container.addEventListener("touchstart", handleTouchStart, {
-      passive: true,
-    });
+    container.addEventListener("touchstart", handleTouchStart, { passive: true });
     container.addEventListener("touchmove", handleTouchMove, { passive: false });
 
     return () => {
@@ -264,27 +268,36 @@ export default function HeroSection() {
     damping: 20,
   });
 
-  // --- Mouse Parallax ---
+  // --- Mouse Parallax (rAF-throttled, no per-pixel re-renders) ---
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
   const smoothMouseX = useSpring(mouseX, { stiffness: 30, damping: 20 });
   const smoothMouseY = useSpring(mouseY, { stiffness: 30, damping: 20 });
   const [normalizedMouse, setNormalizedMouse] = useState({ x: 0.5, y: 0.5 });
+  const mouseRafRef = useRef(0);
 
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
 
     const handleMouseMove = (e: MouseEvent) => {
-      const rect = container.getBoundingClientRect();
-      const relativeX = (e.clientX - rect.left) / rect.width;
-      const relativeY = (e.clientY - rect.top) / rect.height;
-      setNormalizedMouse({ x: relativeX, y: relativeY });
-      mouseX.set((relativeX - 0.5) * 100);
-      mouseY.set((relativeY - 0.5) * 50);
+      // Throttle to once per animation frame
+      if (mouseRafRef.current) return;
+      mouseRafRef.current = requestAnimationFrame(() => {
+        mouseRafRef.current = 0;
+        const rect = container.getBoundingClientRect();
+        const relativeX = (e.clientX - rect.left) / rect.width;
+        const relativeY = (e.clientY - rect.top) / rect.height;
+        setNormalizedMouse({ x: relativeX, y: relativeY });
+        mouseX.set((relativeX - 0.5) * 100);
+        mouseY.set((relativeY - 0.5) * 50);
+      });
     };
     container.addEventListener("mousemove", handleMouseMove);
-    return () => container.removeEventListener("mousemove", handleMouseMove);
+    return () => {
+      container.removeEventListener("mousemove", handleMouseMove);
+      if (mouseRafRef.current) cancelAnimationFrame(mouseRafRef.current);
+    };
   }, [mouseX, mouseY]);
 
   // --- Intro Sequence ---
@@ -308,7 +321,7 @@ export default function HeroSection() {
     }));
   }, []);
 
-  // --- Render Loop ---
+  // --- Render Loop (subscribe to motion values for card position updates) ---
   const [morphValue, setMorphValue] = useState(0);
   const [rotateValue, setRotateValue] = useState(0);
   const [parallaxValue, setParallaxValue] = useState(0);
@@ -324,13 +337,16 @@ export default function HeroSection() {
     };
   }, [smoothMorph, smoothScrollRotate, smoothMouseX]);
 
-  // --- Phase 2 Content Opacity (fades in during mid-scroll) ---
+  // --- Phase 2 Content Opacity ---
   const contentOpacity = useTransform(virtualScroll, [500, 750], [0, 1]);
   const contentY = useTransform(virtualScroll, [500, 750], [30, 0]);
 
-  // --- CTA Animation (appears slightly after Phase 2 text) ---
+  // --- CTA Animation ---
   const ctaOpacity = useTransform(virtualScroll, [650, 900], [0, 1]);
   const ctaScale = useTransform(virtualScroll, [650, 900], [0.85, 1]);
+
+  // Use fewer cards on mobile
+  const totalImages = isMobileRef.current ? TOTAL_IMAGES_MOBILE : TOTAL_IMAGES_DESKTOP;
 
   // Shared frosted backing class
   const frostedBacking =
@@ -346,7 +362,7 @@ export default function HeroSection() {
 
       {/* Cards Container — z-10 */}
       <div className="absolute inset-0 z-10 flex items-center justify-center">
-        {IMAGES.slice(0, TOTAL_IMAGES).map((item, i) => {
+        {IMAGES.slice(0, totalImages).map((item, i) => {
           let target = {
             x: 0,
             y: 0,
@@ -359,7 +375,7 @@ export default function HeroSection() {
             target = scatterPositions[i];
           } else if (introPhase === "line") {
             const lineSpacing = 70;
-            const lineTotalWidth = TOTAL_IMAGES * lineSpacing;
+            const lineTotalWidth = totalImages * lineSpacing;
             const lineX = i * lineSpacing - lineTotalWidth / 2;
             target = { x: lineX, y: 0, rotation: 0, scale: 1, opacity: 1 };
           } else {
@@ -371,7 +387,7 @@ export default function HeroSection() {
 
             // Circle Position
             const circleRadius = Math.min(minDimension * 0.35, 350);
-            const circleAngle = (i / TOTAL_IMAGES) * 360;
+            const circleAngle = (i / totalImages) * 360;
             const circleRad = (circleAngle * Math.PI) / 180;
             const circlePos = {
               x: Math.cos(circleRad) * circleRadius,
@@ -390,7 +406,7 @@ export default function HeroSection() {
             const arcCenterY = arcApexY + arcRadius;
             const spreadAngle = isMobile ? 100 : 130;
             const startAngle = -90 - spreadAngle / 2;
-            const step = spreadAngle / (TOTAL_IMAGES - 1);
+            const step = spreadAngle / (totalImages - 1);
 
             const scrollProgress = Math.min(
               Math.max(rotateValue / 200, 0),
@@ -422,7 +438,7 @@ export default function HeroSection() {
               key={i}
               src={item.src}
               index={i}
-              total={TOTAL_IMAGES}
+              total={totalImages}
               phase={introPhase}
               target={target}
             />
@@ -430,7 +446,7 @@ export default function HeroSection() {
         })}
       </div>
 
-      {/* Phase 1 Text — IN FRONT of cards (z-30) */}
+      {/* Phase 1 Text — z-30 */}
       <div className="absolute inset-0 z-30 flex flex-col items-center justify-center pointer-events-none px-4">
         <motion.div
           initial={{
@@ -471,7 +487,7 @@ export default function HeroSection() {
         </motion.div>
       </div>
 
-      {/* Phase 2 Text — IN FRONT of cards (z-30), fades in after 80% morph */}
+      {/* Phase 2 Text — z-30, fades in after 80% morph */}
       <motion.div
         style={{ opacity: contentOpacity, y: contentY }}
         className="absolute inset-0 z-30 flex flex-col items-center justify-center pointer-events-none px-4"
